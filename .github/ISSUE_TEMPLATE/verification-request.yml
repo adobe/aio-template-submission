@@ -1,0 +1,14 @@
+name: Template Review Request
+description: Request template verification
+labels: [review-request]
+body:
+  - type: input
+    attributes:
+      label: Link to GitHub repo
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Link to NPM package
+    validations:
+      required: true
