@@ -1,0 +1,79 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://github.com/adobe/aio-template-submission/blob/main/registry.schema.json",
+    "title": "aio-app-template-registry-schema",
+    "description": "A schema for the Adobe App Builder Template registry",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "string",
+                "description": "The unique identifier for the template in UUID format",
+                "pattern": "^[0-9a-fA-F]{8}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{12}$"
+            },
+            "author": {
+                "type": "string",
+                "description": "The name of the template author in npmjs.org"
+            },
+            "name": {
+                "type": "string",
+                "description": "The name of the template in npmjs.org"
+            },
+            "description": {
+                "type": "string",
+                "description": "A description of the template"
+            },
+            "adobeRecommended": {
+                "type": "boolean",
+                "description": "Whether the template is recommended by Adobe"
+            },
+            "latestVersion": {
+                "type": "string",
+                "description": "The version of the template in semver format",
+                "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$"
+            },
+            "publishDate": {
+                "type": "string",
+                "description": "The date the template was published in ISO 8601 format",
+                "pattern": "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d+)?)(?:Z|([+-])(\\d{2}):(\\d{2}))$"
+            },
+            "extensionPoints": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "categories": {
+                "type": "array",
+                "description": "A list of categories the template belongs to",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "links": {
+                "type": "object",
+                "description": "List of locations where the template can be found",
+                "patternProperties": {
+                    "^(?:github|npm)$": {
+                        "type": "string",
+                        "pattern": "^(?:https?|git)://[^/]+/[^/]+/[^/]+$"
+                    }
+                }
+            }
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "id",
+        "author",
+        "name",
+        "description",
+        "latestVersion",
+        "adobeRecommended",
+        "categories",
+        "extensionPoints",
+        "links",
+        "publishDate"
+    ]
+}
