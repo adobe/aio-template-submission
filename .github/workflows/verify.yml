@@ -1,0 +1,46 @@
+name: Template Verification
+
+on:
+  issues:
+    types: [labeled]
+  issue_comment:
+    types: [ created ]
+jobs:
+  validate:
+    if: (github.event.label.name == 'review-request') || (github.event_name == 'issue_comment' && github.event.comment.body == '/verify')
+    name: Validate template
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      # ToDo: DEVX-2067 add validation checks here
+  add-to-registry:
+    name: Add to Template Registry
+    runs-on: ubuntu-latest
+    needs: validate
+    if: ${{ always() && contains(join(needs.validate.result, ','), 'success') }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
+      # ToDo: DEVX-2072 add registry handlers
+  success-close-issue:
+    name: Close issue
+    runs-on: ubuntu-latest
+    needs: [add-to-registry]
+    if: ${{ always() && contains(join(needs.add-to-registry.result, ','), 'success') }}
+    steps:
+      - uses: peter-evans/close-issue@v1
+        with:
+          comment: ":white_check_mark: Congratulations! Your template has been verified and added to Template Registry."
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  fail-validation-comment:
+    name: Validation failed
+    runs-on: ubuntu-latest
+    needs: [validate]
+    if: ${{ always() && contains(join(needs.validate.result, ','), 'failure') }}
+    steps:
+      - uses: ben-z/actions-comment-on-issue@1.0.2
+        with:
+          message: ":x: Template validation failed."
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
