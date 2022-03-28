@@ -15,9 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     if: (github.event.label.name == 'review-request') || (github.event_name == 'issue_comment' && github.event.comment.body == '/verify')
     outputs:
-      github-link: ${{ steps.env-vars.outputs.github-link }}
-      npm-link: ${{ steps.env-vars.outputs.npm-link }}
-      npm-package: ${{ steps.env-vars.outputs.npm-package }}
+      github-link: ${{ steps.issue-input.outputs.github-link }}
+      npm-link: ${{ steps.issue-input.outputs.npm-link }}
+      npm-package: ${{ steps.issue-input.outputs.npm-package }}
     steps:
       - name: Parse Issue Form Body
         uses: peter-murray/issue-forms-body-parser@v2
@@ -28,8 +28,8 @@ jobs:
           separator: "###"
           label_marker_start: '"'
           label_marker_end: '"'
-      - name: Set Env Vars
-        id: env-vars
+      - name: Parse Issue Payload
+        id: issue-input
         run: |
           github_link=$(echo '${{ steps.issue-payload.outputs.payload }}' | jq '."Link to GitHub repo"')
           echo "::set-output name=github-link::$github_link"
