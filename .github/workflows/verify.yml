@@ -1,46 +1,131 @@
 name: Template Verification
 
+defaults:
+  run:
+    shell: bash
+
 on:
   issues:
     types: [labeled]
   issue_comment:
-    types: [ created ]
+    types: [created]
 jobs:
-  validate:
+  parse-issue-form-body:
+    name: Parse Issue Form Body
+    runs-on: ubuntu-latest
     if: (github.event.label.name == 'review-request') || (github.event_name == 'issue_comment' && github.event.comment.body == '/verify')
-    name: Validate template
-    runs-on: ubuntu-latest
+    outputs:
+      github-link: ${{ steps.env-vars.outputs.github-link }}
+      npm-link: ${{ steps.env-vars.outputs.npm-link }}
+      npm-package: ${{ steps.env-vars.outputs.npm-package }}
     steps:
-      - uses: actions/checkout@v1
-      # ToDo: DEVX-2067 add validation checks here
-  add-to-registry:
-    name: Add to Template Registry
+      - name: Parse Issue Form Body
+        uses: peter-murray/issue-forms-body-parser@v2
+        id: issue-payload
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          issue_id: ${{ github.event.issue.number }}
+          separator: "###"
+          label_marker_start: '"'
+          label_marker_end: '"'
+      - name: Set Env Vars
+        id: env-vars
+        run: |
+          github_link=$(echo '${{ steps.issue-payload.outputs.payload }}' | jq '."Link to GitHub repo"')
+          echo "::set-output name=github-link::$github_link"
+          npm_link=$(echo '${{ steps.issue-payload.outputs.payload }}' | jq '."Link to NPM package"')
+          echo "::set-output name=npm-link::$npm_link"
+          npm_package_path="https://www.npmjs.com/package/"
+          npm_package="${npm_link/$npm_package_path/}"
+          echo "::set-output name=npm-package::$npm_package"
+  check-github-link:
+    name: Check GitHub link
     runs-on: ubuntu-latest
-    needs: validate
-    if: ${{ always() && contains(join(needs.validate.result, ','), 'success') }}
+    continue-on-error: true
+    needs: [parse-issue-form-body]
+    outputs:
+      error: ${{ steps.check-github-link.outputs.error }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Install dependencies
-        run: npm install
+      - name: Check GitHub link
+        id: check-github-link
+        run: |
+          failed=0
+          git ls-remote --tags ${{ needs.parse-issue-form-body.outputs.github-link }} || failed=1
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: A link to the GitHub repo is incorrect or the GitHub repo is not public."; exit 1; fi;
+  check-npm-link:
+    name: Check NPM link
+    runs-on: ubuntu-latest
+    needs: [parse-issue-form-body]
+    outputs:
+      error: ${{ steps.check-npm-link.outputs.error }}
+    steps:
+      - name: Check NPM link
+        id: check-npm-link
+        run: |
+          failed=0
+          npm view ${{ needs.parse-issue-form-body.outputs.npm-package }} name || failed=1
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: A link to the NPM package is incorrect or the NPM package doesn't exist."; exit 1; fi;
+  check-npm-package:
+    name: Validate template
+    runs-on: ubuntu-latest
+    needs: [parse-issue-form-body, check-npm-link]
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x]
+    outputs:
+      error: ${{ steps.check-installation-and-tests.outputs.error }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Check installation and tests
+        id: check-installation-and-tests
+        run: |
+          failed=0
+          mkdir "npm-package"; cd "npm-package"
+          npm init --yes
+          npm install ${{ needs.parse-issue-form-body.outputs.npm-package }} || failed=1
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: A package installation failed."; exit 1; fi;
+          cp -R "./node_modules/${{ needs.parse-issue-form-body.outputs.npm-package }}" "installed-npm-package-src"; cd "installed-npm-package-src"
+          npm install --legacy-peer-deps || failed=1
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: A package's dependencies installation failed."; exit 1; fi;
+          npm test || failed=1
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: A package didn't pass its own tests."; exit 1; fi;
+  add-to-registry:
+    name: Add to Template Registry
+    runs-on: ubuntu-latest
+    needs: [check-npm-package, check-github-link]
+    if: ${{ always() && (needs.check-npm-package.result == 'success' && needs.check-github-link.outputs.error == '') }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
       # ToDo: DEVX-2072 add registry handlers
   success-close-issue:
     name: Close issue
     runs-on: ubuntu-latest
     needs: [add-to-registry]
-    if: ${{ always() && contains(join(needs.add-to-registry.result, ','), 'success') }}
+    if: ${{ always() && needs.add-to-registry.result == 'success' }}
     steps:
       - uses: peter-evans/close-issue@v1
         with:
-          comment: ":white_check_mark: Congratulations! Your template has been verified and added to Template Registry."
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          comment: ":white_check_mark: Congratulations! Your template has been verified."
+          token: ${{ secrets.GITHUB_TOKEN }}
   fail-validation-comment:
     name: Validation failed
     runs-on: ubuntu-latest
-    needs: [validate]
-    if: ${{ always() && contains(join(needs.validate.result, ','), 'failure') }}
+    needs: [check-npm-package, check-github-link, check-npm-link]
+    if: ${{ always() && (needs.check-npm-package.result != 'success' || needs.check-github-link.outputs.error != '') }}
     steps:
       - uses: ben-z/actions-comment-on-issue@1.0.2
         with:
-          message: ":x: Template validation failed."
+          message: |
+            :x: Template validation failed.
+            ${{ needs.check-github-link.outputs.error }}
+            ${{ needs.check-npm-link.outputs.error }}
+            ${{ needs.check-npm-package.outputs.error }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

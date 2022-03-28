@@ -3,12 +3,16 @@ description: Request template verification
 labels: [review-request]
 body:
   - type: input
+    id: github_link
     attributes:
-      label: Link to GitHub repo
+      label: '"Link to GitHub repo"'
+      placeholder: https://github.com/xxx
     validations:
       required: true
   - type: input
+    id: npm_link
     attributes:
-      label: Link to NPM package
+      label: '"Link to NPM package"'
+      placeholder: https://www.npmjs.com/package/xxx
     validations:
       required: true
