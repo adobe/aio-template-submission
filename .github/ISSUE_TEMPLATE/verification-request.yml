@@ -1,6 +1,6 @@
 name: Template Review Request
 description: Request template verification
-labels: [review-request]
+labels: [add-template]
 body:
   - type: input
     id: github_link

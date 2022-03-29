@@ -1,5 +1,5 @@
 {
-    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "https://github.com/adobe/aio-template-submission/blob/main/registry.schema.json",
     "title": "aio-app-template-registry-schema",
     "description": "A schema for the Adobe App Builder Template registry",
@@ -40,6 +40,7 @@
             },
             "extensionPoints": {
                 "type": "array",
+                "description": "A list of extension points the template implements",
                 "items": {
                     "type": "string"
                 }
@@ -47,6 +48,13 @@
             "categories": {
                 "type": "array",
                 "description": "A list of categories the template belongs to",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "keywords": {
+                "type": "array",
+                "description": "A list of keywords specified in packages.json file",
                 "items": {
                     "type": "string"
                 }
@@ -73,6 +81,7 @@
         "adobeRecommended",
         "categories",
         "extensionPoints",
+        "keywords",
         "links",
         "publishDate"
     ]
