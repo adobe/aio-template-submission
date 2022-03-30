@@ -1,6 +1,6 @@
 {
-  "name": "aio-template-submission",
-  "author": "adobe",
+  "name": "@adobe/aio-template-submission",
+  "author": "Adobe Inc.",
   "version": "1.0.0",
   "description": "Run validation checks on NPM packages that are App Builder templates",
   "type": "module",
@@ -13,6 +13,7 @@
     "url": "https://github.com/adobe/aio-template-submission/issues"
   },
   "dependencies": {
+    "@actions/core": "^1.6.0",
     "fs": "0.0.1-security",
     "node-fetch": "^3.2.3",
     "uuid": "^8.3.2"

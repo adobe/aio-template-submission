@@ -108,6 +108,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Change registry.json
+        id: run-add-to-registry
         run: node src/add-to-registry.js "$(npm view --json ${{ needs.parse-issue-form-body.outputs.npm-package }} name author description version keywords)" ${{ needs.parse-issue-form-body.outputs.github-link }} ${{ needs.parse-issue-form-body.outputs.npm-link }}
       - name: Commit and push changes
         uses: EndBug/add-and-commit@v8
@@ -116,6 +117,8 @@ jobs:
           default_author: github_actions
           message: Add template to the Registry
           push: true
+    outputs:
+      error: ${{ steps.run-add-to-registry.outputs.error }}
   success-close-issue:
     name: Close issue
     runs-on: ubuntu-latest
