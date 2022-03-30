@@ -59,7 +59,7 @@ registry.push(registryItem);
 const newData = JSON.stringify(registry, null, "  ");
 fs.writeFile('registry.json', newData, err => {
     if (err) {
-        core.setOutput('error', ':warning: Error occurred during adding template to the Template Registry.');
+        core.setOutput('error', ':warning: Error occurred during adding template to Template Registry.');
         throw err;
     }
     console.log('Template was added', newData);
