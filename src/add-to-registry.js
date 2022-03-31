@@ -10,15 +10,19 @@ const packageData = JSON.parse(myArgs[0]);
 // Grab stargazers count for the specified GitHub repo
 const gitHubUrl = myArgs[1];
 const repo = gitHubUrl.split('/').slice(-2).join('/');
-const gitHubResponse = (async () => {
-    await fetch('https://api.github.com/repos/' + repo);
-})();
 
 // We expect repo to have more than 10 stargazers in order to be featured
+let stargazersCount
+fetch('https://api.github.com/repos/' + repo)
+    .then(response => response.json())
+    .then(data => {
+        stargazersCount = data['stargazers_count'];
+    })
+    .catch(function (e) {
+        core.setOutput('error', ':warning: ' + e.message);
+        throw e;
+    })
 const stargazersThreshold = 10;
-const stargazersCount = (async () => {
-    await gitHubResponse.text()['stargazers_count'];
-})();
 const adobeRecommended = stargazersCount > stargazersThreshold;
 
 // Create registry item object
@@ -59,7 +63,7 @@ registry.push(registryItem);
 const newData = JSON.stringify(registry, null, "  ");
 fs.writeFile('registry.json', newData, err => {
     if (err) {
-        core.setOutput('error', ':warning: Error occurred during adding template to Template Registry.');
+        core.setOutput('error', ':warning: Error occurred while adding template to Template Registry.');
         throw err;
     }
     console.log('Template was added', newData);
