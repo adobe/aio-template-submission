@@ -63,7 +63,7 @@ if (registry.filter(e => e.name === registryItem.name).length > 0) {
 registry.push(registryItem);
 const newData = JSON.stringify(registry, null, "  ");
 
-// Validate JSON schema
+// Validate registry.json file
 validateJson(newData)
 
 // Write to registry.json

@@ -2,9 +2,13 @@ import * as core from "@actions/core";
 import fs from 'fs' ;
 import Ajv from 'ajv';
 
-// Validate JSON against registry.schema.json
+/**
+ * Validate JSON against registry.schema.json
+ *
+ * @param json
+ */
 export default function validateJson(json) {
-    const ajv = new Ajv({ strictTuples: false });
+    const ajv = new Ajv({strictTuples: false});
     const validate = ajv.compile(JSON.parse(fs.readFileSync('registry.schema.json')));
     const valid = validate(JSON.parse(json));
     if (!valid) {
