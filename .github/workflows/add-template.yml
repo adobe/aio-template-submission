@@ -92,7 +92,12 @@ jobs:
           npm init --yes
           npm install ${{ needs.parse-issue-form-body.outputs.npm-package }} || failed=1
           if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: Package installation failed."; exit 1; fi;
-          cp -R "./node_modules/${{ needs.parse-issue-form-body.outputs.npm-package }}" "installed-npm-package-src"; cd "installed-npm-package-src"
+          cd .. && mkdir "npm-package-src"
+          git clone ${{ needs.parse-issue-form-body.outputs.github-link }} "npm-package-src" || failed=1
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: Failed cloning the GitHub repository."; exit 1; fi;
+          cd "npm-package-src"
+          git checkout `npm view ${{ needs.parse-issue-form-body.outputs.npm-package }} gitHead` || failed=1
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: Failed switching to the GitHub commit hash."; exit 1; fi;
           npm install --legacy-peer-deps || failed=1
           if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: Package dependencies installation failed."; exit 1; fi;
           npm test || failed=1
@@ -139,11 +144,11 @@ jobs:
         with:
           message: |
             The following checks failed:
-            
+
             ${{ needs.check-github-link.outputs.error }}
             ${{ needs.check-npm-link.outputs.error }}
             ${{ needs.check-npm-package.outputs.error }}
             ${{ needs.add-to-registry.outputs.error }}
-            
+
             Fix all mentioned issues and comment `/check` to run checks again.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
