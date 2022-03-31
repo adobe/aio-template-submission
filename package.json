@@ -1,0 +1,29 @@
+{
+  "name": "@adobe/aio-template-submission",
+  "author": "Adobe Inc.",
+  "version": "1.0.0",
+  "description": "Run validation checks on NPM packages that are App Builder templates",
+  "type": "module",
+  "license": "Apache-2.0",
+  "scripts": {
+    "lint:check": "eslint --ext .js .",
+    "lint:fix": "eslint --ext .js --fix ."
+  },
+  "bugs": {
+    "url": "https://github.com/adobe/aio-template-submission/issues"
+  },
+  "dependencies": {
+    "@actions/core": "^1.6.0",
+    "fs": "0.0.1-security",
+    "node-fetch": "^3.2.3",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.2.0"
+  }
+}
