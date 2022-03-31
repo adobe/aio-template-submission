@@ -120,7 +120,7 @@ jobs:
         with:
           add: registry.json
           default_author: github_actions
-          message: Add template to the Registry
+          message: Add ${{ needs.parse-issue-form-body.outputs.npm-package }} to Template Registry
           push: true
     outputs:
       error: ${{ steps.run-add-to-registry.outputs.error }}

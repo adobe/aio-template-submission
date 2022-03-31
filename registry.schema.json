@@ -65,7 +65,7 @@
         "patternProperties": {
           "^(?:github|npm)$": {
             "type": "string",
-            "pattern": "^(?:https?|git)://[^/]+/[^/]+/[^/]+$"
+            "pattern": "^(https:\/\/)(www\\.)?(npmjs\\.com\/|github\\.com\/)"
           }
         }
       }
