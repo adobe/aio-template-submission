@@ -88,7 +88,7 @@ jobs:
         id: check-installation-and-tests
         run: |
           failed=0
-          cd .. && mkdir "npm-package"; cd "npm-package"
+          cd .. && mkdir "npm-package" && cd "npm-package"
           npm init --yes
           npm install ${{ needs.parse-issue-form-body.outputs.npm-package }} || failed=1
           if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: Package installation failed."; exit 1; fi;
