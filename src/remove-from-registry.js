@@ -15,6 +15,10 @@ if (index != -1) {
 }
 
 const newData = JSON.stringify(registryObject, null, 4);
+
+// Validate registry.json file
+validateJson(newData)
+
 fs.writeFile("registry.json", newData, err => {
     if(err) {
       core.setOutput('error', ':warning: Error occurred during removing template from Template Registry.')

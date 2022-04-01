@@ -44,7 +44,7 @@ const registryItem = {
         "aio-graphql"
     ],
     "adobeRecommended": adobeRecommended,
-    "keywords": packageData.keywords,
+    "keywords": [].concat(packageData.keywords),
     "links": {
         "npm": myArgs[2],
         "github": gitHubUrl
