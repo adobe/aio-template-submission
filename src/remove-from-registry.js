@@ -1,5 +1,6 @@
 import fs from 'fs'
 import * as core from '@actions/core'
+import validateJson from "./validate-json-schema.js";
 
 const myArgs = process.argv.slice(2);
 const pluginName = myArgs[0];
