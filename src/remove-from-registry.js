@@ -1,5 +1,6 @@
 import fs from 'fs'
 import * as core from '@actions/core'
+import validateJson from "./validate-json-schema.js";
 
 const myArgs = process.argv.slice(2);
 const pluginName = myArgs[0];
@@ -15,6 +16,10 @@ if (index != -1) {
 }
 
 const newData = JSON.stringify(registryObject, null, 4);
+
+// Validate registry.json file
+validateJson(newData)
+
 fs.writeFile("registry.json", newData, err => {
     if(err) {
       core.setOutput('error', ':warning: Error occurred during removing template from Template Registry.')
