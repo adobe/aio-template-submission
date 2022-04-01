@@ -1,0 +1,10 @@
+name: Template Removal Request
+description: Request template removal
+labels: [remove-template]
+body:
+  - type: input
+    id: npm_name
+    attributes:
+      label: '"Name of NPM package"'
+    validations:
+      required: true
