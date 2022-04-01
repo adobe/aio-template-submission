@@ -1,24 +1,2 @@
-[
-  {
-    "id": "2cad36df-97c8-4518-85b5-277457182f0a",
-    "author": "Adobe Inc.",
-    "name": "@adobe/generator-app-excshell",
-    "description": "Extensibility template for generator-aio-app",
-    "latestVersion": "0.2.0",
-    "publishDate": "2022-04-01T14:29:11.206Z",
-    "extensionPoints": [
-      "dx-spa",
-      "dx-commerce"
-    ],
-    "categories": [
-      "aio-action",
-      "aio-graphql"
-    ],
-    "adobeRecommended": false,
-    "keywords": "ecosystem:aio-app-builder-template",
-    "links": {
-      "npm": "https://www.npmjs.com/package/@adobe/generator-app-excshell",
-      "github": "https://github.com/adobe/generator-app-excshell"
-    }
-  }
-]
+[]
+
