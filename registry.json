@@ -1,55 +1,33 @@
 [
-  {
-    "id": "f7a333a9-5149-4de1-9b40-bdde3a340fb9",
-    "author": "Adobe Inc.",
-    "name": "@adobe/generator-app-asset-compute",
-    "description": "Extensibility template for generator-aio-app",
-    "latestVersion": "0.2.0",
-    "publishDate": "2022-04-01T15:09:01.959Z",
-    "extensionPoints": [
-      "dx-spa",
-      "dx-commerce"
-    ],
-    "categories": [
-      "aio-action",
-      "aio-graphql"
-    ],
-    "adobeRecommended": false,
-    "keywords": [
-      "yeoman",
-      "generator",
-      "codegen",
-      "aio",
-      "adobeio",
-      "app",
-      "templates",
-      "ecosystem:aio-app-builder-template"
-    ],
-    "links": {
-      "npm": "https://www.npmjs.com/package/@adobe/generator-app-asset-compute",
-      "github": "https://github.com/adobe/generator-app-asset-compute"
+    {
+        "id": "f7a333a9-5149-4de1-9b40-bdde3a340fb9",
+        "author": "Adobe Inc.",
+        "name": "@adobe/generator-app-asset-compute",
+        "description": "Extensibility template for generator-aio-app",
+        "latestVersion": "0.2.0",
+        "publishDate": "2022-04-01T15:09:01.959Z",
+        "extensionPoints": [
+            "dx-spa",
+            "dx-commerce"
+        ],
+        "categories": [
+            "aio-action",
+            "aio-graphql"
+        ],
+        "adobeRecommended": false,
+        "keywords": [
+            "yeoman",
+            "generator",
+            "codegen",
+            "aio",
+            "adobeio",
+            "app",
+            "templates",
+            "ecosystem:aio-app-builder-template"
+        ],
+        "links": {
+            "npm": "https://www.npmjs.com/package/@adobe/generator-app-asset-compute",
+            "github": "https://github.com/adobe/generator-app-asset-compute"
+        }
     }
-  },
-  {
-    "id": "7ebadd2c-ebb2-44f9-9f6b-3e6256f09c4b",
-    "author": "Adobe Inc.",
-    "name": "@adobe/generator-app-excshell",
-    "description": "Extensibility template for generator-aio-app",
-    "latestVersion": "0.2.0",
-    "publishDate": "2022-04-01T15:14:42.085Z",
-    "extensionPoints": [
-      "dx-spa",
-      "dx-commerce"
-    ],
-    "categories": [
-      "aio-action",
-      "aio-graphql"
-    ],
-    "adobeRecommended": false,
-    "keywords": "ecosystem:aio-app-builder-template",
-    "links": {
-      "npm": "https://www.npmjs.com/package/@adobe/generator-app-excshell",
-      "github": "https://github.com/adobe/generator-app-excshell"
-    }
-  }
 ]
