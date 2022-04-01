@@ -1,2 +1,33 @@
-[]
-
+[
+  {
+    "id": "1e6ef84b-4142-43b5-a0ec-ede6f1180f09",
+    "author": "Adobe Inc.",
+    "name": "@adobe/generator-app-asset-compute",
+    "description": "Extensibility template for generator-aio-app",
+    "latestVersion": "0.2.0",
+    "publishDate": "2022-04-01T15:02:31.133Z",
+    "extensionPoints": [
+      "dx-spa",
+      "dx-commerce"
+    ],
+    "categories": [
+      "aio-action",
+      "aio-graphql"
+    ],
+    "adobeRecommended": false,
+    "keywords": [
+      "yeoman",
+      "generator",
+      "codegen",
+      "aio",
+      "adobeio",
+      "app",
+      "templates",
+      "ecosystem:aio-app-builder-template"
+    ],
+    "links": {
+      "npm": "https://www.npmjs.com/package/@adobe/generator-app-asset-compute",
+      "github": "https://github.com/adobe/generator-app-asset-compute"
+    }
+  }
+]
