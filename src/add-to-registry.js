@@ -2,6 +2,7 @@ import fs from 'fs' ;
 import {v4 as uuidv4} from 'uuid';
 import fetch from 'node-fetch';
 import * as core from '@actions/core';
+import validateJson from "./validate-json-schema.js";
 
 // Simple script that collects template metadata and adds it to the registry
 const myArgs = process.argv.slice(2);
@@ -61,6 +62,11 @@ if (registry.filter(e => e.name === registryItem.name).length > 0) {
 // Add to the registry
 registry.push(registryItem);
 const newData = JSON.stringify(registry, null, "  ");
+
+// Validate registry.json file
+validateJson(newData)
+
+// Write to registry.json
 fs.writeFile('registry.json', newData, err => {
     if (err) {
         core.setOutput('error', ':warning: Error occurred while adding template to Template Registry.');
