@@ -29,5 +29,35 @@
       "npm": "https://www.npmjs.com/package/@adobe/generator-app-asset-compute",
       "github": "https://github.com/adobe/generator-app-asset-compute"
     }
+  },
+  {
+    "id": "978c6ab7-4d39-4aba-8a16-a08e38eefea9",
+    "author": "Adobe Inc.",
+    "name": "@adobe/generator-aio-app",
+    "description": "Adobe I/O application yeoman code generator",
+    "latestVersion": "3.1.1",
+    "publishDate": "2022-04-01T20:19:45.800Z",
+    "extensionPoints": [
+      "dx-spa",
+      "dx-commerce"
+    ],
+    "categories": [
+      "aio-action",
+      "aio-graphql"
+    ],
+    "adobeRecommended": false,
+    "keywords": [
+      "yeoman",
+      "generator",
+      "codegen",
+      "aio",
+      "adobeio",
+      "app",
+      "templates"
+    ],
+    "links": {
+      "npm": "https://www.npmjs.com/package/@adobe/generator-aio-app",
+      "github": "https://github.com/adobe/generator-aio-app"
+    }
   }
 ]
