@@ -5,7 +5,7 @@ const myArgs = process.argv.slice(2);
 const creator = myArgs[0];
 const npmLink = "https://www.npmjs.com/package/" + myArgs[1];
 
-fetch('https://api.github.com/repos/adobe/aio-template-submission/issues?state=closed&labels=add-template&creator=' + creator)
+fetch('https://api.github.com/repos/amyjzhao/aio-template-submission/issues?state=closed&labels=add-template&creator=' + creator)
   .then(response => response.json())
   .then(data => {
     if(data.length == 0) {
