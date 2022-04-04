@@ -68,10 +68,28 @@ jobs:
           failed=0
           npm view ${{ needs.parse-issue-form-body.outputs.npm-package }} name || failed=1
           if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: A link to the NPM package is incorrect or the NPM package doesn't exist."; exit 1; fi;
+  check-npm-package-metadata:
+    name: Check NPM package metadata
+    runs-on: ubuntu-latest
+    needs: [parse-issue-form-body, check-npm-link]
+    outputs:
+      error: ${{ steps.check-npm-package-metadata.outputs.error }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+      - name: Install dependencies
+        run: npm install
+      - name: Check NPM package metadata
+        id: check-npm-package-metadata
+        run: node src/check-npm-package-metadata.js ${{ needs.parse-issue-form-body.outputs.npm-package }}
   check-npm-package:
     name: Validate template
     runs-on: ubuntu-latest
-    needs: [parse-issue-form-body, check-npm-link, check-github-link]
+    needs: [parse-issue-form-body, check-npm-package-metadata, check-github-link]
     if: ${{ needs.check-github-link.outputs.error == '' }}
     strategy:
       matrix:
@@ -138,7 +156,7 @@ jobs:
   fail-validation-comment:
     name: Validation failed
     runs-on: ubuntu-latest
-    needs: [parse-issue-form-body, check-npm-package, check-github-link, check-npm-link, add-to-registry]
+    needs: [parse-issue-form-body, check-npm-package, check-github-link, check-npm-link, check-npm-package-metadata]
     if: ${{ always() && needs.parse-issue-form-body.result == 'success' && (needs.check-github-link.outputs.error != '' || needs.add-to-registry.result == 'failure' || needs.add-to-registry.result == 'skipped') }}
     steps:
       - uses: ben-z/actions-comment-on-issue@1.0.2
@@ -148,6 +166,7 @@ jobs:
 
             ${{ needs.check-github-link.outputs.error }}
             ${{ needs.check-npm-link.outputs.error }}
+            ${{ needs.check-npm-package-metadata.outputs.error }}
             ${{ needs.check-npm-package.outputs.error }}
             ${{ needs.add-to-registry.outputs.error }}
 
