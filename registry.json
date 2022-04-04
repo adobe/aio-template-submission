@@ -29,5 +29,36 @@
       "npm": "https://www.npmjs.com/package/@adobe/generator-app-asset-compute",
       "github": "https://github.com/adobe/generator-app-asset-compute"
     }
+  },
+  {
+    "id": "58a551ff-e601-43d4-bcc4-44dab70beac7",
+    "author": "Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)",
+    "name": "random-item",
+    "description": "Get a random item from an array",
+    "latestVersion": "4.0.1",
+    "publishDate": "2022-04-04T14:09:39.860Z",
+    "extensionPoints": [
+      "dx-spa",
+      "dx-commerce"
+    ],
+    "categories": [
+      "aio-action",
+      "aio-graphql"
+    ],
+    "adobeRecommended": false,
+    "keywords": [
+      "random",
+      "randomize",
+      "math",
+      "array",
+      "item",
+      "element",
+      "pick",
+      "select"
+    ],
+    "links": {
+      "npm": "https://www.npmjs.com/package/random-item",
+      "github": "https://github.com/sindresorhus/random-item"
+    }
   }
 ]
