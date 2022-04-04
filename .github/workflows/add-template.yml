@@ -156,7 +156,7 @@ jobs:
   fail-validation-comment:
     name: Validation failed
     runs-on: ubuntu-latest
-    needs: [parse-issue-form-body, check-npm-package, check-github-link, check-npm-link, check-npm-package-metadata]
+    needs: [parse-issue-form-body, check-npm-package, check-github-link, check-npm-link, check-npm-package-metadata, add-to-registry]
     if: ${{ always() && needs.parse-issue-form-body.result == 'success' && (needs.check-github-link.outputs.error != '' || needs.add-to-registry.result == 'failure' || needs.add-to-registry.result == 'skipped') }}
     steps:
       - uses: ben-z/actions-comment-on-issue@1.0.2
