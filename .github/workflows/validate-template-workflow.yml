@@ -71,8 +71,7 @@ jobs:
   check-npm-package:
     name: Validate template
     runs-on: ubuntu-latest
-    needs:
-      [check-npm-package-metadata, check-github-link]
+    needs: [check-npm-package-metadata, check-github-link]
     if: ${{ needs.check-github-link.outputs.error == '' }}
     strategy:
       matrix:
