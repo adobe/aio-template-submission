@@ -25,7 +25,3 @@ Template Registry will execute a set of checks and provide the feedback via issu
 
 ## How to remove a template
 If you decide you no longer wish to maintain your template and want to remove it from the registry, please open a [template removal request](https://github.com/adobe/aio-template-submission/issues/new?assignees=&labels=remove-template&template=remove-request.yml) in this repository and fill in the form.
-
-## API
-Adobe App Builder Template Registry provides an ability to submit, remove and list templates via API.
-Please refer to the [API documentation](https://tbd) for more details.
