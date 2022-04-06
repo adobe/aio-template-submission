@@ -41,6 +41,7 @@ jobs:
     continue-on-error: true
     outputs:
       error: ${{ steps.check-github-link.outputs.error }}
+      status: ${{ steps.check-github-link.outputs.status }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -56,6 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       error: ${{ steps.check-npm-link.outputs.error }}
+      status: ${{ steps.check-npm-link.outputs.status }}
     steps:
       - name: Check NPM link
         id: check-npm-link
@@ -70,6 +72,7 @@ jobs:
     needs: [check-npm-link]
     outputs:
       error: ${{ steps.check-npm-package-metadata.outputs.error }}
+      status: ${{ steps.check-npm-package-metadata.outputs.status }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -90,6 +93,7 @@ jobs:
         node-version: [12.x, 14.x]
     outputs:
       error: ${{ steps.check-installation-and-tests.outputs.error }}
+      status: ${{ steps.check-installation-and-tests.outputs.status }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
