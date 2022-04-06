@@ -15,12 +15,20 @@ on:
     outputs:
       check-github-link-error:
         value: ${{ jobs.check-github-link.outputs.error }}
+      check-github-link-status:
+        value: ${{ jobs.check-github-link.outputs.status }}
       check-npm-link-error:
         value: ${{ jobs.check-npm-link.outputs.error }}
+      check-npm-link-status:
+        value: ${{ jobs.check-npm-link.outputs.status }}
       check-npm-package-metadata-error:
         value: ${{ jobs.check-npm-package-metadata.outputs.error }}
+      check-npm-package-metadata-status:
+        value: ${{ jobs.check-npm-package-metadata.outputs.status }}
       check-npm-package-error:
         value: ${{ jobs.check-npm-package.outputs.error }}
+      check-npm-package-status:
+        value: ${{ jobs.check-npm-package.outputs.status }}
 
 defaults:
   run:
@@ -42,6 +50,7 @@ jobs:
           failed=0
           git ls-remote --tags ${{ inputs.github-link }} || failed=1
           if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: A link to the GitHub repo is incorrect or the GitHub repo is not public."; exit 1; fi;
+          echo "::set-output name=status::success";
   check-npm-link:
     name: Check NPM link
     runs-on: ubuntu-latest
@@ -54,6 +63,7 @@ jobs:
           failed=0
           npm view ${{ inputs.npm-package }} name || failed=1
           if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: A link to the NPM package is incorrect or the NPM package doesn't exist."; exit 1; fi;
+          echo "::set-output name=status::success";
   check-npm-package-metadata:
     name: Check NPM package metadata
     runs-on: ubuntu-latest
@@ -67,7 +77,9 @@ jobs:
         run: npm install
       - name: Check NPM package metadata
         id: check-npm-package-metadata
-        run: node src/check-npm-package-metadata.js ${{ inputs.npm-package }}
+        run: |
+          node src/check-npm-package-metadata.js ${{ inputs.npm-package }}
+          echo "::set-output name=status::success";
   check-npm-package:
     name: Validate template
     runs-on: ubuntu-latest
@@ -103,3 +115,4 @@ jobs:
           if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: Package dependencies installation failed."; exit 1; fi;
           npm test || failed=1
           if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: Package tests failed."; exit 1; fi;
+          echo "::set-output name=status::success";
