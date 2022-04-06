@@ -36,16 +36,16 @@ jobs:
     name: Check if issue submitted by admin on devx-services team
     runs-on: ubuntu-latest
     outputs:
-      error: ${{ steps.check-admin.outputs.error }}
+      is-admin: ${{ steps.check-admin.outputs.status }}
     needs: [parse-issue-form-body]
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Install dependencies
-        run: npm install
       - name: Validate creator of removal request is admin
         id: check-admin
-        run: node src/validate-admin.js "${{ github.event.issue.user.login }}"
+        env:
+          TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          state=$(curl -u "amyjzhao:$TOKEN" "https://api.github.com/orgs/adobe/teams/devx-services/memberships/${{ github.event.issue.user.login }}" | jq '.state')
+          echo "::set-output name=status::$state"
   validate-requestor:
     name: Validate matching add-template issue
     runs-on: ubuntu-latest
@@ -65,8 +65,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       error: ${{ steps.run-remove-from-registry.outputs.error }}
-    needs: [validate-requestor, validate-admin]
-    if: ${{ always() && (needs.validate-requestor.outputs.error == '' || needs.validate-admin.outputs.error == '') }}
+    needs: [parse-issue-form-body, validate-requestor, validate-admin]
+    if: ${{ always() && (needs.validate-requestor.outputs.error == '' || needs.validate-admin.outputs.is-admin == 'active') }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
