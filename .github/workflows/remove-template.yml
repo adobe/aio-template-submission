@@ -32,6 +32,20 @@ jobs:
         run: |
           npm_package_name=$(echo '${{ steps.issue-payload.outputs.payload }}' | jq '."Name of NPM package"')
           echo "::set-output name=npm-package-name::$npm_package_name"
+  validate-admin:
+    name: Check if issue submitted by admin on devx-services team
+    runs-on: ubuntu-latest
+    outputs:
+      error: ${{ steps.check-admin.outputs.error }}
+    needs: [parse-issue-form-body]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
+      - name: Validate creator of removal request is admin
+        id: check-admin
+        run: node src/validate-admin.js "${{ github.event.issue.user.login }}"
   validate-requestor:
     name: Validate matching add-template issue
     runs-on: ubuntu-latest
@@ -51,8 +65,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       error: ${{ steps.run-remove-from-registry.outputs.error }}
-    needs: [parse-issue-form-body, validate-requestor]
-    if: ${{ always() && contains(join(needs.parse-issue-form-body.result, ','), 'success') && needs.validate-requestor.outputs.error == ''}}
+    needs: [validate-requestor, validate-admin]
+    if: ${{ always() && (needs.validate-requestor.outputs.error == '' || needs.validate-admin.outputs.error == '') }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
