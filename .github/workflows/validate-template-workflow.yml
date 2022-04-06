@@ -1,0 +1,122 @@
+name: Reusable Workflow For Template Verification
+
+on:
+  workflow_call:
+    inputs:
+      github-link:
+        required: true
+        type: string
+      npm-link:
+        required: true
+        type: string
+      npm-package:
+        required: true
+        type: string
+    outputs:
+      check-github-link-error:
+        value: ${{ jobs.check-github-link.outputs.error }}
+      check-github-link-status:
+        value: ${{ jobs.check-github-link.outputs.status }}
+      check-npm-link-error:
+        value: ${{ jobs.check-npm-link.outputs.error }}
+      check-npm-link-status:
+        value: ${{ jobs.check-npm-link.outputs.status }}
+      check-npm-package-metadata-error:
+        value: ${{ jobs.check-npm-package-metadata.outputs.error }}
+      check-npm-package-metadata-status:
+        value: ${{ jobs.check-npm-package-metadata.outputs.status }}
+      check-npm-package-error:
+        value: ${{ jobs.check-npm-package.outputs.error }}
+      check-npm-package-status:
+        value: ${{ jobs.check-npm-package.outputs.status }}
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  check-github-link:
+    name: Check GitHub link
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    outputs:
+      error: ${{ steps.check-github-link.outputs.error }}
+      status: ${{ steps.check-github-link.outputs.status }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Check GitHub link
+        id: check-github-link
+        run: |
+          failed=0
+          git ls-remote --tags ${{ inputs.github-link }} || failed=1
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: A link to the GitHub repo is incorrect or the GitHub repo is not public."; exit 1; fi;
+          echo "::set-output name=status::success";
+  check-npm-link:
+    name: Check NPM link
+    runs-on: ubuntu-latest
+    outputs:
+      error: ${{ steps.check-npm-link.outputs.error }}
+      status: ${{ steps.check-npm-link.outputs.status }}
+    steps:
+      - name: Check NPM link
+        id: check-npm-link
+        run: |
+          failed=0
+          npm view ${{ inputs.npm-package }} name || failed=1
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: A link to the NPM package is incorrect or the NPM package doesn't exist."; exit 1; fi;
+          echo "::set-output name=status::success";
+  check-npm-package-metadata:
+    name: Check NPM package metadata
+    runs-on: ubuntu-latest
+    needs: [check-npm-link]
+    outputs:
+      error: ${{ steps.check-npm-package-metadata.outputs.error }}
+      status: ${{ steps.check-npm-package-metadata.outputs.status }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
+      - name: Check NPM package metadata
+        id: check-npm-package-metadata
+        run: |
+          node src/check-npm-package-metadata.js ${{ inputs.npm-package }}
+          echo "::set-output name=status::success";
+  check-npm-package:
+    name: Validate template
+    runs-on: ubuntu-latest
+    needs: [check-npm-package-metadata, check-github-link]
+    if: ${{ needs.check-github-link.outputs.error == '' }}
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x]
+    outputs:
+      error: ${{ steps.check-installation-and-tests.outputs.error }}
+      status: ${{ steps.check-installation-and-tests.outputs.status }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Check installation and tests
+        id: check-installation-and-tests
+        run: |
+          failed=0
+          cd .. && mkdir "npm-package" && cd "npm-package"
+          npm init --yes
+          npm install ${{ inputs.npm-package }} || failed=1
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: Package installation failed."; exit 1; fi;
+          cd .. && mkdir "npm-package-src"
+          git clone ${{ inputs.github-link }} "npm-package-src" || failed=1
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: Failed cloning the GitHub repository."; exit 1; fi;
+          cd "npm-package-src"
+          git checkout `npm view ${{ inputs.npm-package }} gitHead` || failed=1
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: Failed switching to the GitHub commit hash."; exit 1; fi;
+          npm install --legacy-peer-deps || failed=1
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: Package dependencies installation failed."; exit 1; fi;
+          npm test || failed=1
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: Package tests failed."; exit 1; fi;
+          echo "::set-output name=status::success";
