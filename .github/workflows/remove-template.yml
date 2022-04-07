@@ -44,7 +44,7 @@ jobs:
         env:
           TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
-          state=$(curl -u "amyjzhao:$TOKEN" "https://api.github.com/orgs/adobe/teams/devx-services/memberships/${{ github.event.issue.user.login }}" | jq '.state')
+          state=$(curl -u "template-registry-api-bot:$TOKEN" "https://api.github.com/orgs/adobe/teams/devx-services/memberships/${{ github.event.issue.user.login }}" | jq '.state')
           echo "::set-output name=status::$state"
   validate-requestor:
     name: Validate matching add-template issue
