@@ -42,9 +42,10 @@ jobs:
       - name: Validate creator of removal request is admin
         id: check-admin
         env:
-          TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          USERNAME: ${{ secrets.ADOBE_BOT_GITHUB_USERNAME }}
+          TOKEN: ${{ secrets.ADOBE_BOT_GITHUB_TOKEN }}
         run: |
-          state=$(curl -u "template-registry-api-bot:$TOKEN" "https://api.github.com/orgs/adobe/teams/devx-services/memberships/${{ github.event.issue.user.login }}" | jq '.state')
+          state=$(curl -u "$USERNAME:$TOKEN" "https://api.github.com/orgs/adobe/teams/devx-services/memberships/${{ github.event.issue.user.login }}" | jq '.state')
           echo "::set-output name=status::$state"
   validate-requestor:
     name: Validate matching add-template issue
