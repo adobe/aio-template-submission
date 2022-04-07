@@ -32,6 +32,21 @@ jobs:
         run: |
           npm_package_name=$(echo '${{ steps.issue-payload.outputs.payload }}' | jq '."Name of NPM package"')
           echo "::set-output name=npm-package-name::$npm_package_name"
+  validate-admin:
+    name: Check if issue submitted by admin on devx-services team
+    runs-on: ubuntu-latest
+    outputs:
+      is-admin: ${{ steps.check-admin.outputs.status }}
+    needs: [parse-issue-form-body]
+    steps:
+      - name: Validate creator of removal request is admin
+        id: check-admin
+        env:
+          USERNAME: ${{ secrets.ADOBE_BOT_GITHUB_USERNAME }}
+          TOKEN: ${{ secrets.ADOBE_BOT_GITHUB_TOKEN }}
+        run: |
+          state=$(curl -u "$USERNAME:$TOKEN" "https://api.github.com/orgs/adobe/teams/devx-services/memberships/${{ github.event.issue.user.login }}" | jq '.state')
+          echo "::set-output name=status::$state"
   validate-requestor:
     name: Validate matching add-template issue
     runs-on: ubuntu-latest
@@ -51,8 +66,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       error: ${{ steps.run-remove-from-registry.outputs.error }}
-    needs: [parse-issue-form-body, validate-requestor]
-    if: ${{ always() && contains(join(needs.parse-issue-form-body.result, ','), 'success') && needs.validate-requestor.outputs.error == ''}}
+    needs: [parse-issue-form-body, validate-requestor, validate-admin]
+    if: ${{ always() && (needs.validate-requestor.outputs.error == '' || needs.validate-admin.outputs.is-admin == 'active') }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
