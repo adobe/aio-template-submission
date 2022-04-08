@@ -2,8 +2,10 @@ import * as core from '@actions/core';
 import * as metadata from '@adobe/aio-lib-template-validation';
 
 (async () => {
+  console.log('Check started');
   const myArgs = process.argv.slice(2);
   const path = myArgs[0];
+  console.log(path);
   const results = await metadata.checkTemplateMetadata(path);
   try {
   } catch (e) {
