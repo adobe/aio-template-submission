@@ -29,5 +29,33 @@
             "npm": "https://www.npmjs.com/package/@adobe/generator-app-asset-compute",
             "github": "https://github.com/adobe/generator-app-asset-compute"
         }
+    },
+    {
+        "id": "654ebced-5405-4577-ab2f-dc7772b6ec39",
+        "author": "Adobe Inc.",
+        "name": "@lenaorobei/app-builder-template",
+        "description": "A template for testing purposes",
+        "latestVersion": "1.0.0",
+        "publishDate": "2022-04-08T15:56:01.009Z",
+        "extensionPoints": [
+            "dx-spa",
+            "dx-commerce"
+        ],
+        "categories": [
+            "aio-action",
+            "aio-graphql"
+        ],
+        "adobeRecommended": false,
+        "keywords": [
+            "aio",
+            "adobeio",
+            "app",
+            "templates",
+            "aio-app-builder-template"
+        ],
+        "links": {
+            "npm": "https://www.npmjs.com/package/@lenaorobei/app-builder-template",
+            "github": "https://github.com/lenaorobei/app-builder-template"
+        }
     }
 ]
