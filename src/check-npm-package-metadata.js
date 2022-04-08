@@ -3,9 +3,9 @@ import * as metadata from '@adobe/aio-lib-template-validation';
 
 (async () => {
   const myArgs = process.argv.slice(2);
-  const packageName = myArgs[0];
+  const path = myArgs[0];
+  const results = await metadata.checkTemplateMetadata(path);
   try {
-    var results = await metadata.checkTemplateMetadata(packageName);
   } catch (e) {
     core.setOutput('error', `:x: ${e.message}`);
     throw e;
