@@ -59,7 +59,7 @@ jobs:
       - name: Collect metadata and save to registry.json
         id: run-add-to-registry
         run: |
-          npm v ${{ inputs.npm-package }} dist.tarball | xargs curl | tar -xz
+          npm v ${{ needs.parse-issue-form-body.outputs.npm-package }} dist.tarball | xargs curl | tar -xz
           node src/add-to-registry.js $GITHUB_WORKSPACE/package ${{ needs.parse-issue-form-body.outputs.github-link }} ${{ needs.parse-issue-form-body.outputs.npm-link }}
       - name: Commit and push changes
         uses: EndBug/add-and-commit@v8
