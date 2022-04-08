@@ -4,8 +4,8 @@ import * as metadata from '@adobe/aio-lib-template-validation';
 (async () => {
   const myArgs = process.argv.slice(2);
   const path = myArgs[0];
-  const results = await metadata.checkTemplateMetadata(path);
   try {
+    var results = await metadata.checkTemplateMetadata(path);
   } catch (e) {
     core.setOutput('error', `:x: ${e.message}`);
     throw e;
