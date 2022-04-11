@@ -29,5 +29,28 @@
             "npm": "https://www.npmjs.com/package/@adobe/generator-app-asset-compute",
             "github": "https://github.com/adobe/generator-app-asset-compute"
         }
+    },
+    {
+        "id": "a514cf79-b642-41c1-b85b-d54945e09cd8",
+        "name": "test-aio-template-amy",
+        "description": "Amy's test template to add to Template Registry",
+        "latestVersion": "0.0.5",
+        "publishDate": "2022-04-11T17:09:15.267Z",
+        "extensionPoints": [
+            "dx-spa",
+            "dx-commerce"
+        ],
+        "categories": [
+            "aio-action",
+            "aio-graphql"
+        ],
+        "adobeRecommended": false,
+        "keywords": [
+            "ecosystem:aio-app-builder-templates"
+        ],
+        "links": {
+            "npm": "https://www.npmjs.com/package/test-aio-template-amy",
+            "github": "https://github.com/AmyJZhao/test-aio-template-amy"
+        }
     }
 ]
