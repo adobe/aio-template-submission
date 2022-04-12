@@ -78,10 +78,11 @@ jobs:
         uses: actions/checkout@v2
       - name: Install dependencies
         run: npm install
-      - name: Check NPM package metadata
+      - name: Download NPM package and check its metadata
         id: check-npm-package-metadata
         run: |
-          node src/check-npm-package-metadata.js ${{ inputs.npm-package }}
+          npm v ${{ inputs.npm-package }} dist.tarball | xargs curl | tar -xz
+          node src/check-npm-package-metadata.js $GITHUB_WORKSPACE/package
           echo "::set-output name=status::success";
   check-npm-package:
     name: Validate template

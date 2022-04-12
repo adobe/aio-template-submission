@@ -1,14 +1,23 @@
 import { v4 as uuidv4 } from 'uuid';
 import * as core from '@actions/core';
-import { isAdobeRecommended } from "./is-adobe-recommended.js";
-import { isInRegistry, addToRegistry } from "./registry.js";
+import { isAdobeRecommended } from './is-adobe-recommended.js';
+import { isInRegistry, addToRegistry } from './registry.js';
+import fs from 'fs';
+import YAML from 'yaml';
 
 // Simple script that collects template metadata and adds it to the registry
-
 (async () => {
     try {
         const myArgs = process.argv.slice(2);
-        const packageData = JSON.parse(myArgs[0]);
+
+        // Grab package.json data
+        const packageJson = fs.readFileSync(myArgs[0] + '/package.json', 'utf8');
+        const packageJsonData = JSON.parse(packageJson);
+
+        // Grab install.yml data
+        const installYml = fs.readFileSync(myArgs[0] + '/install.yml', 'utf8');
+        const installYmlData = YAML.parse(installYml);
+
         const gitHubUrl = myArgs[1];
         const npmUrl = myArgs[2];
 
@@ -17,22 +26,15 @@ import { isInRegistry, addToRegistry } from "./registry.js";
         // Create registry item object
         const registryItem = {
             "id": uuidv4(),
-            "author": packageData.author,
-            "name": packageData.name,
-            "description": packageData.description,
-            "latestVersion": packageData.version,
+            "author": packageJsonData.author,
+            "name": packageJsonData.name,
+            "description": packageJsonData.description,
+            "latestVersion": packageJsonData.version,
             "publishDate": new Date(Date.now()),
-            // ToDo: get data from user input or keywords
-            "extensionPoints": [
-                "dx-spa",
-                "dx-commerce"
-            ],
-            "categories": [
-                "aio-action",
-                "aio-graphql"
-            ],
+            "extensionPoints": [].concat(installYmlData.extension.name),
+            "categories": [].concat(installYmlData.categories),
             "adobeRecommended": adobeRecommended,
-            "keywords": [].concat(packageData.keywords),
+            "keywords": [].concat(packageJsonData.keywords),
             "links": {
                 "npm": npmUrl,
                 "github": gitHubUrl
