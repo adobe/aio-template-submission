@@ -38,7 +38,7 @@
         "description": "The date the template was published in ISO 8601 format",
         "pattern": "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d+)?)(?:Z|([+-])(\\d{2}):(\\d{2}))$"
       },
-      "extensionPoints": {
+      "extensions": {
         "type": "array",
         "description": "A list of extension points the template implements",
         "items": {
@@ -46,6 +46,13 @@
         }
       },
       "categories": {
+        "type": "array",
+        "description": "A list of categories the template belongs to",
+        "items": {
+          "type": "string"
+        }
+      },
+      "services": {
         "type": "array",
         "description": "A list of categories the template belongs to",
         "items": {
@@ -80,7 +87,8 @@
     "latestVersion",
     "adobeRecommended",
     "categories",
-    "extensionPoints",
+    "services",
+    "extensions",
     "keywords",
     "links",
     "publishDate"
