@@ -7,7 +7,7 @@ const STARGAZERS_THRESHOLD = 10;
  *
  * @private
  * @param {string} gitHubUrl the GitHub repo URL
- * @returns {number}
+ * @returns {Promise<number>}
  */
 async function getStargazersCount(gitHubUrl) {
     const repo = gitHubUrl.split('/').slice(-2).join('/');
@@ -36,7 +36,7 @@ async function getStargazersCount(gitHubUrl) {
  * We expect the GitHub repo to have more than STARGAZERS_THRESHOLD stargazers in order to be featured
  *
  * @param {string} gitHubUrl the GitHub repo URL
- * @returns {boolean}
+ * @returns {Promise<boolean>}
  */
 export async function isAdobeRecommended(gitHubUrl) {
     let stargazersCount = await getStargazersCount(gitHubUrl);
