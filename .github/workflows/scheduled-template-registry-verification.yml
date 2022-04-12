@@ -1,0 +1,83 @@
+name: Template Registry Verification
+
+defaults:
+  run:
+    shell: bash
+
+on:
+  schedule:
+    # At 04:20 each day
+    - cron: "20 4 * * *"
+
+  # TODO: for testing, remove later
+  issue_comment:
+    types: [created]
+
+jobs:
+  create-issue:
+    name: Create "Template Registry Verification" Issue
+    runs-on: ubuntu-latest
+
+    # TODO: for testing, remove later
+    if: (github.event_name == 'issue_comment' && github.event.comment.body == '/test-registry-verification')
+
+    permissions:
+      issues: write
+    outputs:
+      issue-number: ${{ steps.issue.outputs.issue-number }}
+    steps:
+      - name: Get today's date
+        id: date
+        run: |
+          echo "::set-output name=today::$(date '+%m/%d/%Y')"
+      - name: Create "Template Registry Verification" Issue
+        uses: imjohnbo/issue-bot@v3.3.6
+        id: issue
+        with:
+          labels: "verify-template-registry, template-auto-verification"
+          title: '"Template Registry Verification" (${{ steps.date.outputs.today }})'
+          body: |
+            ### Template Registry Verification
+          pinned: false
+          close-previous: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  check-registry:
+    name: Create issues to remove unavailable templates, and to update templates that have newest versions
+    runs-on: ubuntu-latest
+    needs: [create-issue]
+    outputs:
+      templates-to-process: ${{ steps.check-registry.outputs.templates-to-process }}
+      error: ${{ steps.check-registry.outputs.error }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
+      - name: Check Template Registry
+        id: check-registry
+        run: node src/check-registry.js ${{ needs.create-issue.outputs.issue-number }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.ADOBE_BOT_GITHUB_TOKEN }}
+  success-close-issue:
+    name: Close issue if there are no templates to process
+    runs-on: ubuntu-latest
+    needs: [create-issue, check-registry]
+    if: ${{ needs.check-registry.outputs.templates-to-process == 0 }}
+    steps:
+      - uses: peter-evans/close-issue@v1
+        with:
+          issue-number: ${{ needs.create-issue.outputs.issue-number }}
+          comment: ":white_check_mark: All template packages in Template Registry are available and contain the latest information. Nothing to update."
+          token: ${{ secrets.GITHUB_TOKEN }}
+  registry-validation-failed-comment:
+    name: Template Registry Validation failed
+    runs-on: ubuntu-latest
+    needs: [check-registry]
+    if: ${{ always() && needs.check-registry.outputs.error != '' }}
+    steps:
+      - uses: ben-z/actions-comment-on-issue@1.0.2
+        with:
+          message: |
+            ${{ needs.check-registry.outputs.error }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
