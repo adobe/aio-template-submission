@@ -54,7 +54,7 @@
       },
       "services": {
         "type": "array",
-        "description": "A list of categories the template belongs to",
+        "description": "A list of Adobe services required by the template",
         "items": {
           "type": "string"
         }
