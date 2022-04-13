@@ -31,8 +31,9 @@ import YAML from 'yaml';
             "description": packageJsonData.description,
             "latestVersion": packageJsonData.version,
             "publishDate": new Date(Date.now()),
-            "extensionPoints": [].concat(installYmlData.extension.name),
+            "extensions": [].concat(installYmlData.extension).map(item => item.id),
             "categories": [].concat(installYmlData.categories),
+            "services": [].concat(installYmlData.services).flat(),
             "adobeRecommended": adobeRecommended,
             "keywords": [].concat(packageJsonData.keywords),
             "links": {
