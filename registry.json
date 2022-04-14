@@ -34,8 +34,8 @@
         "id": "991f1cf7-8ecc-403c-9f29-1ab8a3beacbf",
         "author": "Adobe Inc.",
         "name": "@litviachenko/app-builder-template",
-        "description": "A template for testing purposes [1.0.2]",
-        "latestVersion": "1.0.2",
+        "description": "A template for testing purposes [1.0.3]",
+        "latestVersion": "1.0.3",
         "publishDate": "2022-04-14T13:58:54.448Z",
         "extensions": [
             "dx/excshell/1"
