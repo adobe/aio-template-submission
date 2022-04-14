@@ -29,39 +29,5 @@
             "npm": "https://www.npmjs.com/package/@lenaorobei/app-builder-template",
             "github": "https://github.com/lenaorobei/app-builder-template"
         }
-    },
-    {
-        "id": "1ff34c90-4860-4dfd-a441-08df79242b64",
-        "author": "Adobe Inc.",
-        "name": "@litviachenko/app-builder-template",
-        "description": "A template for testing purposes [1.0.2]",
-        "latestVersion": "1.0.2",
-        "publishDate": "2022-04-14T04:04:16.530Z",
-        "extensions": [
-            "dx/excshell/1"
-        ],
-        "categories": [
-            "add-action"
-        ],
-        "services": [
-            "AnalyticsSDK",
-            "CampaignStandard",
-            "Runtime"
-        ],
-        "adobeRecommended": false,
-        "keywords": [
-            "aio",
-            "adobeio",
-            "app",
-            "templates",
-            "aio-app-builder-template"
-        ],
-        "links": {
-            "npm": "https://www.npmjs.com/package/@litviachenko/app-builder-template",
-            "github": "https://github.com/slitviachenko/app-builder-template"
-        },
-        "extensionPoints": [
-            null
-        ]
     }
 ]
