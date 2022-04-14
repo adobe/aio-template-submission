@@ -59,6 +59,9 @@
         "links": {
             "npm": "https://www.npmjs.com/package/@litviachenko/app-builder-template",
             "github": "https://github.com/slitviachenko/app-builder-template"
-        }
+        },
+        "extensionPoints": [
+            null
+        ]
     }
 ]
