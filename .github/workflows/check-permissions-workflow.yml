@@ -38,7 +38,7 @@ jobs:
           TOKEN: ${{ secrets.ADOBE_BOT_GITHUB_TOKEN }}
         run: |
           state=$(curl -s -u "$USERNAME:$TOKEN" "https://api.github.com/orgs/adobe/teams/devx-services/memberships/${{ inputs.user-login }}" | jq -r '.state')
-          if [ "${{ inputs.user-login }}" = "${{ secrets.ADOBE_BOT_GITHUB_USERNAME }}" ] || [ "${state}" = "active" ]; then echo "::set-output name=is-admin::true"; else echo "::set-output name=error:::x: Submitter is not an admin belonging to devx-services team. Admins can remove and update any templates."; fi;
+          if [ "${{ inputs.user-login }}" = "${USERNAME}" ] || [ "${state}" = "active" ]; then echo "::set-output name=is-admin::true"; else echo "::set-output name=error:::x: Submitter is not an admin belonging to devx-services team. Admins can remove and update any templates."; fi;
   is-owner:
     name: Validate matching add-template issue
     runs-on: ubuntu-latest
