@@ -19,6 +19,8 @@ jobs:
       github-link: ${{ steps.issue-input.outputs.github-link }}
       npm-package: ${{ steps.issue-input.outputs.npm-package }}
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
       - name: Parse Issue Form Body
         uses: peter-murray/issue-forms-body-parser@v2
         id: issue-payload
