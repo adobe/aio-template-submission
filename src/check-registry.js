@@ -1,8 +1,8 @@
-import * as core from '@actions/core';
-import fetch from 'node-fetch';
-import * as exec from '@actions/exec';
-import { getRegistry } from './registry.js';
-import * as github from './github.js';
+const core = require('@actions/core');
+const axios = require('axios').default;
+const exec = require('@actions/exec');
+const { getRegistry } = require('./registry');
+const github = require('./github');
 
 const GITHUB_ISSUES_URL = `https://github.com/${github.GITHUB_REPO_OWNER}/${github.GITHUB_REPO}/issues`;
 
@@ -44,7 +44,10 @@ async function checkUrlAvailability(url) {
         available: false,
         error: ''
     }
-    await fetch(url)
+    await axios({
+        'method': 'get',
+        'url': url
+    })
         .then(response => {
             if (response.status === 200) {
                 result.available = true;

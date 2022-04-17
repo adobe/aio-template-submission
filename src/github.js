@@ -1,7 +1,7 @@
-import * as github from '@actions/github';
+const github = require('@actions/github');
 
-export const GITHUB_REPO = 'aio-template-submission';
-export const GITHUB_REPO_OWNER = 'adobe';
+const GITHUB_REPO = 'aio-template-submission';
+const GITHUB_REPO_OWNER = 'adobe';
 const GITHUB_LABEL_TEMPLATE_REMOVAL = 'remove-template';
 const GITHUB_LABEL_TEMPLATE_UPDATING = 'update-template';
 const GITHUB_LABEL_TEMPLATE_AUTO_VERIFICATION = 'template-auto-verification';
@@ -13,7 +13,7 @@ const GITHUB_LABEL_TEMPLATE_AUTO_VERIFICATION = 'template-auto-verification';
  * @param {string} templateName template name
  * @returns {Promise<number>} created issue number
  */
-export async function createRemoveIssue(githubToken, templateName) {
+async function createRemoveIssue(githubToken, templateName) {
     const octokit = new github.getOctokit(githubToken);
     const response = await octokit.rest.issues.create({
         'owner': GITHUB_REPO_OWNER,
@@ -34,7 +34,7 @@ export async function createRemoveIssue(githubToken, templateName) {
  * @param {string} templateGithubUrl template Github repo url
  * @returns {Promise<number>} created issue number
  */
-export async function createUpdateIssue(githubToken, templateName, templateLatestVersion, templateGithubUrl) {
+async function createUpdateIssue(githubToken, templateName, templateLatestVersion, templateGithubUrl) {
     const octokit = new github.getOctokit(githubToken);
     const response = await octokit.rest.issues.create({
         'owner': GITHUB_REPO_OWNER,
@@ -54,7 +54,7 @@ export async function createUpdateIssue(githubToken, templateName, templateLates
  * @param {string} comment comment to add
  * @returns {Promise<number>} created comment id
  */
-export async function createComment(githubToken, issueNumber, comment) {
+async function createComment(githubToken, issueNumber, comment) {
     const octokit = new github.getOctokit(githubToken);
     const response = await octokit.rest.issues.createComment({
         'owner': GITHUB_REPO_OWNER,
@@ -63,4 +63,8 @@ export async function createComment(githubToken, issueNumber, comment) {
         'body': comment
     });
     return response.data.id;
+}
+
+module.exports = {
+    GITHUB_REPO, GITHUB_REPO_OWNER, createRemoveIssue, createUpdateIssue, createComment
 }

@@ -1,5 +1,5 @@
-import * as core from '@actions/core';
-import * as metadata from '@adobe/aio-lib-template-validation';
+const core = require('@actions/core');
+const metadata = require('@adobe/aio-lib-template-validation');
 
 (async () => {
   const myArgs = process.argv.slice(2);

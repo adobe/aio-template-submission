@@ -3,9 +3,9 @@
   "author": "Adobe Inc.",
   "version": "1.0.0",
   "description": "Run validation checks on NPM packages that are App Builder templates",
-  "type": "module",
   "license": "Apache-2.0",
   "scripts": {
+    "test": "jest -c ./tests/jest.config.json",
     "lint:check": "eslint --ext .js .",
     "lint:fix": "eslint --ext .js --fix ."
   },
@@ -18,8 +18,8 @@
     "@actions/github": "^5.0.1",
     "@adobe/aio-lib-template-validation": "^2.1.0",
     "ajv": "^8.11.0",
+    "axios": "^0.26.1",
     "fs": "0.0.1-security",
-    "node-fetch": "^3.2.3",
     "uuid": "^8.3.2",
     "yaml": "^2.0.0"
   },
@@ -29,6 +29,8 @@
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.2.0"
+    "eslint-plugin-promise": "^5.2.0",
+    "jest": "^27.5.1",
+    "jest-nock": "^0.2.2"
   }
 }

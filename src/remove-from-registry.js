@@ -1,5 +1,5 @@
-import * as core from '@actions/core';
-import { getFromRegistry, removeFromRegistry } from "./registry.js";
+const core = require('@actions/core');
+const { getFromRegistry, removeFromRegistry } = require('./registry');
 
 const myArgs = process.argv.slice(2);
 const templateName = myArgs[0];

@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+const axios = require('axios').default;
 
 const STARGAZERS_THRESHOLD = 10;
 
@@ -14,16 +14,16 @@ async function getStargazersCount(gitHubUrl) {
 
     let stargazersCount;
     const githubApiUrl = 'https://api.github.com/repos/' + repo;
-    await fetch(githubApiUrl)
+    await axios({
+        'method': 'get',
+        'url': githubApiUrl
+    })
         .then(response => {
             if (response.status !== 200) {
                 const errorMessage = `The response code is ${response.status}`;
                 throw new Error(errorMessage);
             }
-            return response.json();
-        })
-        .then(data => {
-            stargazersCount = data['stargazers_count'];
+            stargazersCount = response.data['stargazers_count'];
         })
         .catch(e => {
             const errorMessage = `:x: Error occurred during fetching "${githubApiUrl}". ${e.message}`;
@@ -38,7 +38,11 @@ async function getStargazersCount(gitHubUrl) {
  * @param {string} gitHubUrl the GitHub repo URL
  * @returns {Promise<boolean>}
  */
-export async function isAdobeRecommended(gitHubUrl) {
+async function isAdobeRecommended(gitHubUrl) {
     let stargazersCount = await getStargazersCount(gitHubUrl);
     return stargazersCount > STARGAZERS_THRESHOLD;
+}
+
+module.exports = {
+    isAdobeRecommended
 }
