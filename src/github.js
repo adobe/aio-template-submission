@@ -31,17 +31,16 @@ async function createRemoveIssue(githubToken, templateName) {
  * @param {string} githubToken Github token
  * @param {string} templateName template name
  * @param {string} templateLatestVersion template latest version
- * @param {string} templateGithubUrl template Github repo url
  * @returns {Promise<number>} created issue number
  */
-async function createUpdateIssue(githubToken, templateName, templateLatestVersion, templateGithubUrl) {
+async function createUpdateIssue(githubToken, templateName, templateLatestVersion) {
     const octokit = new github.getOctokit(githubToken);
     const response = await octokit.rest.issues.create({
         'owner': GITHUB_REPO_OWNER,
         'repo': GITHUB_REPO,
         'title': `Update ${templateName} as there is the newest ${templateLatestVersion} version`,
         'labels': [GITHUB_LABEL_TEMPLATE_UPDATING, GITHUB_LABEL_TEMPLATE_AUTO_VERIFICATION],
-        'body': `### "Link to GitHub repo"\n${templateGithubUrl}\n### "Name of NPM package"\n${templateName}`
+        'body': `### "Name of NPM package"\n${templateName}`
     });
     return response.data.number;
 }

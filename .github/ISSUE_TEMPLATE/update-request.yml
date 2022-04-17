@@ -3,13 +3,6 @@ description: Request to update template
 labels: [update-template]
 body:
   - type: input
-    id: github_link
-    attributes:
-      label: '"Link to GitHub repo"'
-      placeholder: https://github.com/xxx
-    validations:
-      required: true
-  - type: input
     id: npm_name
     attributes:
       label: '"Name of NPM package"'

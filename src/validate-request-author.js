@@ -33,7 +33,8 @@ const github = require('./github');
         }
       })
       .catch(e => {
-        result.error = `Error occurred during fetching "${url}". ${e.message}`;
+        let errorMessage = `Error occurred during fetching "${url}". ${e.message}`;
+        throw new Error(errorMessage);
       });
   } catch (e) {
     core.setOutput('error', `:x: ${e.message}`);

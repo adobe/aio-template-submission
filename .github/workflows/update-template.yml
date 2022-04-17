@@ -31,10 +31,10 @@ jobs:
       - name: Parse Issue Payload
         id: issue-input
         run: |
-          github_link=$(echo '${{ steps.issue-payload.outputs.payload }}' | jq '."Link to GitHub repo"')
-          echo "::set-output name=github-link::$github_link"
           npm_package=$(echo '${{ steps.issue-payload.outputs.payload }}' | jq '."Name of NPM package"')
           echo "::set-output name=npm-package::$npm_package"
+          github_link=$(cat registry.json | jq '.[] | select(.name == "$npm_package")' | jq -r '.links.github')
+          echo "::set-output name=github-link::$github_link"
   check-permissions:
     needs: [parse-issue-form-body]
     uses: ./.github/workflows/check-permissions-workflow.yml

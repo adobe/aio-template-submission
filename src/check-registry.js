@@ -106,7 +106,7 @@ async function checkUrlAvailability(url) {
 
             if (latestVersion !== templateVersion) {
                 templatesToUpdate++;
-                const updateIssueNumber = await github.createUpdateIssue(githubToken, templateName, latestVersion, templateGithubUrl);
+                const updateIssueNumber = await github.createUpdateIssue(githubToken, templateName, latestVersion);
                 let messages = [];
                 messages.push(`${GITHUB_ISSUES_URL}/${updateIssueNumber} issue created to update ${templateName}`);
                 messages.push(`- There is the newest ${latestVersion} version, the version in Template Registry is ${templateVersion}`);
