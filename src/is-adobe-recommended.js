@@ -10,7 +10,7 @@ const STARGAZERS_THRESHOLD = 10;
  * @returns {Promise<number>}
  */
 async function getStargazersCount(gitHubUrl) {
-    const repo = gitHubUrl.split('/').slice(-2).join('/');
+    const repo = gitHubUrl.replace('https://github.com/', '');
 
     let stargazersCount;
     const githubApiUrl = 'https://api.github.com/repos/' + repo;
@@ -19,10 +19,6 @@ async function getStargazersCount(gitHubUrl) {
         'url': githubApiUrl
     })
         .then(response => {
-            if (response.status !== 200) {
-                const errorMessage = `The response code is ${response.status}`;
-                throw new Error(errorMessage);
-            }
             stargazersCount = response.data['stargazers_count'];
         })
         .catch(e => {

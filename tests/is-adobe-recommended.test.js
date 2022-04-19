@@ -11,8 +11,8 @@ describe('Verify "Adobe Recommended" flag calculations', () => {
             .times(1)
             .reply(200, { 'stargazers_count': 100 });
 
-        expect(await isAdobeRecommended(`https://github.com/${GITHUB_REPO}`))
-            .toBe(true);
+        await expect(isAdobeRecommended(`https://github.com/${GITHUB_REPO}`))
+            .resolves.toBe(true);
     });
 
     test('Verify that not very popular Github repo cannot be recommended', async () => {
@@ -21,7 +21,17 @@ describe('Verify "Adobe Recommended" flag calculations', () => {
             .times(1)
             .reply(200, { 'stargazers_count': 10 });
 
-        expect(await isAdobeRecommended(`https://github.com/${GITHUB_REPO}`))
-            .toBe(false);
+        await expect(isAdobeRecommended(`https://github.com/${GITHUB_REPO}`))
+            .resolves.toBe(false);
+    });
+
+    test('Verify that exception is thrown for non-existing Github repo', async () => {
+        nock('https://api.github.com')
+            .get('/repos/non-existing-repo')
+            .times(1)
+            .reply(404);
+
+        await expect(isAdobeRecommended('https://github.com/non-existing-repo'))
+            .rejects.toThrow(':x: Error occurred during fetching "https://api.github.com/repos/non-existing-repo". Request failed with status code 404');
     });
 });

@@ -18,8 +18,8 @@ describe('Verify creation of Github issues and comments', () => {
             .times(1)
             .reply(200, { 'number': ISSUE_NUMBER });
 
-        expect(await github.createRemoveIssue(GITHUB_TOKEN, TEMPLATE_NAME))
-            .toBe(ISSUE_NUMBER);
+        await expect(github.createRemoveIssue(GITHUB_TOKEN, TEMPLATE_NAME))
+            .resolves.toBe(ISSUE_NUMBER);
     });
 
     test('Verify that "Template Update Request" issue created', async () => {
@@ -32,8 +32,8 @@ describe('Verify creation of Github issues and comments', () => {
             .times(1)
             .reply(200, { 'number': ISSUE_NUMBER });
 
-        expect(await github.createUpdateIssue(GITHUB_TOKEN, TEMPLATE_NAME, TEMPLATE_LATEST_VERSION))
-            .toBe(ISSUE_NUMBER);
+        await expect(github.createUpdateIssue(GITHUB_TOKEN, TEMPLATE_NAME, TEMPLATE_LATEST_VERSION))
+            .resolves.toBe(ISSUE_NUMBER);
     });
 
     test('Verify that comment to Github issue added', async () => {
@@ -46,7 +46,7 @@ describe('Verify creation of Github issues and comments', () => {
             .times(1)
             .reply(200, { 'id': commentId });
 
-        expect(await github.createComment(GITHUB_TOKEN, ISSUE_NUMBER, comment))
-            .toBe(commentId);
+        await expect(github.createComment(GITHUB_TOKEN, ISSUE_NUMBER, comment))
+            .resolves.toBe(commentId);
     });
 });

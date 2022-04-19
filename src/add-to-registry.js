@@ -30,7 +30,7 @@ const YAML = require('yaml');
             "name": packageJsonData.name,
             "description": packageJsonData.description,
             "latestVersion": packageJsonData.version,
-            "publishDate": new Date(Date.now()),
+            "publishDate": (new Date(Date.now())).toISOString(),
             "extensions": [].concat(installYmlData.extension).map(item => item.id),
             "categories": [].concat(installYmlData.categories),
             "services": [].concat(installYmlData.services).flat(),
