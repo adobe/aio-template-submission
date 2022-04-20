@@ -76,21 +76,21 @@
           }
         }
       }
-    }
-  },
-  "additionalProperties": false,
-  "required": [
-    "id",
-    "author",
-    "name",
-    "description",
-    "latestVersion",
-    "adobeRecommended",
-    "categories",
-    "services",
-    "extensions",
-    "keywords",
-    "links",
-    "publishDate"
-  ]
+    },
+    "additionalProperties": false,
+    "required": [
+      "id",
+      "author",
+      "name",
+      "description",
+      "latestVersion",
+      "adobeRecommended",
+      "categories",
+      "services",
+      "extensions",
+      "keywords",
+      "links",
+      "publishDate"
+    ]
+  }
 }
