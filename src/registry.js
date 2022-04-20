@@ -1,9 +1,7 @@
-import { URL } from 'url';
-import fs from 'fs';
-import validateJson from "./validate-json-schema.js";
+const fs = require('fs');
+const validateJson = require('./validate-json-schema');
 
-const __dirname = new URL('.', import.meta.url).pathname;
-const REGISTRY_JSON_FILE = __dirname + '/../registry.json';
+const REGISTRY_JSON_FILE = './registry.json';
 
 /**
  * Save the registry json object to registry.json
@@ -32,7 +30,7 @@ function saveRegistry(registry) {
  *
  * @returns {object}
  */
-export function getRegistry() {
+function getRegistry() {
     return JSON.parse(fs.readFileSync(REGISTRY_JSON_FILE));
 }
 
@@ -42,7 +40,7 @@ export function getRegistry() {
  * @param {string} templateName the template name
  * @returns {boolean}
  */
-export function isInRegistry(templateName) {
+function isInRegistry(templateName) {
     const registry = getRegistry();
     return registry.find(item => item.name === templateName) !== undefined;
 }
@@ -53,7 +51,7 @@ export function isInRegistry(templateName) {
  * @param {object} item the new template item as a json object
  * @returns {void}
  */
-export function addToRegistry(item) {
+function addToRegistry(item) {
     const registry = getRegistry();
     registry.push(item);
     saveRegistry(registry);
@@ -65,7 +63,7 @@ export function addToRegistry(item) {
  * @param {object} item the updated template item as a json object
  * @returns {void}
  */
-export function updateInRegistry(item) {
+function updateInRegistry(item) {
     const templateName = item.name;
     const registry = getRegistry();
     let index = registry.findIndex(record => record.name === templateName);
@@ -84,7 +82,7 @@ export function updateInRegistry(item) {
  * @param {string} templateName the template name
  * @returns {void}
  */
-export function removeFromRegistry(templateName) {
+function removeFromRegistry(templateName) {
     const registry = getRegistry();
     let index = registry.findIndex(item => item.name === templateName);
     if (index !== -1) {
@@ -99,7 +97,7 @@ export function removeFromRegistry(templateName) {
  * @param {string} templateName the template name
  * @returns {object}
  */
-export function getFromRegistry(templateName) {
+function getFromRegistry(templateName) {
     const registry = getRegistry();
     const item = registry.find(item => item.name === templateName);
     if (item !== undefined) {
@@ -107,4 +105,8 @@ export function getFromRegistry(templateName) {
     }
     const errorMessage = ':x: Template with name `' + templateName + '` does not exist in Template Registry.';
     throw new Error(errorMessage);
+}
+
+module.exports = {
+    getRegistry, isInRegistry, addToRegistry, updateInRegistry, removeFromRegistry, getFromRegistry
 }

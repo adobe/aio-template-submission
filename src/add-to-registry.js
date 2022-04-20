@@ -1,9 +1,9 @@
-import { v4 as uuidv4 } from 'uuid';
-import * as core from '@actions/core';
-import { isAdobeRecommended } from './is-adobe-recommended.js';
-import { isInRegistry, addToRegistry } from './registry.js';
-import fs from 'fs';
-import YAML from 'yaml';
+const { v4: uuidv4 } = require('uuid');
+const core = require('@actions/core');
+const { isAdobeRecommended } = require('./is-adobe-recommended');
+const { isInRegistry, addToRegistry } = require('./registry');
+const fs = require('fs');
+const YAML = require('yaml');
 
 // Simple script that collects template metadata and adds it to the registry
 (async () => {
@@ -30,7 +30,7 @@ import YAML from 'yaml';
             "name": packageJsonData.name,
             "description": packageJsonData.description,
             "latestVersion": packageJsonData.version,
-            "publishDate": new Date(Date.now()),
+            "publishDate": (new Date(Date.now())).toISOString(),
             "extensions": [].concat(installYmlData.extension).map(item => item.id),
             "categories": [].concat(installYmlData.categories),
             "services": [].concat(installYmlData.services).flat(),

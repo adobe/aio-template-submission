@@ -1,8 +1,8 @@
-import * as core from '@actions/core';
-import { isAdobeRecommended } from './is-adobe-recommended.js';
-import { getFromRegistry, updateInRegistry } from './registry.js';
-import fs from 'fs';
-import YAML from 'yaml';
+const core = require('@actions/core');
+const { isAdobeRecommended } = require('./is-adobe-recommended');
+const { getFromRegistry, updateInRegistry } = require('./registry');
+const fs = require('fs');
+const YAML = require('yaml');
 
 // Simple script that collects template metadata and updates it in the registry
 (async () => {

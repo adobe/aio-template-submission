@@ -1,13 +1,13 @@
-import * as core from "@actions/core";
-import fs from 'fs' ;
-import Ajv from 'ajv';
+const core = require('@actions/core');
+const fs = require('fs');
+const Ajv = require('ajv');
 
 /**
  * Validate JSON against registry.schema.json
  *
  * @param json
  */
-export default function validateJson(json) {
+function validateJson(json) {
     const ajv = new Ajv({strictTuples: false});
     const validate = ajv.compile(JSON.parse(fs.readFileSync('registry.schema.json')));
     const valid = validate(JSON.parse(json));
@@ -16,3 +16,5 @@ export default function validateJson(json) {
         throw new Error(JSON.stringify(validate.errors, null, 2));
     }
 }
+
+module.exports = validateJson;
