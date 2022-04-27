@@ -1,0 +1,20 @@
+# This is an App Builder install configuration
+
+# we use json schema
+$schema: http://json-schema.org/draft-07/schema
+# (TBD) this is a versioning property
+$id: https://adobe.io/schemas/app-builder-templates/1
+
+categories:
+  - extension
+
+# metadata for a category
+extension:
+  -  id: dx/excshell/1
+     operations:
+       - view
+
+services:
+  - AnalyticsSDK
+  - CampaignStandard
+  - Runtime

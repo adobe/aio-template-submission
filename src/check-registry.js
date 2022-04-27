@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const axios = require('axios').default;
 const exec = require('@actions/exec');
-const { getRegistry } = require('./registry');
+const { getRegistry, TEMPLATE_STATUS_IN_VERIFICATION } = require('./registry');
 const github = require('./github');
 
 const GITHUB_ISSUES_URL = `https://github.com/${github.GITHUB_REPO_OWNER}/${github.GITHUB_REPO}/issues`;
@@ -71,6 +71,9 @@ async function checkUrlAvailability(url) {
         let templatesToRemove = 0;
         let templatesToUpdate = 0;
         for (const template of registry) {
+            if (template.status === TEMPLATE_STATUS_IN_VERIFICATION) {
+                continue;
+            }
             const templateName = template.name;
             const templateGithubUrl = template.links.github;
             const templateVersion = template.latestVersion;
