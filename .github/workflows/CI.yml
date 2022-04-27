@@ -1,9 +1,7 @@
 name: CI
 
-on:
-  push:
-    paths:
-      - 'src/**'
+on: push
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,3 +11,5 @@ jobs:
         run: npm i
       - name: Run ESLint
         run: npm run lint:check
+      - name: Run tests
+        run: npm test
