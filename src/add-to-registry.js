@@ -1,7 +1,8 @@
 const { v4: uuidv4 } = require('uuid');
 const core = require('@actions/core');
 const { isAdobeRecommended } = require('./is-adobe-recommended');
-const { isInRegistry, addToRegistry } = require('./registry');
+const { isInRegistry, addToRegistry, getFromRegistry, updateInRegistry, TEMPLATE_STATUS_IN_VERIFICATION, TEMPLATE_STATUS_APPROVED }
+    = require('./registry');
 const fs = require('fs');
 const YAML = require('yaml');
 
@@ -23,9 +24,7 @@ const YAML = require('yaml');
 
         const adobeRecommended = await isAdobeRecommended(gitHubUrl);
 
-        // Create registry item object
-        const registryItem = {
-            "id": uuidv4(),
+        const templateData = {
             "author": packageJsonData.author,
             "name": packageJsonData.name,
             "description": packageJsonData.description,
@@ -36,20 +35,27 @@ const YAML = require('yaml');
             "services": [].concat(installYmlData.services).flat(),
             "adobeRecommended": adobeRecommended,
             "keywords": [].concat(packageJsonData.keywords),
+            "status": TEMPLATE_STATUS_APPROVED,
             "links": {
                 "npm": npmUrl,
                 "github": gitHubUrl
             }
         }
 
-        // Check for duplicates
-        if (isInRegistry(registryItem.name)) {
-            const errorMessage = ':x: Template with name `' + registryItem.name + '` already exists in Template Registry.';
-            throw new Error(errorMessage);
+        if (isInRegistry(templateData.name)) {
+            const savedTemplate = getFromRegistry(templateData.name);
+            if (savedTemplate.status !== TEMPLATE_STATUS_IN_VERIFICATION) {
+                const errorMessage = ':x: Template with name `' + templateData.name + '` already exists in Template Registry.';
+                throw new Error(errorMessage);
+            }
+            const registryItem = {...savedTemplate, ...templateData};
+            updateInRegistry(registryItem);
+            console.log('Template was verified.', registryItem);
+        } else {
+            const registryItem = {"id": uuidv4(), ...templateData};
+            addToRegistry(registryItem);
+            console.log('Template was added.', registryItem);
         }
-
-        addToRegistry(registryItem);
-        console.log('Template was added.', registryItem);
     } catch (e) {
         core.setOutput('error', e.message);
         throw e;

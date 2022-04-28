@@ -9,16 +9,16 @@
     "properties": {
       "id": {
         "type": "string",
-        "description": "The unique identifier for the template in UUID format",
-        "pattern": "^[0-9a-fA-F]{8}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{12}$"
+        "description": "The unique identifier of the template in the UUID format",
+        "format": "uuid"
       },
       "author": {
         "type": "string",
-        "description": "The name of the template author in npmjs.org"
+        "description": "The name of the template's author on npmjs.com"
       },
       "name": {
         "type": "string",
-        "description": "The name of the template in npmjs.org"
+        "description": "The name of the template on npmjs.com"
       },
       "description": {
         "type": "string",
@@ -30,12 +30,12 @@
       },
       "latestVersion": {
         "type": "string",
-        "description": "The version of the template in semver format",
+        "description": "The version of the template in the semver format",
         "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$"
       },
       "publishDate": {
         "type": "string",
-        "description": "The date the template was published in ISO 8601 format",
+        "description": "The date the template was published in the ISO 8601 format",
         "pattern": "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d+)?)(?:Z|([+-])(\\d{2}):(\\d{2}))$"
       },
       "extensions": {
@@ -61,14 +61,19 @@
       },
       "keywords": {
         "type": "array",
-        "description": "A list of keywords specified in packages.json file",
+        "description": "A list of keywords specified in the packages.json file",
         "items": {
           "type": "string"
         }
       },
+      "status": {
+        "type": "string",
+        "description": "A status of a package in Template Registry. \"Error\" indicates that an application error occurred.",
+        "enum": ["InVerification", "Approved", "Rejected", "Error"]
+      },
       "links": {
         "type": "object",
-        "description": "List of locations where the template can be found",
+        "description": "A list of locations where the package's code can be found",
         "patternProperties": {
           "^(?:github|npm)$": {
             "type": "string",
@@ -80,17 +85,9 @@
     "additionalProperties": false,
     "required": [
       "id",
-      "author",
       "name",
-      "description",
-      "latestVersion",
-      "adobeRecommended",
-      "categories",
-      "services",
-      "extensions",
-      "keywords",
-      "links",
-      "publishDate"
+      "status",
+      "links"
     ]
   }
 }

@@ -1,7 +1,12 @@
 const fs = require('fs');
 const validateJson = require('./validate-json-schema');
 
-const REGISTRY_JSON_FILE = './registry.json';
+const REGISTRY_JSON_FILE = 'registry.json';
+
+const TEMPLATE_STATUS_IN_VERIFICATION = 'InVerification';
+const TEMPLATE_STATUS_APPROVED = 'Approved';
+const TEMPLATE_STATUS_REJECTED = 'Rejected';
+const TEMPLATE_STATUS_ERROR = 'Error';
 
 /**
  * Save the registry json object to registry.json
@@ -108,5 +113,6 @@ function getFromRegistry(templateName) {
 }
 
 module.exports = {
-    getRegistry, isInRegistry, addToRegistry, updateInRegistry, removeFromRegistry, getFromRegistry
+    getRegistry, isInRegistry, addToRegistry, updateInRegistry, removeFromRegistry, getFromRegistry,
+    TEMPLATE_STATUS_IN_VERIFICATION, TEMPLATE_STATUS_APPROVED, TEMPLATE_STATUS_REJECTED, TEMPLATE_STATUS_ERROR
 }
