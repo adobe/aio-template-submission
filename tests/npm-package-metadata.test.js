@@ -50,6 +50,6 @@ describe('Verify grabbing npm package metadata', () => {
                 'keywords': ['aio', 'adobeio', 'app', 'templates', 'aio-app-builder-template']
             }
         );
-        expect(npmPackageMetadata.hasOwnProperty('extension')).toBe(false);
+        expect(Object.prototype.hasOwnProperty.call(npmPackageMetadata, 'extension')).toBe(false);
     });
 });

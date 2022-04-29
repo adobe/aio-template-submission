@@ -107,7 +107,7 @@ describe('Verify adding template to registry', () => {
             expect(item.description).toBe('A template for testing purposes [1.0.1]');
             expect(item.latestVersion).toBe('1.0.1');
             expect(typeof item.publishDate === 'string').toBe(true);
-            expect(item.hasOwnProperty('extension')).toBe(false);
+            expect(Object.prototype.hasOwnProperty.call(item, 'extension')).toBe(false);
             expect(item.categories).toEqual(['action', 'ui']);
             expect(item.services).toEqual([
                 {
