@@ -10,11 +10,46 @@ describe('Verify grabbing npm package metadata', () => {
                 'name': '@adobe/app-builder-template',
                 'description': 'A template for testing purposes [1.0.1]',
                 'version': '1.0.1',
-                'extensions': ['dx/excshell/1'],
-                'categories': ['extension'],
-                'services': ['AnalyticsSDK', 'CampaignStandard', 'Runtime'],
+                'extension': { 'serviceCode': 'dx/excshell/1' },
+                'categories': ['action', 'ui'],
+                'services': [
+                    {
+                        "code": "AnalyticsSDK",
+                        "credentials": "OAuth"
+                    },
+                    {
+                        "code": "CampaignStandard"
+                    },
+                    {
+                        "code": "Runtime"
+                    }
+                ],
                 'keywords': ['aio', 'adobeio', 'app', 'templates', 'aio-app-builder-template']
             }
         );
+    });
+
+    test('Verify that getNpmPackageMetadata() grabs npm package metadata from a template missing optional properties in install.yml', () => {
+        const npmPackageMetadata = getNpmPackageMetadata('tests/templatePackageNotImplementingExtensionPoint');
+        expect(npmPackageMetadata).toEqual(
+            {
+                'author': 'Company1 Inc.',
+                'name': '@company1/app-builder-template',
+                'description': 'A template for testing purposes [1.0.1]',
+                'version': '1.0.1',
+                'categories': ['action', 'ui'],
+                'services': [
+                    {
+                        "code": "AnalyticsSDK",
+                        "credentials": "OAuth"
+                    },
+                    {
+                        "code": "Runtime"
+                    }
+                ],
+                'keywords': ['aio', 'adobeio', 'app', 'templates', 'aio-app-builder-template']
+            }
+        );
+        expect(npmPackageMetadata.hasOwnProperty('extension')).toBe(false);
     });
 });

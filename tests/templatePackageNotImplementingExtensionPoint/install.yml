@@ -10,10 +10,6 @@ categories:
   - action
   - ui
 
-# if the template implements an extension point, this top-level property is available
-extension:
-  serviceCode: dx/excshell/1
-
 # these are the optional environment variables
 # these values may be used instead of interactive input
 env:
@@ -32,5 +28,4 @@ workspaces:
 services:
   - code: AnalyticsSDK
     credentials: OAuth
-  - code: CampaignStandard
   - code: Runtime

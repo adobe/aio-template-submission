@@ -16,16 +16,22 @@ function getNpmPackageMetadata(packagePath) {
     const installYml = fs.readFileSync(packagePath + '/install.yml', 'utf8');
     const installYmlData = YAML.parse(installYml);
 
-    return {
+    let npmPackageMetadata = {
         "author": packageJsonData.author,
         "name": packageJsonData.name,
         "description": packageJsonData.description,
         "version": packageJsonData.version,
-        "extensions": [].concat(installYmlData.extension).map(item => item.id),
-        "categories": [].concat(installYmlData.categories),
-        "services": [].concat(installYmlData.services).flat(),
-        "keywords": [].concat(packageJsonData.keywords)
+        "keywords": [].concat(packageJsonData.keywords),
+        "categories": [].concat(installYmlData.categories)
     }
+    // "extension", "services" are optional
+    if (installYmlData.extension) {
+        npmPackageMetadata["extension"] = installYmlData.extension;
+    }
+    if (installYmlData.services) {
+        npmPackageMetadata["services"] = installYmlData.services;
+    }
+    return npmPackageMetadata;
 }
 
 module.exports = {

@@ -14,13 +14,11 @@ const { getFromRegistry, updateInRegistry } = require('./registry');
         const npmPackageMetadata = getNpmPackageMetadata(packagePath);
         const adobeRecommended = await isAdobeRecommended(gitHubUrl);
 
-        const templateData = {
+        let templateData = {
             "author": npmPackageMetadata.author,
             "name": npmPackageMetadata.name,
             "description": npmPackageMetadata.description,
             "latestVersion": npmPackageMetadata.version,
-            "extensions": npmPackageMetadata.extensions,
-            "categories": npmPackageMetadata.categories,
             "services": npmPackageMetadata.services,
             "adobeRecommended": adobeRecommended,
             "keywords": npmPackageMetadata.keywords,
@@ -29,6 +27,12 @@ const { getFromRegistry, updateInRegistry } = require('./registry');
                 "github": gitHubUrl
             }
         };
+        if (npmPackageMetadata.extension) {
+            templateData['extension'] = npmPackageMetadata.extension;
+        }
+        if (npmPackageMetadata.categories) {
+            templateData['categories'] = npmPackageMetadata.categories;
+        }
         const savedTemplate = getFromRegistry(npmPackageMetadata.name);
         const updatedTemplate = { ...savedTemplate, ...templateData };
         updateInRegistry(updatedTemplate);

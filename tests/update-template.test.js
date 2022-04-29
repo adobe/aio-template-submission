@@ -26,9 +26,20 @@ describe('Verify updating template in registry', () => {
             expect(item.description).toBe('A template for testing purposes [1.0.1]');
             expect(item.latestVersion).toBe('1.0.1');
             expect(item.publishDate).toBe(existingRegistryItem.publishDate);
-            expect(item.extensions).toEqual(['dx/excshell/1']);
-            expect(item.categories).toEqual(['extension']);
-            expect(item.services.sort()).toEqual(['AnalyticsSDK', 'CampaignStandard', 'Runtime'].sort());
+            expect(item.extension).toEqual({ 'serviceCode': 'dx/excshell/1' });
+            expect(item.categories).toEqual(['action', 'ui']);
+            expect(item.services).toEqual([
+                {
+                    "code": "AnalyticsSDK",
+                    "credentials": "OAuth"
+                },
+                {
+                    "code": "CampaignStandard"
+                },
+                {
+                    "code": "Runtime"
+                }
+            ]);
             expect(item.adobeRecommended).toBe(adobeRecommended);
             expect(item.keywords.sort()).toEqual(['aio', 'adobeio', 'app', 'templates', 'aio-app-builder-template'].sort());
             expect(item.status).toBe(TEMPLATE_STATUS_APPROVED);

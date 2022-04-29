@@ -1,0 +1,21 @@
+{
+  "name": "@company1/app-builder-template",
+  "version": "1.0.1",
+  "description": "A template for testing purposes [1.0.1]",
+  "engines": {
+    "node": "^14 || ^16"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/company1/app-builder-template.git"
+  },
+  "keywords": [
+    "aio",
+    "adobeio",
+    "app",
+    "templates",
+    "aio-app-builder-template"
+  ],
+  "author": "Company1 Inc.",
+  "license": "Apache-2.0"
+}

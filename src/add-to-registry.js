@@ -16,14 +16,12 @@ const { isInRegistry, addToRegistry, getFromRegistry, updateInRegistry, TEMPLATE
         const npmPackageMetadata = getNpmPackageMetadata(packagePath);
         const adobeRecommended = await isAdobeRecommended(gitHubUrl);
 
-        const templateData = {
+        let templateData = {
             "author": npmPackageMetadata.author,
             "name": npmPackageMetadata.name,
             "description": npmPackageMetadata.description,
             "latestVersion": npmPackageMetadata.version,
             "publishDate": (new Date(Date.now())).toISOString(),
-            "extensions": npmPackageMetadata.extensions,
-            "categories": npmPackageMetadata.categories,
             "services": npmPackageMetadata.services,
             "adobeRecommended": adobeRecommended,
             "keywords": npmPackageMetadata.keywords,
@@ -33,6 +31,12 @@ const { isInRegistry, addToRegistry, getFromRegistry, updateInRegistry, TEMPLATE
                 "github": gitHubUrl
             }
         }
+        if (npmPackageMetadata.extension) {
+            templateData['extension'] = npmPackageMetadata.extension;
+        }
+        if (npmPackageMetadata.categories) {
+            templateData['categories'] = npmPackageMetadata.categories;
+        }
 
         if (isInRegistry(templateData.name)) {
             const savedTemplate = getFromRegistry(templateData.name);
@@ -40,11 +44,11 @@ const { isInRegistry, addToRegistry, getFromRegistry, updateInRegistry, TEMPLATE
                 const errorMessage = ':x: Template with name `' + templateData.name + '` already exists in Template Registry.';
                 throw new Error(errorMessage);
             }
-            const registryItem = {...savedTemplate, ...templateData};
+            const registryItem = { ...savedTemplate, ...templateData };
             updateInRegistry(registryItem);
             console.log('Template was verified.', registryItem);
         } else {
-            const registryItem = {"id": uuidv4(), ...templateData};
+            const registryItem = { "id": uuidv4(), ...templateData };
             addToRegistry(registryItem);
             console.log('Template was added.', registryItem);
         }

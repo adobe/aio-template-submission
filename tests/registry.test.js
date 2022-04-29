@@ -51,7 +51,7 @@ describe('Verify "Template Registry" operations', () => {
         registryItems.push(generateRegistryItem('@adobe/app-builder-template-2'));
         when(fs.readFileSync).calledWith('registry.json').mockReturnValue(JSON.stringify(registryItems, null, 4));
         let newRegistryItem = generateRegistryItem('@adobe/app-builder-template-3');
-        let newRegistryItems = [...registryItems];
+        let newRegistryItems = registryItems;
         newRegistryItems.push(newRegistryItem);
 
         expect(registry.addToRegistry(newRegistryItem)).toBeUndefined();
@@ -63,7 +63,7 @@ describe('Verify "Template Registry" operations', () => {
         let registryItem2 = generateRegistryItem('@adobe/app-builder-template-2');
         let registryItems = [registryItem1, registryItem2];
         when(fs.readFileSync).calledWith('registry.json').mockReturnValue(JSON.stringify(registryItems, null, 4));
-        let updatedRegistryItem = { ...registryItem1 };
+        let updatedRegistryItem = registryItem1;
         updatedRegistryItem.latestVersion = '1.2.3';
         updatedRegistryItem.author = 'Test Company';
         let updatedRegistryItems = [updatedRegistryItem, registryItem2];
