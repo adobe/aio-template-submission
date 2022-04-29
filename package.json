@@ -16,7 +16,7 @@
     "@actions/core": "^1.6.0",
     "@actions/exec": "^1.1.1",
     "@actions/github": "^5.0.1",
-    "@adobe/aio-lib-template-validation": "^2.1.0",
+    "@adobe/aio-lib-template-validation": "github:adobe/aio-lib-template-validation#6994ff7e22eeb4256047f3ded313728d098f3f83",
     "ajv": "^8.11.0",
     "ajv-formats": "^2.1.1",
     "axios": "^0.26.1",
