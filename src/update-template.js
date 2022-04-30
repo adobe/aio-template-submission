@@ -1,8 +1,7 @@
 const core = require('@actions/core');
 const { isAdobeRecommended } = require('./is-adobe-recommended');
+const { getNpmPackageMetadata } = require('./npm-package-metadata');
 const { getFromRegistry, updateInRegistry } = require('./registry');
-const fs = require('fs');
-const YAML = require('yaml');
 
 // Simple script that collects template metadata and updates it in the registry
 (async () => {
@@ -12,32 +11,29 @@ const YAML = require('yaml');
         const gitHubUrl = myArgs[1];
         const npmUrl = 'https://www.npmjs.com/package/' + myArgs[2];
 
-        // Grab package.json data
-        const packageJson = fs.readFileSync(packagePath + '/package.json', 'utf8');
-        const packageJsonData = JSON.parse(packageJson);
-
-        // Grab install.yml data
-        const installYml = fs.readFileSync(packagePath + '/install.yml', 'utf8');
-        const installYmlData = YAML.parse(installYml);
-
+        const npmPackageMetadata = getNpmPackageMetadata(packagePath);
         const adobeRecommended = await isAdobeRecommended(gitHubUrl);
 
-        const templateData = {
-            "author": packageJsonData.author,
-            "name": packageJsonData.name,
-            "description": packageJsonData.description,
-            "latestVersion": packageJsonData.version,
-            "extensions": [].concat(installYmlData.extension).map(item => item.id),
-            "categories": [].concat(installYmlData.categories),
-            "services": [].concat(installYmlData.services).flat(),
+        let templateData = {
+            "author": npmPackageMetadata.author,
+            "name": npmPackageMetadata.name,
+            "description": npmPackageMetadata.description,
+            "latestVersion": npmPackageMetadata.version,
+            "services": npmPackageMetadata.services,
             "adobeRecommended": adobeRecommended,
-            "keywords": [].concat(packageJsonData.keywords),
+            "keywords": npmPackageMetadata.keywords,
             "links": {
                 "npm": npmUrl,
                 "github": gitHubUrl
             }
         };
-        const savedTemplate = getFromRegistry(packageJsonData.name);
+        if (npmPackageMetadata.extension) {
+            templateData['extension'] = npmPackageMetadata.extension;
+        }
+        if (npmPackageMetadata.categories) {
+            templateData['categories'] = npmPackageMetadata.categories;
+        }
+        const savedTemplate = getFromRegistry(npmPackageMetadata.name);
         const updatedTemplate = { ...savedTemplate, ...templateData };
         updateInRegistry(updatedTemplate);
         console.log('Template was updated.', updatedTemplate);

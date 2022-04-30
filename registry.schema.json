@@ -38,25 +38,50 @@
         "description": "The date the template was published in the ISO 8601 format",
         "pattern": "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d+)?)(?:Z|([+-])(\\d{2}):(\\d{2}))$"
       },
-      "extensions": {
-        "type": "array",
-        "description": "A list of extension points the template implements",
-        "items": {
-          "type": "string"
-        }
+      "extension": {
+        "type": "object",
+        "description": "It contains the extension metadata if the template implements an extension point",
+        "properties": {
+          "serviceCode": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "serviceCode"
+        ]
       },
       "categories": {
         "type": "array",
         "description": "A list of categories the template belongs to",
+        "minItems": 1,
         "items": {
-          "type": "string"
+          "type": "string",
+          "enum": [
+            "action",
+            "ui",
+            "graphql-mesh",
+            "ci-cd",
+            "events"
+          ]
         }
       },
       "services": {
         "type": "array",
         "description": "A list of Adobe services required by the template",
+        "minItems": 1,
         "items": {
-          "type": "string"
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "The sdk code of the service"
+            }
+          },
+          "additionalProperties": true,
+          "required": [
+            "code"
+          ]
         }
       },
       "keywords": {
