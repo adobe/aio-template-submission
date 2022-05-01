@@ -1,1 +1,58 @@
-[]
+[
+    {
+        "id": "d1dc1000-f32e-4172-a0ec-9b2f3ef6ac47",
+        "author": "Adobe Inc.",
+        "name": "@litviachenko/app-builder-template",
+        "description": "A template for testing purposes [1.0.9]",
+        "latestVersion": "1.0.9",
+        "publishDate": "2022-05-01T03:50:39.658Z",
+        "services": [
+            {
+                "code": "AnalyticsSDK",
+                "credentials": "OAuth"
+            },
+            {
+                "code": "CampaignStandard"
+            },
+            {
+                "code": "Runtime"
+            },
+            {
+                "code": "Events",
+                "hooks": [
+                    {
+                        "postdeploy": "some command"
+                    }
+                ]
+            },
+            {
+                "code": "Mesh",
+                "endpoints": [
+                    {
+                        "my-action": "https://some-action.com/action"
+                    }
+                ]
+            }
+        ],
+        "adobeRecommended": false,
+        "keywords": [
+            "aio",
+            "adobeio",
+            "app",
+            "templates",
+            "aio-app-builder-template"
+        ],
+        "status": "Approved",
+        "links": {
+            "npm": "https://www.npmjs.com/package/@litviachenko/app-builder-template",
+            "github": "https://github.com/slitviachenko/app-builder-template"
+        },
+        "extension": {
+            "serviceCode": "dx/excshell/1"
+        },
+        "categories": [
+            "action",
+            "ui"
+        ]
+    }
+]
