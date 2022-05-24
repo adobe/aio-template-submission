@@ -54,5 +54,14 @@
             "action",
             "ui"
         ]
+    },
+    {
+        "id": "db02a125-1f17-4927-baf4-25ac8cef1862",
+        "name": "@litviachenko/app-builder-template1",
+        "status": "InVerification",
+        "links": {
+            "npm": "https://www.npmjs.com/package/@litviachenko/app-builder-template1",
+            "github": "https://github.com/slitviachenko/app-builder-template1"
+        }
     }
 ]
