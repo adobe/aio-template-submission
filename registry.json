@@ -6,7 +6,7 @@
         "description": "A template for testing purposes [1.0.9]",
         "latestVersion": "1.0.9",
         "publishDate": "2022-05-01T03:50:39.658Z",
-        "services": [
+        "apis": [
             {
                 "code": "AnalyticsSDK",
                 "credentials": "OAuth"

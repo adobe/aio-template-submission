@@ -19,7 +19,6 @@ const { getFromRegistry, updateInRegistry } = require('./registry');
             "name": npmPackageMetadata.name,
             "description": npmPackageMetadata.description,
             "latestVersion": npmPackageMetadata.version,
-            "services": npmPackageMetadata.services,
             "adobeRecommended": adobeRecommended,
             "keywords": npmPackageMetadata.keywords,
             "links": {

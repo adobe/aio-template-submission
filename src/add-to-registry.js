@@ -22,7 +22,6 @@ const { isInRegistry, addToRegistry, getFromRegistry, updateInRegistry, TEMPLATE
             "description": npmPackageMetadata.description,
             "latestVersion": npmPackageMetadata.version,
             "publishDate": (new Date(Date.now())).toISOString(),
-            "services": npmPackageMetadata.services,
             "adobeRecommended": adobeRecommended,
             "keywords": npmPackageMetadata.keywords,
             "status": TEMPLATE_STATUS_APPROVED,
@@ -30,6 +29,10 @@ const { isInRegistry, addToRegistry, getFromRegistry, updateInRegistry, TEMPLATE
                 "npm": npmUrl,
                 "github": gitHubUrl
             }
+        }
+
+        if(npmPackageMetadata.apis) {
+            templateData['apis'] = npmPackageMetadata.apis;
         }
         if (npmPackageMetadata.extension) {
             templateData['extension'] = npmPackageMetadata.extension;

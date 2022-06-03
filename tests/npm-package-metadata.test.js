@@ -12,7 +12,7 @@ describe('Verify grabbing npm package metadata', () => {
                 'version': '1.0.1',
                 'extension': { 'serviceCode': 'dx/excshell/1' },
                 'categories': ['action', 'ui'],
-                'services': [
+                'apis': [
                     {
                         "code": "AnalyticsSDK",
                         "credentials": "OAuth"
@@ -38,7 +38,7 @@ describe('Verify grabbing npm package metadata', () => {
                 'description': 'A template for testing purposes [1.0.1]',
                 'version': '1.0.1',
                 'categories': ['action', 'ui'],
-                'services': [
+                'apis': [
                     {
                         "code": "AnalyticsSDK",
                         "credentials": "OAuth"

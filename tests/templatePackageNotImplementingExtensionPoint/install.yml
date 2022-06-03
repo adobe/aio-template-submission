@@ -25,7 +25,7 @@ workspaces:
 
 # required services, listed by their SDK code
 # any config for the service is listed under the service
-services:
+apis:
   - code: AnalyticsSDK
     credentials: OAuth
   - code: Runtime
