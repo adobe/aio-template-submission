@@ -38,6 +38,12 @@ const { isInRegistry, addToRegistry, getFromRegistry, updateInRegistry, TEMPLATE
         if (npmPackageMetadata.apis) {
             templateData['apis'] = npmPackageMetadata.apis;
         }
+        if (npmPackageMetadata.runtime) {
+            templateData['runtime'] = npmPackageMetadata.runtime;
+        }
+        if (npmPackageMetadata.event) {
+            templateData['event'] = npmPackageMetadata.event;
+        }
 
         if (isInRegistry(templateData.name)) {
             const savedTemplate = getFromRegistry(templateData.name);

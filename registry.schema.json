@@ -84,6 +84,48 @@
           ]
         }
       },
+      "runtime": {
+        "type": "boolean",
+        "description": "Whether to add Runtime to App Builder application or not.",
+        "default": false
+      },
+      "event": {
+        "type": "object",
+        "description": "event configuration for the template",
+        "properties": {
+          "consumer": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "provider": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "provider": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "event-types": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
       "keywords": {
         "type": "array",
         "description": "A list of keywords specified in the packages.json file",

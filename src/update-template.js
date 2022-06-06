@@ -37,7 +37,13 @@ const { TEMPLATE_STATUS_APPROVED } = require('../src/registry');
         if (npmPackageMetadata.apis) {
             templateData['apis'] = npmPackageMetadata.apis;
         }
-
+        if (npmPackageMetadata.runtime) {
+            templateData['runtime'] = npmPackageMetadata.runtime;
+        }
+        if (npmPackageMetadata.event) {
+            templateData['event'] = npmPackageMetadata.event;
+        }
+        
         const savedTemplate = getFromRegistry(npmPackageMetadata.name);
         const updatedTemplate = { ...savedTemplate, ...templateData };
         updateInRegistry(updatedTemplate);
