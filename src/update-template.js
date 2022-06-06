@@ -19,19 +19,24 @@ const { getFromRegistry, updateInRegistry } = require('./registry');
             "name": npmPackageMetadata.name,
             "description": npmPackageMetadata.description,
             "latestVersion": npmPackageMetadata.version,
+            "publishDate": (new Date(Date.now())).toISOString(),
+            "categories": npmPackageMetadata.categories,
             "adobeRecommended": adobeRecommended,
             "keywords": npmPackageMetadata.keywords,
+            "status": TEMPLATE_STATUS_APPROVED,
             "links": {
                 "npm": npmUrl,
                 "github": gitHubUrl
             }
-        };
+        }
+        
         if (npmPackageMetadata.extension) {
             templateData['extension'] = npmPackageMetadata.extension;
         }
-        if (npmPackageMetadata.categories) {
-            templateData['categories'] = npmPackageMetadata.categories;
+        if(npmPackageMetadata.apis) {
+            templateData['apis'] = npmPackageMetadata.apis;
         }
+        
         const savedTemplate = getFromRegistry(npmPackageMetadata.name);
         const updatedTemplate = { ...savedTemplate, ...templateData };
         updateInRegistry(updatedTemplate);
