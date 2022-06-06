@@ -30,11 +30,11 @@ const { TEMPLATE_STATUS_APPROVED } = require('../src/registry');
                 "github": gitHubUrl
             }
         }
-        
+
         if (npmPackageMetadata.extension) {
             templateData['extension'] = npmPackageMetadata.extension;
         }
-        if(npmPackageMetadata.apis) {
+        if (npmPackageMetadata.apis) {
             templateData['apis'] = npmPackageMetadata.apis;
         }
 

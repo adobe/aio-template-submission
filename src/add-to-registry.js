@@ -31,11 +31,11 @@ const { isInRegistry, addToRegistry, getFromRegistry, updateInRegistry, TEMPLATE
                 "github": gitHubUrl
             }
         }
-        
+
         if (npmPackageMetadata.extension) {
             templateData['extension'] = npmPackageMetadata.extension;
         }
-        if(npmPackageMetadata.apis) {
+        if (npmPackageMetadata.apis) {
             templateData['apis'] = npmPackageMetadata.apis;
         }
 
