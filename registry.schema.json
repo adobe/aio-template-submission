@@ -68,7 +68,7 @@
       },
       "apis": {
         "type": "array",
-        "description": "A list of Adobe services required by the template",
+        "description": "A list of Adobe APIs required by the template",
         "minItems": 1,
         "items": {
           "type": "object",
