@@ -2,6 +2,7 @@ const core = require('@actions/core');
 const { isAdobeRecommended } = require('./is-adobe-recommended');
 const { getNpmPackageMetadata } = require('./npm-package-metadata');
 const { getFromRegistry, updateInRegistry } = require('./registry');
+const { TEMPLATE_STATUS_APPROVED } = require('../src/registry');
 
 // Simple script that collects template metadata and updates it in the registry
 (async () => {
@@ -36,7 +37,7 @@ const { getFromRegistry, updateInRegistry } = require('./registry');
         if(npmPackageMetadata.apis) {
             templateData['apis'] = npmPackageMetadata.apis;
         }
-        
+
         const savedTemplate = getFromRegistry(npmPackageMetadata.name);
         const updatedTemplate = { ...savedTemplate, ...templateData };
         updateInRegistry(updatedTemplate);
