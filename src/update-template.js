@@ -2,6 +2,7 @@ const core = require('@actions/core');
 const { isAdobeRecommended } = require('./is-adobe-recommended');
 const { getNpmPackageMetadata } = require('./npm-package-metadata');
 const { getFromRegistry, updateInRegistry } = require('./registry');
+const { TEMPLATE_STATUS_APPROVED } = require('../src/registry');
 
 // Simple script that collects template metadata and updates it in the registry
 (async () => {
@@ -19,21 +20,33 @@ const { getFromRegistry, updateInRegistry } = require('./registry');
             "name": npmPackageMetadata.name,
             "description": npmPackageMetadata.description,
             "latestVersion": npmPackageMetadata.version,
-            "services": npmPackageMetadata.services,
+            "categories": npmPackageMetadata.categories,
             "adobeRecommended": adobeRecommended,
             "keywords": npmPackageMetadata.keywords,
+            "status": TEMPLATE_STATUS_APPROVED,
             "links": {
                 "npm": npmUrl,
                 "github": gitHubUrl
             }
-        };
+        }
+
         if (npmPackageMetadata.extension) {
             templateData['extension'] = npmPackageMetadata.extension;
         }
-        if (npmPackageMetadata.categories) {
-            templateData['categories'] = npmPackageMetadata.categories;
+        if (npmPackageMetadata.apis) {
+            templateData['apis'] = npmPackageMetadata.apis;
         }
+        if (npmPackageMetadata.runtime) {
+            templateData['runtime'] = npmPackageMetadata.runtime;
+        }
+        if (npmPackageMetadata.event) {
+            templateData['event'] = npmPackageMetadata.event;
+        }
+
         const savedTemplate = getFromRegistry(npmPackageMetadata.name);
+        if(!savedTemplate.publishDate) {
+            templateData["publishDate"] = (new Date(Date.now())).toISOString()
+        }
         const updatedTemplate = { ...savedTemplate, ...templateData };
         updateInRegistry(updatedTemplate);
         console.log('Template was updated.', updatedTemplate);

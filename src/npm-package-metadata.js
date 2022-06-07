@@ -24,12 +24,18 @@ function getNpmPackageMetadata(packagePath) {
         "keywords": [].concat(packageJsonData.keywords),
         "categories": [].concat(installYmlData.categories)
     }
-    // "extension", "services" are optional
+    // "extension", "apis", "runtime", "event" are optional
     if (installYmlData.extension) {
         npmPackageMetadata["extension"] = installYmlData.extension;
     }
-    if (installYmlData.services) {
-        npmPackageMetadata["services"] = installYmlData.services;
+    if (installYmlData.apis) {
+        npmPackageMetadata["apis"] = installYmlData.apis;
+    }
+    if (installYmlData.runtime) {
+        npmPackageMetadata["runtime"] = installYmlData.runtime;
+    }
+    if (installYmlData.event) {
+        npmPackageMetadata["event"] = installYmlData.event;
     }
     return npmPackageMetadata;
 }

@@ -32,7 +32,7 @@ function generateRegistryItem(templateName, templateStatus = TEMPLATE_STATUS_APP
                     'action',
                     'ui'
                 ],
-                'services': [
+                'apis': [
                     {
                         "code": "AnalyticsSDK",
                         "credentials": "OAuth"

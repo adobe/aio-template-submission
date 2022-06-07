@@ -27,7 +27,7 @@ describe('Verify adding template to registry', () => {
             expect(typeof item.publishDate === 'string').toBe(true);
             expect(item.extension).toEqual({ 'serviceCode': 'dx/excshell/1' });
             expect(item.categories).toEqual(['action', 'ui']);
-            expect(item.services).toEqual([
+            expect(item.apis).toEqual([
                 {
                     "code": "AnalyticsSDK",
                     "credentials": "OAuth"
@@ -69,7 +69,7 @@ describe('Verify adding template to registry', () => {
             expect(typeof item.publishDate === 'string').toBe(true);
             expect(item.extension).toEqual({ 'serviceCode': 'dx/excshell/1' });
             expect(item.categories).toEqual(['action', 'ui']);
-            expect(item.services).toEqual([
+            expect(item.apis).toEqual([
                 {
                     "code": "AnalyticsSDK",
                     "credentials": "OAuth"
@@ -109,7 +109,7 @@ describe('Verify adding template to registry', () => {
             expect(typeof item.publishDate === 'string').toBe(true);
             expect(Object.prototype.hasOwnProperty.call(item, 'extension')).toBe(false);
             expect(item.categories).toEqual(['action', 'ui']);
-            expect(item.services).toEqual([
+            expect(item.apis).toEqual([
                 {
                     "code": "AnalyticsSDK",
                     "credentials": "OAuth"
