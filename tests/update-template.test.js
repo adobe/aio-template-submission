@@ -25,7 +25,7 @@ describe('Verify updating template in registry', () => {
             expect(item.name).toBe(existingRegistryItem.name);
             expect(item.description).toBe('A template for testing purposes [1.0.1]');
             expect(item.latestVersion).toBe('1.0.1');
-            expect(new Date(item.publishDate)).toBeInstanceOf(Date);
+            expect(item.publishDate).toBe(existingRegistryItem.publishDate);
             expect(item.extension).toEqual({ 'serviceCode': 'dx/excshell/1' });
             expect(item.categories).toEqual(['action', 'ui']);
             expect(item.apis).toEqual([

@@ -20,7 +20,6 @@ const { TEMPLATE_STATUS_APPROVED } = require('../src/registry');
             "name": npmPackageMetadata.name,
             "description": npmPackageMetadata.description,
             "latestVersion": npmPackageMetadata.version,
-            "publishDate": (new Date(Date.now())).toISOString(),
             "categories": npmPackageMetadata.categories,
             "adobeRecommended": adobeRecommended,
             "keywords": npmPackageMetadata.keywords,
@@ -43,7 +42,7 @@ const { TEMPLATE_STATUS_APPROVED } = require('../src/registry');
         if (npmPackageMetadata.event) {
             templateData['event'] = npmPackageMetadata.event;
         }
-        
+
         const savedTemplate = getFromRegistry(npmPackageMetadata.name);
         const updatedTemplate = { ...savedTemplate, ...templateData };
         updateInRegistry(updatedTemplate);
