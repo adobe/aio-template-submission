@@ -88,5 +88,36 @@
             "serviceCode": "dx/excshell/1"
         },
         "runtime": true
+    },
+    {
+        "id": "81da09d1-5620-47ef-a04d-b47af57c7096",
+        "author": "Adobe Inc.",
+        "name": "@adobe/generator-app-asset-compute",
+        "description": "Extensibility template for generator-aio-app",
+        "latestVersion": "0.2.1",
+        "publishDate": "2022-06-09T03:20:08.366Z",
+        "categories": [
+            "action"
+        ],
+        "adobeRecommended": false,
+        "keywords": [
+            "yeoman",
+            "generator",
+            "codegen",
+            "aio",
+            "adobeio",
+            "app",
+            "templates",
+            "ecosystem:aio-app-builder-template"
+        ],
+        "status": "Approved",
+        "links": {
+            "npm": "https://www.npmjs.com/package/@adobe/generator-app-asset-compute",
+            "github": "https://github.com/adobe/generator-app-asset-compute"
+        },
+        "extension": {
+            "serviceCode": "dx/asset-compute/worker/1"
+        },
+        "runtime": true
     }
 ]
