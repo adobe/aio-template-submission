@@ -63,5 +63,30 @@
             "npm": "https://www.npmjs.com/package/@litviachenko/app-builder-template1",
             "github": "https://github.com/slitviachenko/app-builder-template1"
         }
+    },
+    {
+        "id": "54dc152d-b923-4d66-8844-40c89e804694",
+        "author": "Adobe Inc.",
+        "name": "@adobe/generator-app-excshell",
+        "description": "Extensibility template for generator-aio-app",
+        "latestVersion": "0.2.1",
+        "publishDate": "2022-06-09T02:56:52.169Z",
+        "categories": [
+            "action",
+            "ui"
+        ],
+        "adobeRecommended": false,
+        "keywords": [
+            "ecosystem:aio-app-builder-template"
+        ],
+        "status": "Approved",
+        "links": {
+            "npm": "https://www.npmjs.com/package/@adobe/generator-app-excshell",
+            "github": "https://github.com/adobe/generator-app-excshell"
+        },
+        "extension": {
+            "serviceCode": "dx/excshell/1"
+        },
+        "runtime": true
     }
 ]
