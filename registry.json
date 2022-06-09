@@ -119,5 +119,14 @@
             "serviceCode": "dx/asset-compute/worker/1"
         },
         "runtime": true
+    },
+    {
+        "id": "ee43241b-6f92-4398-86d9-a2ebf5ec5bd0",
+        "name": "@gibberish-123/agasgage",
+        "status": "InVerification",
+        "links": {
+            "npm": "https://www.npmjs.com/package/@gibberish-123/agasgage",
+            "github": "https://github.com/@gibberish-123/agasgage"
+        }
     }
 ]
