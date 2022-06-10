@@ -94,7 +94,7 @@
         "author": "Adobe Inc.",
         "name": "@adobe/generator-app-asset-compute",
         "description": "Extensibility template for generator-aio-app",
-        "latestVersion": "0.2.1",
+        "latestVersion": "0.2.2",
         "publishDate": "2022-06-09T03:20:08.366Z",
         "categories": [
             "action"
@@ -118,7 +118,12 @@
         "extension": {
             "serviceCode": "dx/asset-compute/worker/1"
         },
-        "runtime": true
+        "runtime": true,
+        "apis": [
+            {
+                "code": "AssetComputeSDK"
+            }
+        ]
     },
     {
         "id": "ee43241b-6f92-4398-86d9-a2ebf5ec5bd0",
