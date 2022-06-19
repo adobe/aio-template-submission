@@ -137,10 +137,37 @@
     {
         "id": "9d9988a8-6530-4fdd-9916-d48926566e4f",
         "name": "@ajzhao32423423894/app-builder-template-1",
-        "status": "InVerification",
+        "status": "Approved",
         "links": {
             "npm": "https://www.npmjs.com/package/@ajzhao32423423894/app-builder-template-1",
             "github": "https://github.com/AmyJZhao/app-builder-template"
-        }
+        },
+        "author": "Adobe Inc.",
+        "description": "A template for testing purposes",
+        "latestVersion": "1.0.3",
+        "publishDate": "2022-06-19T17:37:19.815Z",
+        "categories": [
+            "action",
+            "ui"
+        ],
+        "adobeRecommended": false,
+        "keywords": [
+            "aio",
+            "adobeio",
+            "app",
+            "templates",
+            "aio-app-builder-template"
+        ],
+        "extension": {
+            "serviceCode": "dx/excshell/1"
+        },
+        "apis": [
+            {
+                "code": "AnalyticsSDK"
+            },
+            {
+                "code": "CampaignStandard"
+            }
+        ]
     }
 ]
