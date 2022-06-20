@@ -10,16 +10,13 @@ on:
     - cron: "20 4 * * *"
 
   # TODO: for testing, remove later
-  issue_comment:
-    types: [created]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 jobs:
   create-issue:
     name: Create "Template Registry Verification" Issue
     runs-on: ubuntu-latest
-
-    # TODO: for testing, remove later
-    if: (github.event_name == 'issue_comment' && github.event.comment.body == '/test-registry-verification')
 
     permissions:
       issues: write
