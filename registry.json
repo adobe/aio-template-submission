@@ -169,5 +169,14 @@
                 "code": "CampaignStandard"
             }
         ]
+    },
+    {
+        "id": "fa116cb5-7cec-428d-8f8f-7dabac7356ba",
+        "name": "@adobe/app-builder-template",
+        "status": "InVerification",
+        "links": {
+            "npm": "https://www.npmjs.com/package/@adobe/app-builder-template",
+            "github": "https://github.com/adobe/app-builder-template"
+        }
     }
 ]
