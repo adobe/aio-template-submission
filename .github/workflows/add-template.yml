@@ -56,8 +56,12 @@ jobs:
         run: |
           npm v ${{ needs.parse-issue-form-body.outputs.npm-package }} dist.tarball | xargs curl | tar -xz
           node src/add-to-registry.js $GITHUB_WORKSPACE/package ${{ needs.parse-issue-form-body.outputs.github-link }} ${{ needs.parse-issue-form-body.outputs.npm-package }}
+      - name: Pull changes
+        uses: EndBug/add-and-commit@v8.0.2
+        with:
+          pull: '--rebase --autostash'
       - name: Commit and push changes
-        uses: EndBug/add-and-commit@v8
+        uses: EndBug/add-and-commit@v8.0.2
         with:
           add: registry.json
           default_author: github_actions
