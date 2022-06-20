@@ -133,41 +133,5 @@
             "npm": "https://www.npmjs.com/package/@gibberish-123/agasgage",
             "github": "https://github.com/@gibberish-123/agasgage"
         }
-    },
-    {
-        "id": "20e1f0e3-74f1-4541-b695-5c07bd3fdde8",
-        "name": "@ajzhao32423423894/app-builder-template-2",
-        "status": "Approved",
-        "links": {
-            "npm": "https://www.npmjs.com/package/@ajzhao32423423894/app-builder-template-2",
-            "github": "https://github.com/AmyJZhao/app-builder-template"
-        },
-        "author": "Adobe Inc.",
-        "description": "A template for testing purposes",
-        "latestVersion": "1.0.0",
-        "publishDate": "2022-06-19T17:46:25.064Z",
-        "categories": [
-            "action",
-            "ui"
-        ],
-        "adobeRecommended": false,
-        "keywords": [
-            "aio",
-            "adobeio",
-            "app",
-            "templates",
-            "aio-app-builder-template"
-        ],
-        "extension": {
-            "serviceCode": "dx/excshell/1"
-        },
-        "apis": [
-            {
-                "code": "AnalyticsSDK"
-            },
-            {
-                "code": "CampaignStandard"
-            }
-        ]
     }
 ]
