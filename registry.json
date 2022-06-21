@@ -95,38 +95,5 @@
             "npm": "https://www.npmjs.com/package/@adobe/app-builder-template",
             "github": "https://github.com/adobe/app-builder-template"
         }
-    },
-    {
-        "id": "a75e5b81-54d4-4eb2-a385-482763d63f33",
-        "author": "Adobe Inc.",
-        "name": "@litviachenko/app-builder-template-test-10",
-        "description": "A template for testing purposes [1.0.1]",
-        "latestVersion": "1.0.1",
-        "publishDate": "2022-06-21T16:33:30.354Z",
-        "categories": [
-            "action"
-        ],
-        "adobeRecommended": false,
-        "keywords": [
-            "aio",
-            "adobeio",
-            "app",
-            "templates",
-            "aio-app-builder-template"
-        ],
-        "status": "Approved",
-        "links": {
-            "npm": "https://www.npmjs.com/package/@litviachenko/app-builder-template-test-10",
-            "github": "https://github.com/slitviachenko/app-builder-template"
-        },
-        "extension": {
-            "serviceCode": "dx/excshell/1"
-        },
-        "apis": [
-            {
-                "code": "AssetComputeSDK"
-            }
-        ],
-        "runtime": true
     }
 ]
