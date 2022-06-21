@@ -135,15 +135,6 @@
         }
     },
     {
-        "id": "a9ec2cc3-382d-4ce8-955f-1f3f8747bfde",
-        "name": "@ajzhao32423423894/app-builder-template-5",
-        "status": "InVerification",
-        "links": {
-            "npm": "https://www.npmjs.com/package/@ajzhao32423423894/app-builder-template-5",
-            "github": "https://github.com/AmyJZhao/app-builder-template"
-        }
-    },
-    {
         "id": "e4ff6d1c-d9f1-45d2-a89e-1be3af98b456",
         "name": "@adobe/app-builder-template",
         "status": "InVerification",
