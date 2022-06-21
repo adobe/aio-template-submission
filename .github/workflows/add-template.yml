@@ -51,10 +51,6 @@ jobs:
         uses: actions/checkout@v2
       - name: Install dependencies
         run: npm install
-      - name: Pull changes
-        uses: EndBug/add-and-commit@v8.0.2
-        with:
-          pull: '--rebase'
       - name: Collect metadata and save to registry.json
         id: run-add-to-registry
         run: |

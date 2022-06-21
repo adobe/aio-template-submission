@@ -50,10 +50,6 @@ jobs:
         uses: actions/checkout@v2
       - name: Install dependencies
         run: npm install
-      - name: Pull changes
-        uses: EndBug/add-and-commit@v8.0.2
-        with:
-          pull: '--rebase'
       - name: Change registry.json
         id: run-remove-from-registry
         run: node src/remove-from-registry.js ${{ needs.parse-issue-form-body.outputs.npm-package-name }}
