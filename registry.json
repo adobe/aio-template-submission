@@ -142,5 +142,14 @@
             "npm": "https://www.npmjs.com/package/@ajzhao32423423894/app-builder-template-5",
             "github": "https://github.com/AmyJZhao/app-builder-template"
         }
+    },
+    {
+        "id": "ca290b2c-8f9c-40d0-916a-ae1d57eb00a4",
+        "name": "@adobe/app-builder-template",
+        "status": "InVerification",
+        "links": {
+            "npm": "https://www.npmjs.com/package/@adobe/app-builder-template",
+            "github": "https://github.com/adobe/app-builder-template"
+        }
     }
 ]
