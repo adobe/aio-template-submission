@@ -59,5 +59,14 @@
                 "code": "AssetComputeSDK"
             }
         ]
+    },
+    {
+        "id": "b261c474-b17a-4d5d-bacc-9b68f2fbb265",
+        "name": "@litviachenko/app-builder-template-test-2",
+        "status": "InVerification",
+        "links": {
+            "npm": "https://www.npmjs.com/package/@litviachenko/app-builder-template-test-2",
+            "github": "https://github.com/slitviachenko/app-builder-template-test-2"
+        }
     }
 ]
