@@ -133,14 +133,5 @@
             "npm": "https://www.npmjs.com/package/@gibberish-123/agasgage",
             "github": "https://github.com/@gibberish-123/agasgage"
         }
-    },
-    {
-        "id": "e4ff6d1c-d9f1-45d2-a89e-1be3af98b456",
-        "name": "@adobe/app-builder-template",
-        "status": "InVerification",
-        "links": {
-            "npm": "https://www.npmjs.com/package/@adobe/app-builder-template",
-            "github": "https://github.com/adobe/app-builder-template"
-        }
     }
 ]
