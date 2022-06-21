@@ -70,15 +70,6 @@
         }
     },
     {
-        "id": "cde9ef2a-28ee-49ec-8c05-1edd5066a938",
-        "name": "@ajzhao32423423894/app-builder-template-5",
-        "status": "InVerification",
-        "links": {
-            "npm": "https://www.npmjs.com/package/@ajzhao32423423894/app-builder-template-5",
-            "github": "https://github.com/AmyJZhao/app-builder-template"
-        }
-    },
-    {
         "id": "ca290b2c-8f9c-40d0-916a-ae1d57eb00a4",
         "name": "@adobe/app-builder-template",
         "status": "InVerification",
