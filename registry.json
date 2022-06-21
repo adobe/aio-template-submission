@@ -59,38 +59,5 @@
                 "code": "AssetComputeSDK"
             }
         ]
-    },
-    {
-        "id": "53e4b94d-bd8c-4455-a3d5-b52d569ab410",
-        "author": "Adobe Inc.",
-        "name": "@litviachenko/app-builder-template-test-1",
-        "description": "A template for testing purposes [1.0.1]",
-        "latestVersion": "1.0.1",
-        "publishDate": "2022-06-21T22:26:28.197Z",
-        "categories": [
-            "action"
-        ],
-        "adobeRecommended": false,
-        "keywords": [
-            "aio",
-            "adobeio",
-            "app",
-            "templates",
-            "aio-app-builder-template"
-        ],
-        "status": "Approved",
-        "links": {
-            "npm": "https://www.npmjs.com/package/@litviachenko/app-builder-template-test-1",
-            "github": "https://github.com/slitviachenko/app-builder-template-test-1"
-        },
-        "extension": {
-            "serviceCode": "dx/excshell/1"
-        },
-        "apis": [
-            {
-                "code": "AssetComputeSDK"
-            }
-        ],
-        "runtime": true
     }
 ]
