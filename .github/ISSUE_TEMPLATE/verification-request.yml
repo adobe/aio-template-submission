@@ -12,6 +12,6 @@ body:
   - type: input
     id: npm_name
     attributes:
-      label: "Name of NPM package"
+      label: "npm package name"
     validations:
       required: true
