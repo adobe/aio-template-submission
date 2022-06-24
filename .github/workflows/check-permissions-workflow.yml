@@ -54,8 +54,8 @@ jobs:
         run: npm install
       - name: Validate creator of request
         id: is-owner
-        run: |
-          node src/validate-request-author.js ${{ inputs.user-login }} ${{ inputs.npm-package }}
-        with:
+        env:
           TR_GITHUB_REPO: ${{ secrets.TR_GITHUB_REPO }}
           TR_GITHUB_REPO_OWNER: ${{ secrets.TR_GITHUB_REPO_OWNER }}
+        run: |
+          node src/validate-request-author.js ${{ inputs.user-login }} ${{ inputs.npm-package }}
