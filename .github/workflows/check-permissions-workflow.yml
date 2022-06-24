@@ -56,6 +56,6 @@ jobs:
         id: is-owner
         run: |
           node src/validate-request-author.js ${{ inputs.user-login }} ${{ inputs.npm-package }}
-        env:
+        with:
           TR_GITHUB_REPO: ${{ secrets.TR_GITHUB_REPO }}
           TR_GITHUB_REPO_OWNER: ${{ secrets.TR_GITHUB_REPO_OWNER }}
