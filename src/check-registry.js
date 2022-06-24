@@ -4,7 +4,7 @@ const exec = require('@actions/exec');
 const { getRegistry, TEMPLATE_STATUS_IN_VERIFICATION } = require('./registry');
 const github = require('./github');
 
-const GITHUB_ISSUES_URL = `https://github.com/${github.GITHUB_REPO_OWNER}/${github.GITHUB_REPO}/issues`;
+const GITHUB_ISSUES_URL = `https://github.com/${github.getGithubRepoOwner()}/${github.getGithubRepo()}/issues`;
 
 /**
  * Get the latest template version

@@ -1,7 +1,5 @@
 const github = require('@actions/github');
 
-const GITHUB_REPO = 'aio-template-submission';
-const GITHUB_REPO_OWNER = 'adobe';
 const GITHUB_LABEL_TEMPLATE_REMOVAL = 'remove-template';
 const GITHUB_LABEL_TEMPLATE_UPDATING = 'update-template';
 const GITHUB_LABEL_TEMPLATE_AUTO_VERIFICATION = 'template-auto-verification';
@@ -16,8 +14,8 @@ const GITHUB_LABEL_TEMPLATE_AUTO_VERIFICATION = 'template-auto-verification';
 async function createRemoveIssue(githubToken, templateName) {
     const octokit = new github.getOctokit(githubToken);
     const response = await octokit.rest.issues.create({
-        'owner': GITHUB_REPO_OWNER,
-        'repo': GITHUB_REPO,
+        'owner': getGithubRepoOwner(),
+        'repo': getGithubRepo(),
         'title': `Remove ${templateName} as npm/github links are not valid anymore`,
         'labels': [GITHUB_LABEL_TEMPLATE_REMOVAL, GITHUB_LABEL_TEMPLATE_AUTO_VERIFICATION],
         'body': `### "Name of NPM package"\n${templateName}`
@@ -36,8 +34,8 @@ async function createRemoveIssue(githubToken, templateName) {
 async function createUpdateIssue(githubToken, templateName, templateLatestVersion) {
     const octokit = new github.getOctokit(githubToken);
     const response = await octokit.rest.issues.create({
-        'owner': GITHUB_REPO_OWNER,
-        'repo': GITHUB_REPO,
+        'owner': getGithubRepoOwner(),
+        'repo': getGithubRepo(),
         'title': `Update ${templateName} as there is the newest ${templateLatestVersion} version`,
         'labels': [GITHUB_LABEL_TEMPLATE_UPDATING, GITHUB_LABEL_TEMPLATE_AUTO_VERIFICATION],
         'body': `### "Name of NPM package"\n${templateName}`
@@ -56,14 +54,38 @@ async function createUpdateIssue(githubToken, templateName, templateLatestVersio
 async function createComment(githubToken, issueNumber, comment) {
     const octokit = new github.getOctokit(githubToken);
     const response = await octokit.rest.issues.createComment({
-        'owner': GITHUB_REPO_OWNER,
-        'repo': GITHUB_REPO,
+        'owner': getGithubRepoOwner(),
+        'repo': getGithubRepo(),
         'issue_number': issueNumber,
         'body': comment
     });
     return response.data.id;
 }
 
+/**
+ * Returns a Github repo name, for example, "aio-template-submission".
+ *
+ * @returns {string} A Github repo name
+ */
+function getGithubRepo() {
+    if (!process.env.GITHUB_REPO) {
+        throw new Error('GITHUB_REPO env var is not set.')
+    }
+    return process.env.GITHUB_REPO;
+}
+
+/**
+ * Returns a Github repo owner, for example, "adobe".
+ *
+ * @returns {string} A Github repo owner
+ */
+function getGithubRepoOwner() {
+    if (!process.env.GITHUB_REPO_OWNER) {
+        throw new Error('GITHUB_REPO_OWNER env var is not set.')
+    }
+    return process.env.GITHUB_REPO_OWNER;
+}
+
 module.exports = {
-    GITHUB_REPO, GITHUB_REPO_OWNER, createRemoveIssue, createUpdateIssue, createComment
+    getGithubRepo, getGithubRepoOwner, createRemoveIssue, createUpdateIssue, createComment
 }
