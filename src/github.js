@@ -68,10 +68,10 @@ async function createComment(githubToken, issueNumber, comment) {
  * @returns {string} A Github repo name
  */
 function getGithubRepo() {
-    if (!process.env.GITHUB_REPO) {
-        throw new Error('GITHUB_REPO env var is not set.')
+    if (!process.env.TR_GITHUB_REPO) {
+        throw new Error('TR_GITHUB_REPO env var is not set.')
     }
-    return process.env.GITHUB_REPO;
+    return process.env.TR_GITHUB_REPO;
 }
 
 /**
@@ -80,10 +80,10 @@ function getGithubRepo() {
  * @returns {string} A Github repo owner
  */
 function getGithubRepoOwner() {
-    if (!process.env.GITHUB_REPO_OWNER) {
-        throw new Error('GITHUB_REPO_OWNER env var is not set.')
+    if (!process.env.TR_GITHUB_REPO_OWNER) {
+        throw new Error('TR_GITHUB_REPO_OWNER env var is not set.')
     }
-    return process.env.GITHUB_REPO_OWNER;
+    return process.env.TR_GITHUB_REPO_OWNER;
 }
 
 module.exports = {
