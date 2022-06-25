@@ -32,26 +32,29 @@ jobs:
         run: |
           npm_package_name=$(echo '${{ steps.issue-payload.outputs.payload }}' | jq '."Name of NPM package"')
           echo "::set-output name=npm-package-name::$npm_package_name"
-  intermediate:
-    name: See https://github.community/t/reusable-workflow-env-context-not-available-in-jobs-job-id-with/206111/3
+  set-owner-repo:
+    name: Set the owner and repo name.
     runs-on: ubuntu-latest
     outputs:
-      github-repo-owner: ${{ steps.intermediate.outputs.github-repo-owner }}
-      github-repo: ${{ steps.intermediate.outputs.github-repo }}
+      github-repo-owner: ${{ steps.set-values.outputs.github-repo-owner }}
+      github-repo: ${{ steps.set-values.outputs.github-repo }}
     steps:
-      - id: intermediate
-        shell: bash
+      - name: Set the owner and repo name.
+        id: set-values
         run: |
-          echo "::set-output name=github-repo-owner::${{ secrets.TR_GITHUB_REPO_OWNER }}"
-          echo "::set-output name=github-repo::${{ secrets.TR_GITHUB_REPO }}"
+          ownerRepo='${{ github.repository }}'
+          owner='${{ github.repository_owner }}'
+          echo "::set-output name=github-repo-owner::$owner"
+          github_repo=${ownerRepo#"$owner/"}
+          echo "::set-output name=github-repo::$github_repo"
   check-permissions:
-    needs: [parse-issue-form-body, intermediate]
+    needs: [parse-issue-form-body, set-owner-repo]
     uses: ./.github/workflows/check-permissions-workflow.yml
     with:
       user-login: ${{ github.event.issue.user.login }}
       npm-package: ${{ needs.parse-issue-form-body.outputs.npm-package-name }}
-      github-repo-owner: ${{ needs.intermediate.outputs.github-repo-owner }}
-      github-repo: ${{ needs.intermediate.outputs.github-repo }}
+      github-repo-owner: ${{ needs.set-owner-repo.outputs.github-repo-owner }}
+      github-repo: ${{ needs.set-owner-repo.outputs.github-repo }}
   remove-from-registry:
     name: Remove template from registry
     runs-on: ubuntu-latest

@@ -37,14 +37,29 @@ jobs:
           echo "::set-output name=npm-package::$npm_package"
           github_link=$(cat registry.json | jq ".[] | select(.name == "${npm_package}")" | jq -r '.links.github')
           echo "::set-output name=github-link::$github_link"
+  set-owner-repo:
+    name: Set the owner and repo name.
+    runs-on: ubuntu-latest
+    outputs:
+      github-repo-owner: ${{ steps.set-values.outputs.github-repo-owner }}
+      github-repo: ${{ steps.set-values.outputs.github-repo }}
+    steps:
+      - name: Set the owner and repo name.
+        id: set-values
+        run: |
+          ownerRepo='${{ github.repository }}'
+          owner='${{ github.repository_owner }}'
+          echo "::set-output name=github-repo-owner::$owner"
+          github_repo=${ownerRepo#"$owner/"}
+          echo "::set-output name=github-repo::$github_repo"
   check-permissions:
-    needs: [parse-issue-form-body]
+    needs: [parse-issue-form-body, set-owner-repo]
     uses: ./.github/workflows/check-permissions-workflow.yml
     with:
       user-login: ${{ github.event.issue.user.login }}
       npm-package: ${{ needs.parse-issue-form-body.outputs.npm-package }}
-      github-repo-owner: ${{ secrets.TR_GITHUB_REPO_OWNER }}
-      github-repo: ${{ secrets.TR_GITHUB_REPO }}
+      github-repo-owner: ${{ needs.set-owner-repo.outputs.github-repo-owner }}
+      github-repo: ${{ needs.set-owner-repo.outputs.github-repo }}
   validate-template:
     needs: [parse-issue-form-body, check-permissions]
     if: ${{ always() && needs.parse-issue-form-body.result == 'success' && (needs.check-permissions.outputs.is-admin == 'true' || needs.check-permissions.outputs.is-owner == 'true') }}

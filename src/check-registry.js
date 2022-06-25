@@ -62,11 +62,11 @@ async function checkUrlAvailability(url) {
 (async () => {
     try {
         const githubToken = process.env.GITHUB_TOKEN;
-        const githubRepoOwner = process.env.GITHUB_REPO_OWNER;
-        const githubRepo = process.env.GITHUB_REPO;
-        const githubIssuesUrl = `https://github.com/${githubRepoOwner}/${githubRepo}/issues`;
         const myArgs = process.argv.slice(2);
         const issueNumber = myArgs[0];
+        const githubRepoOwner = myArgs[1];
+        const githubRepo = myArgs[2];
+        const githubIssuesUrl = `https://github.com/${githubRepoOwner}/${githubRepo}/issues`;
 
         const registry = getRegistry();
         let templatesToRemove = 0;
