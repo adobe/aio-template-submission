@@ -40,6 +40,7 @@ jobs:
   set-owner-repo:
     name: Set the owner and repo name.
     runs-on: ubuntu-latest
+    needs: [parse-issue-form-body]
     outputs:
       github-repo-owner: ${{ steps.set-values.outputs.github-repo-owner }}
       github-repo: ${{ steps.set-values.outputs.github-repo }}
