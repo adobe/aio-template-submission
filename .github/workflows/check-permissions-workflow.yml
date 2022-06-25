@@ -9,6 +9,12 @@ on:
       npm-package:
         required: true
         type: string
+      github-repo-owner:
+        required: true
+        type: string
+      github-repo:
+        required: true
+        type: string
     outputs:
       is-admin-error:
         value: ${{ jobs.is-admin.outputs.error }}
@@ -54,8 +60,5 @@ jobs:
         run: npm install
       - name: Validate creator of request
         id: is-owner
-        env:
-          TR_GITHUB_REPO: ${{ secrets.TR_GITHUB_REPO }}
-          TR_GITHUB_REPO_OWNER: ${{ secrets.TR_GITHUB_REPO_OWNER }}
         run: |
-          node src/validate-request-author.js ${{ inputs.user-login }} ${{ inputs.npm-package }}
+          node src/validate-request-author.js ${{ inputs.user-login }} ${{ inputs.npm-package }} ${{ inputs.github-repo-owner }} ${{ inputs.github-repo }}

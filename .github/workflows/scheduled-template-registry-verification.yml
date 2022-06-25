@@ -53,6 +53,8 @@ jobs:
         run: node src/check-registry.js ${{ needs.create-issue.outputs.issue-number }}
         env:
           GITHUB_TOKEN: ${{ secrets.ADOBE_BOT_GITHUB_TOKEN }}
+          GITHUB_REPO_OWNER: ${{ secrets.TR_GITHUB_REPO_OWNER }}
+          GITHUB_REPO: ${{ secrets.TR_GITHUB_REPO }}
   success-close-issue:
     name: Close issue if there are no templates to process
     runs-on: ubuntu-latest

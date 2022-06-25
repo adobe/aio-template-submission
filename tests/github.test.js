@@ -7,14 +7,8 @@ const TEMPLATE_NAME = '@test/app-builder-template';
 const TEMPLATE_LATEST_VERSION = '1.0.1';
 const ISSUE_NUMBER = 1001;
 
-const TR_GITHUB_REPO_OWNER = 'adobe';
-const TR_GITHUB_REPO = 'aio-template-submission';
-beforeEach(() => {
-    process.env = {
-        TR_GITHUB_REPO_OWNER: 'adobe',
-        TR_GITHUB_REPO: 'aio-template-submission'
-    };
-});
+const GITHUB_REPO_OWNER = 'adobe';
+const GITHUB_REPO = 'aio-template-submission';
 
 describe('Verify creation of Github issues and comments', () => {
     test('Verify that "Template Removal Request" issue created', async () => {
@@ -27,7 +21,7 @@ describe('Verify creation of Github issues and comments', () => {
             .times(1)
             .reply(200, { 'number': ISSUE_NUMBER });
 
-        await expect(github.createRemoveIssue(GITHUB_TOKEN, TEMPLATE_NAME))
+        await expect(github.createRemoveIssue(GITHUB_TOKEN, TEMPLATE_NAME, GITHUB_REPO_OWNER, GITHUB_REPO))
             .resolves.toBe(ISSUE_NUMBER);
     });
 
@@ -41,7 +35,7 @@ describe('Verify creation of Github issues and comments', () => {
             .times(1)
             .reply(200, { 'number': ISSUE_NUMBER });
 
-        await expect(github.createUpdateIssue(GITHUB_TOKEN, TEMPLATE_NAME, TEMPLATE_LATEST_VERSION))
+        await expect(github.createUpdateIssue(GITHUB_TOKEN, TEMPLATE_NAME, TEMPLATE_LATEST_VERSION, GITHUB_REPO_OWNER, GITHUB_REPO))
             .resolves.toBe(ISSUE_NUMBER);
     });
 
@@ -55,25 +49,7 @@ describe('Verify creation of Github issues and comments', () => {
             .times(1)
             .reply(200, { 'id': commentId });
 
-        await expect(github.createComment(GITHUB_TOKEN, ISSUE_NUMBER, comment))
+        await expect(github.createComment(GITHUB_TOKEN, ISSUE_NUMBER, comment, GITHUB_REPO_OWNER, GITHUB_REPO))
             .resolves.toBe(commentId);
-    });
-
-    test('Verify getting a Github repo name', () => {
-        expect(github.getGithubRepo()).toBe(TR_GITHUB_REPO);
-    });
-
-    test('Verify getting a Github repo owner', () => {
-        expect(github.getGithubRepoOwner()).toBe(TR_GITHUB_REPO_OWNER);
-    });
-
-    test('Verify getting a Github repo name throws an exception', () => {
-        delete process.env.TR_GITHUB_REPO;
-        expect(() => github.getGithubRepo()).toThrow(new Error('TR_GITHUB_REPO env var is not set.'));
-    });
-
-    test('Verify getting a Github repo owner throws an exception', () => {
-        delete process.env.TR_GITHUB_REPO_OWNER;
-        expect(() => github.getGithubRepoOwner()).toThrow(new Error('TR_GITHUB_REPO_OWNER env var is not set.'));
     });
 });

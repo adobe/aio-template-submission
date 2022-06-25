@@ -43,6 +43,8 @@ jobs:
     with:
       user-login: ${{ github.event.issue.user.login }}
       npm-package: ${{ needs.parse-issue-form-body.outputs.npm-package }}
+      github-repo-owner: ${{ secrets.TR_GITHUB_REPO_OWNER }}
+      github-repo: ${{ secrets.TR_GITHUB_REPO }}
   validate-template:
     needs: [parse-issue-form-body, check-permissions]
     if: ${{ always() && needs.parse-issue-form-body.result == 'success' && (needs.check-permissions.outputs.is-admin == 'true' || needs.check-permissions.outputs.is-owner == 'true') }}

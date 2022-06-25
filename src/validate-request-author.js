@@ -1,14 +1,15 @@
 const core = require('@actions/core');
 const axios = require('axios').default;
-const github = require('./github');
 
 (async () => {
   try {
     const myArgs = process.argv.slice(2);
     const userLogin = myArgs[0];
     const npmPackage = myArgs[1];
+    const githubRepoOwner = myArgs[2];
+    const githubRepo = myArgs[3];
 
-    const url = `https://api.github.com/repos/${github.getGithubRepoOwner()}/${github.getGithubRepo()}/issues?state=closed&labels=add-template&creator=${userLogin}`;
+    const url = `https://api.github.com/repos/${githubRepoOwner}/${githubRepo}/issues?state=closed&labels=add-template&creator=${userLogin}`;
     await axios({
       'method': 'get',
       'url': url
