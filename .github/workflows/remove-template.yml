@@ -32,14 +32,26 @@ jobs:
         run: |
           npm_package_name=$(echo '${{ steps.issue-payload.outputs.payload }}' | jq '."Name of NPM package"')
           echo "::set-output name=npm-package-name::$npm_package_name"
+  intermediate:
+    name: See https://github.community/t/reusable-workflow-env-context-not-available-in-jobs-job-id-with/206111/3
+    runs-on: ubuntu-latest
+    outputs:
+      github-repo-owner: ${{ steps.intermediate.outputs.github-repo-owner }}
+      github-repo: ${{ steps.intermediate.outputs.github-repo }}
+    steps:
+      - id: intermediate
+        shell: bash
+        run: |
+          echo "::set-output name=github-repo-owner::${{ secrets.TR_GITHUB_REPO_OWNER }}"
+          echo "::set-output name=github-repo::${{ secrets.TR_GITHUB_REPO }}"
   check-permissions:
-    needs: [parse-issue-form-body]
+    needs: [parse-issue-form-body, intermediate]
     uses: ./.github/workflows/check-permissions-workflow.yml
     with:
       user-login: ${{ github.event.issue.user.login }}
       npm-package: ${{ needs.parse-issue-form-body.outputs.npm-package-name }}
-      github-repo-owner: ${{ secrets.TR_GITHUB_REPO_OWNER }}
-      github-repo: ${{ secrets.TR_GITHUB_REPO }}
+      github-repo-owner: ${{ needs.intermediate.outputs.github-repo-owner }}
+      github-repo: ${{ needs.intermediate.outputs.github-repo }}
   remove-from-registry:
     name: Remove template from registry
     runs-on: ubuntu-latest
