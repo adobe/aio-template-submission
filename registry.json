@@ -87,5 +87,14 @@
             }
         ],
         "runtime": true
+    },
+    {
+        "id": "d184a804-9bd7-429a-b7c9-990afd5876c1",
+        "name": "@litviachenko/app-builder-template-test-2",
+        "status": "InVerification",
+        "links": {
+            "npm": "https://www.npmjs.com/package/@litviachenko/app-builder-template-test-2",
+            "github": "https://github.com/slitviachenko/app-builder-template-test-2"
+        }
     }
 ]
