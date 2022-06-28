@@ -1,4 +1,4 @@
-name: Template Registry Verification
+name: Daily - Template Registry Verification
 
 defaults:
   run:
@@ -6,14 +6,15 @@ defaults:
 
 on:
   schedule:
-    # At 04:20 each day
+    # run daily at 04:20
     - cron: "20 4 * * *"
 
 jobs:
   create-issue:
     name: Create "Template Registry Verification" Issue
+    # we would like to avoid running any scheduled workflows in forked repos
+    if: github.repository == 'adobe/aio-template-submission'
     runs-on: ubuntu-latest
-
     permissions:
       issues: write
     outputs:
@@ -44,12 +45,16 @@ jobs:
       error: ${{ steps.check-registry.outputs.error }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.4.2
       - name: Install dependencies
         run: npm install
       - name: Check Template Registry
         id: check-registry
-        run: node src/check-registry.js ${{ needs.create-issue.outputs.issue-number }}
+        run: |
+          ownerRepo='${{ github.repository }}'
+          owner='${{ github.repository_owner }}'
+          repo=${ownerRepo#"$owner/"}
+          node src/check-registry.js ${{ needs.create-issue.outputs.issue-number }} $owner $repo
         env:
           GITHUB_TOKEN: ${{ secrets.ADOBE_BOT_GITHUB_TOKEN }}
   success-close-issue:
@@ -58,7 +63,7 @@ jobs:
     needs: [create-issue, check-registry]
     if: ${{ needs.check-registry.outputs.templates-to-process == 0 }}
     steps:
-      - uses: peter-evans/close-issue@v1
+      - uses: peter-evans/close-issue@v1.0.3
         with:
           issue-number: ${{ needs.create-issue.outputs.issue-number }}
           comment: ":white_check_mark: All template packages in Template Registry are available and contain the latest information. Nothing to update."

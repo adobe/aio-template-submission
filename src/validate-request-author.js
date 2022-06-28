@@ -1,14 +1,15 @@
 const core = require('@actions/core');
 const axios = require('axios').default;
-const github = require('./github');
 
 (async () => {
   try {
     const myArgs = process.argv.slice(2);
     const userLogin = myArgs[0];
     const npmPackage = myArgs[1];
+    const githubRepoOwner = myArgs[2];
+    const githubRepo = myArgs[3];
 
-    const url = `https://api.github.com/repos/${github.GITHUB_REPO_OWNER}/${github.GITHUB_REPO}/issues?state=closed&labels=add-template&creator=${userLogin}`;
+    const url = `https://api.github.com/repos/${githubRepoOwner}/${githubRepo}/issues?state=closed&labels=add-template&creator=${userLogin}`;
     await axios({
       'method': 'get',
       'url': url
@@ -27,7 +28,7 @@ const github = require('./github');
             let errorMessage = 'Matching add-template issue by user login not found.';
             core.setOutput('error', ':x: ' + errorMessage);
           } else {
-            console.log('Github add-template issue by user login found: ' + found.url);
+            console.log('Github add-template issue by user login found: ' + found.html_url);
             core.setOutput('is-owner', 'true');
           }
         }

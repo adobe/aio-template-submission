@@ -4,8 +4,6 @@ const exec = require('@actions/exec');
 const { getRegistry, TEMPLATE_STATUS_IN_VERIFICATION } = require('./registry');
 const github = require('./github');
 
-const GITHUB_ISSUES_URL = `https://github.com/${github.GITHUB_REPO_OWNER}/${github.GITHUB_REPO}/issues`;
-
 /**
  * Get the latest template version
  *
@@ -66,6 +64,9 @@ async function checkUrlAvailability(url) {
         const githubToken = process.env.GITHUB_TOKEN;
         const myArgs = process.argv.slice(2);
         const issueNumber = myArgs[0];
+        const githubRepoOwner = myArgs[1];
+        const githubRepo = myArgs[2];
+        const githubIssuesUrl = `https://github.com/${githubRepoOwner}/${githubRepo}/issues`;
 
         const registry = getRegistry();
         let templatesToRemove = 0;
@@ -89,9 +90,9 @@ async function checkUrlAvailability(url) {
 
             if (urlAvailability.available !== true || latestVersionError !== '') {
                 templatesToRemove++;
-                const removeIssueNumber = await github.createRemoveIssue(githubToken, templateName);
+                const removeIssueNumber = await github.createRemoveIssue(githubToken, templateName, githubRepoOwner, githubRepo);
                 let messages = [];
-                messages.push(`${GITHUB_ISSUES_URL}/${removeIssueNumber} issue created to remove ${templateName}`);
+                messages.push(`${githubIssuesUrl}/${removeIssueNumber} issue created to remove ${templateName}`);
                 if (urlAvailability.available !== true) {
                     messages.push(`- ${templateGithubUrl} is not available anymore`);
                     messages.push(`${urlAvailability.error}`);
@@ -100,22 +101,22 @@ async function checkUrlAvailability(url) {
                     messages.push(`- ${templateName} npm package is not available anymore`);
                     messages.push(`${latestVersionError}`);
                 }
-                await github.createComment(githubToken, issueNumber, messages.join('\n'));
-                messages.push(`\n---\nSee details in ${GITHUB_ISSUES_URL}/${issueNumber}`);
-                await github.createComment(githubToken, removeIssueNumber, messages.join('\n'));
+                await github.createComment(githubToken, issueNumber, messages.join('\n'), githubRepoOwner, githubRepo);
+                messages.push(`\n---\nSee details in ${githubIssuesUrl}/${issueNumber}`);
+                await github.createComment(githubToken, removeIssueNumber, messages.join('\n'), githubRepoOwner, githubRepo);
 
                 continue;
             }
 
             if (latestVersion !== templateVersion) {
                 templatesToUpdate++;
-                const updateIssueNumber = await github.createUpdateIssue(githubToken, templateName, latestVersion);
+                const updateIssueNumber = await github.createUpdateIssue(githubToken, templateName, latestVersion, githubRepoOwner, githubRepo);
                 let messages = [];
-                messages.push(`${GITHUB_ISSUES_URL}/${updateIssueNumber} issue created to update ${templateName}`);
+                messages.push(`${githubIssuesUrl}/${updateIssueNumber} issue created to update ${templateName}`);
                 messages.push(`- There is the newest ${latestVersion} version, the version in Template Registry is ${templateVersion}`);
-                await github.createComment(githubToken, issueNumber, messages.join('\n'));
-                messages.push(`\n---\nSee details in ${GITHUB_ISSUES_URL}/${issueNumber}`);
-                await github.createComment(githubToken, updateIssueNumber, messages.join('\n'));
+                await github.createComment(githubToken, issueNumber, messages.join('\n'), githubRepoOwner, githubRepo);
+                messages.push(`\n---\nSee details in ${githubIssuesUrl}/${issueNumber}`);
+                await github.createComment(githubToken, updateIssueNumber, messages.join('\n'), githubRepoOwner, githubRepo);
             }
         }
         core.setOutput('templates-to-process', templatesToRemove + templatesToUpdate);

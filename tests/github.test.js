@@ -7,6 +7,9 @@ const TEMPLATE_NAME = '@test/app-builder-template';
 const TEMPLATE_LATEST_VERSION = '1.0.1';
 const ISSUE_NUMBER = 1001;
 
+const GITHUB_REPO_OWNER = 'adobe';
+const GITHUB_REPO = 'aio-template-submission';
+
 describe('Verify creation of Github issues and comments', () => {
     test('Verify that "Template Removal Request" issue created', async () => {
         nock('https://api.github.com')
@@ -18,7 +21,7 @@ describe('Verify creation of Github issues and comments', () => {
             .times(1)
             .reply(200, { 'number': ISSUE_NUMBER });
 
-        await expect(github.createRemoveIssue(GITHUB_TOKEN, TEMPLATE_NAME))
+        await expect(github.createRemoveIssue(GITHUB_TOKEN, TEMPLATE_NAME, GITHUB_REPO_OWNER, GITHUB_REPO))
             .resolves.toBe(ISSUE_NUMBER);
     });
 
@@ -32,7 +35,7 @@ describe('Verify creation of Github issues and comments', () => {
             .times(1)
             .reply(200, { 'number': ISSUE_NUMBER });
 
-        await expect(github.createUpdateIssue(GITHUB_TOKEN, TEMPLATE_NAME, TEMPLATE_LATEST_VERSION))
+        await expect(github.createUpdateIssue(GITHUB_TOKEN, TEMPLATE_NAME, TEMPLATE_LATEST_VERSION, GITHUB_REPO_OWNER, GITHUB_REPO))
             .resolves.toBe(ISSUE_NUMBER);
     });
 
@@ -46,7 +49,7 @@ describe('Verify creation of Github issues and comments', () => {
             .times(1)
             .reply(200, { 'id': commentId });
 
-        await expect(github.createComment(GITHUB_TOKEN, ISSUE_NUMBER, comment))
+        await expect(github.createComment(GITHUB_TOKEN, ISSUE_NUMBER, comment, GITHUB_REPO_OWNER, GITHUB_REPO))
             .resolves.toBe(commentId);
     });
 });
