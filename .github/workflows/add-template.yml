@@ -16,25 +16,19 @@ jobs:
     runs-on: ubuntu-latest
     if: (github.event.label.name == 'add-template') || (github.event_name == 'issue_comment' && github.event.comment.body == '/check')
     outputs:
-      github-link: ${{ steps.issue-input.outputs.github-link }}
-      npm-package: ${{ steps.issue-input.outputs.npm-package }}
+      github-link: ${{ steps.parse-issue-form-body.outputs.github-link }}
+      npm-package: ${{ steps.parse-issue-form-body.outputs.npm-package }}
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
       - name: Parse issue form body
-        uses: peter-murray/issue-forms-body-parser@v2
-        id: issue-payload
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          issue_id: ${{ github.event.issue.number }}
-          separator: "###"
-          label_marker_start: '"'
-          label_marker_end: '"'
-      - name: Parse Issue Payload
-        id: issue-input
+        id: parse-issue-form-body
         run: |
-          github_link=$(echo '${{ steps.issue-payload.outputs.payload }}' | jq '."Link to GitHub repo"')
-          echo "::set-output name=github-link::$github_link"
-          npm_package=$(echo '${{ steps.issue-payload.outputs.payload }}' | jq '."Name of NPM package"')
-          echo "::set-output name=npm-package::$npm_package"
+          node src/parse-issue-form-body.js 'review-request'
+        env:
+          GITHUB_ISSUE_PAYLOAD: ${{ github.event.issue.body }}
   validate-template:
     needs: [parse-issue-form-body]
     uses: ./.github/workflows/validate-template-workflow.yml
@@ -85,6 +79,7 @@ jobs:
           message: |
             The following checks failed:
 
+            ${{ needs.parse-issue-form-body.outputs.error }}
             ${{ needs.validate-template.outputs.check-github-link-error }}
             ${{ needs.validate-template.outputs.check-npm-package-name-error }}
             ${{ needs.validate-template.outputs.check-npm-package-metadata-error }}

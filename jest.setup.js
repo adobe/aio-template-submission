@@ -9,17 +9,16 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const core = require('@actions/core');
-const { getFromRegistry, removeFromRegistry } = require('./registry');
+const fs = jest.requireActual('fs');
+const path = require('path');
 
-const myArgs = process.argv.slice(2);
-const templateName = myArgs[0];
+jest.setTimeout(30000);
 
-try {
-  const item = getFromRegistry(templateName);
-  removeFromRegistry(templateName);
-  console.log('Template "' + templateName + '" was removed.', item);
-} catch (e) {
-  core.setOutput('error', e.message);
-  throw e;
+const fixturesFolder = path.join(__dirname, 'tests/__fixtures__');
+global.fixturePath = (file) => {
+    return `${fixturesFolder}/${file}`;
+}
+// helper for fixtures
+global.fixtureFile = (file) => {
+    return fs.readFileSync(global.fixturePath(file)).toString();
 }
