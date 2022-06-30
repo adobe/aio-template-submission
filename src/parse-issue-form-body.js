@@ -40,4 +40,5 @@ try {
     }
 } catch (e) {
     core.setOutput('error', `:x: ${e.message}`);
+    throw e;
 }

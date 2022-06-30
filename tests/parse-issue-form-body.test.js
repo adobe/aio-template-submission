@@ -78,6 +78,7 @@ describe('Verify invoking parse-issue-form-body.js', () => {
                 require(script);
             } catch (e) {
                 // an exception should be thrown, we check that it was caught by checking `core.setOutput` arguments below
+                expect(e).toEqual(new Error('Unknown Issue Type.'));
             }
         });
         expect(core.setOutput).toHaveBeenCalledWith('error', ':x: Unknown Issue Type.');

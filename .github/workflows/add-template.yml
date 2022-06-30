@@ -72,7 +72,7 @@ jobs:
     name: Validation failed
     runs-on: ubuntu-latest
     needs: [parse-issue-form-body, validate-template, add-to-registry]
-    if: ${{ always() && needs.parse-issue-form-body.result == 'success' && (needs.validate-template.outputs.check-github-link-status != 'success' || needs.add-to-registry.result == 'failure' || needs.add-to-registry.result == 'skipped') }}
+    if: ${{ always() && (needs.parse-issue-form-body.result == 'failure' || (needs.validate-template.outputs.check-github-link-status != 'success' || needs.add-to-registry.result == 'failure' || needs.add-to-registry.result == 'skipped')) }}
     steps:
       - uses: ben-z/actions-comment-on-issue@1.0.2
         with:
