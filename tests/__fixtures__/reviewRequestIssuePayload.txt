@@ -1,0 +1,7 @@
+### "Link to GitHub repo"
+
+https://github.com/adobe/app-builder-template
+
+### "Name of NPM package"
+
+@adobe/app-builder-template
