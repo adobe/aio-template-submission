@@ -18,6 +18,7 @@ jobs:
     outputs:
       github-link: ${{ steps.parse-issue-form-body.outputs.github-link }}
       npm-package: ${{ steps.parse-issue-form-body.outputs.npm-package }}
+      error: ${{ steps.parse-issue-form-body.outputs.error }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2

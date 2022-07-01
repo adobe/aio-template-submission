@@ -17,6 +17,7 @@ jobs:
     if: (github.event.label.name == 'remove-template') || (github.event_name == 'issue_comment' && github.event.comment.body == '/remove')
     outputs:
       npm-package: ${{ steps.parse-issue-form-body.outputs.npm-package }}
+      error: ${{ steps.parse-issue-form-body.outputs.error }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
