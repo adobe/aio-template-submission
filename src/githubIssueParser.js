@@ -41,10 +41,10 @@ function parseReviewRequest(githubIssuePayload) {
         }
     });
     if (!isValidGithubRepoUrl(githubLink)) {
-        throw new Error('A GitHub repo link does not satisfy requirements.');
+        throw new Error(':x: A GitHub repo link does not satisfy requirements.');
     }
     if (!isValidNpmPackageName(npmPackage)) {
-        throw new Error('A npm package name does not satisfy requirements.');
+        throw new Error(':x: A npm package name does not satisfy requirements.');
     }
 
     return {
@@ -69,7 +69,7 @@ function parseUpdateRequest(githubIssuePayload) {
         }
     });
     if (!isValidNpmPackageName(npmPackage)) {
-        throw new Error('A npm package name does not satisfy requirements.');
+        throw new Error(':x: A npm package name does not satisfy requirements.');
     }
 
     const template = getFromRegistry(npmPackage);
@@ -96,7 +96,7 @@ function parseRemovalRequest(githubIssuePayload) {
         }
     });
     if (!isValidNpmPackageName(npmPackage)) {
-        throw new Error('A npm package name does not satisfy requirements.');
+        throw new Error(':x: A npm package name does not satisfy requirements.');
     }
 
     return npmPackage;

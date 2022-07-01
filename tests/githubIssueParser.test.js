@@ -33,19 +33,19 @@ describe('Verify parsing Github issues', () => {
     test('Verify parsing "Template Review Request" issue, incorrect Github repo Url, case 1', () => {
         const githubIssuePayload = global.fixtureFile('reviewRequestIssuePayloadIncorrectGithubRepoUrl1.txt');
         expect(() => githubIssueParser.parseReviewRequest(githubIssuePayload))
-            .toThrowError(new Error('A GitHub repo link does not satisfy requirements.'));
+            .toThrowError(new Error(':x: A GitHub repo link does not satisfy requirements.'));
     });
 
     test('Verify parsing "Template Review Request" issue, incorrect Github repo Url, case 2', () => {
         const githubIssuePayload = global.fixtureFile('reviewRequestIssuePayloadIncorrectGithubRepoUrl2.txt');
         expect(() => githubIssueParser.parseReviewRequest(githubIssuePayload))
-            .toThrowError(new Error('A GitHub repo link does not satisfy requirements.'));
+            .toThrowError(new Error(':x: A GitHub repo link does not satisfy requirements.'));
     });
 
     test('Verify parsing "Template Review Request" issue, incorrect npm package name', () => {
         const githubIssuePayload = global.fixtureFile('reviewRequestIssuePayloadIncorrectNpmPackageName.txt');
         expect(() => githubIssueParser.parseReviewRequest(githubIssuePayload))
-            .toThrowError(new Error('A npm package name does not satisfy requirements.'));
+            .toThrowError(new Error(':x: A npm package name does not satisfy requirements.'));
     });
 
     test('Verify parsing "Template Update Request" issue', () => {
@@ -66,7 +66,7 @@ describe('Verify parsing Github issues', () => {
     test('Verify parsing "Template Update Request" issue, incorrect npm package name', () => {
         const githubIssuePayload = global.fixtureFile('updateRequestIssuePayloadIncorrectNpmPackageName.txt');
         expect(() => githubIssueParser.parseUpdateRequest(githubIssuePayload))
-            .toThrowError(new Error('A npm package name does not satisfy requirements.'));
+            .toThrowError(new Error(':x: A npm package name does not satisfy requirements.'));
     });
 
     test('Verify parsing "Template Removal Request" issue', () => {
@@ -77,6 +77,6 @@ describe('Verify parsing Github issues', () => {
     test('Verify parsing "Template Removal Request" issue, incorrect npm package name', () => {
         const githubIssuePayload = global.fixtureFile('removalRequestIssuePayloadIncorrectNpmPackageName.txt');
         expect(() => githubIssueParser.parseRemovalRequest(githubIssuePayload))
-            .toThrowError(new Error('A npm package name does not satisfy requirements.'));
+            .toThrowError(new Error(':x: A npm package name does not satisfy requirements.'));
     });
 });

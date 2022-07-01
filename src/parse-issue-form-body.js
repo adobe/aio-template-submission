@@ -36,9 +36,9 @@ try {
             break;
         }
         default:
-            throw new Error('Unknown Issue Type.');
+            throw new Error(':x: Unknown Issue Type.');
     }
 } catch (e) {
-    core.setOutput('error', `:x: ${e.message}`);
+    core.setOutput('error', e.message);
     throw e;
 }
