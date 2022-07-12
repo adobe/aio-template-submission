@@ -120,5 +120,14 @@
             }
         ],
         "runtime": true
+    },
+    {
+        "id": "c7f63d20-4ed9-4970-936a-1db6e2edd09d",
+        "name": "@adobe/generator-add-action-generic",
+        "status": "InVerification",
+        "links": {
+            "npm": "https://www.npmjs.com/package/@adobe/generator-add-action-generic",
+            "github": "https://github.com/adobe/generator-add-action-generic"
+        }
     }
 ]
