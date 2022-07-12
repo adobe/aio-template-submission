@@ -137,7 +137,7 @@
             "action",
             "ui"
         ],
-        "adobeRecommended": false,
+        "adobeRecommended": true,
         "keywords": [
             "ecosystem:aio-app-builder-template"
         ],
