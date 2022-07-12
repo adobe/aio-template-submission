@@ -124,10 +124,25 @@
     {
         "id": "c7f63d20-4ed9-4970-936a-1db6e2edd09d",
         "name": "@adobe/generator-add-action-generic",
-        "status": "InVerification",
+        "status": "Approved",
         "links": {
             "npm": "https://www.npmjs.com/package/@adobe/generator-add-action-generic",
             "github": "https://github.com/adobe/generator-add-action-generic"
+        },
+        "author": "Adobe Inc.",
+        "description": "Extensibility template for generating a generic App Builder action",
+        "latestVersion": "0.2.2",
+        "publishDate": "2022-07-12T18:35:25.049Z",
+        "categories": [
+            "action",
+            "ui"
+        ],
+        "adobeRecommended": false,
+        "keywords": [
+            "ecosystem:aio-app-builder-template"
+        ],
+        "extension": {
+            "serviceCode": "dx/excshell/1"
         }
     }
 ]
