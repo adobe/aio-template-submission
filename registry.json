@@ -61,34 +61,6 @@
         ]
     },
     {
-        "id": "3633581e-5c09-4dee-806a-bc590185f815",
-        "name": "@askayastha/my-template",
-        "status": "Approved",
-        "links": {
-            "npm": "https://www.npmjs.com/package/@askayastha/my-template",
-            "github": "https://github.com/askayastha22/my-template"
-        },
-        "description": "My test template.",
-        "latestVersion": "0.0.2",
-        "publishDate": "2022-06-24T09:20:28.052Z",
-        "categories": [
-            "action"
-        ],
-        "adobeRecommended": false,
-        "keywords": [
-            "ecosystem:aio-app-builder-templates"
-        ],
-        "extension": {
-            "serviceCode": "dx/excshell/1"
-        },
-        "apis": [
-            {
-                "code": "AssetComputeSDK"
-            }
-        ],
-        "runtime": true
-    },
-    {
         "id": "b092fd55-e3e5-4791-89a5-c19d4f7b3a91",
         "author": "Adobe Inc.",
         "name": "@litviachenko/app-builder-template-test-2",
