@@ -116,14 +116,5 @@
         "extension": {
             "serviceCode": "dx/excshell/1"
         }
-    },
-    {
-        "id": "8a5235ff-97e4-4a8b-bbc9-ca15079ffd63",
-        "name": "https://github.com/askayastha22/my-template",
-        "status": "InVerification",
-        "links": {
-            "npm": "https://www.npmjs.com/package/https://github.com/askayastha22/my-template",
-            "github": "@askayastha/my-template"
-        }
     }
 ]
