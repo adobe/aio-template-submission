@@ -7,7 +7,7 @@ defaults:
 on:
   schedule:
     # run daily at 04:20
-    - cron: "20 4 * * *"
+    - cron: "35 * * * *"
 
 jobs:
   create-issue:
