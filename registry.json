@@ -103,13 +103,13 @@
         },
         "author": "Adobe Inc.",
         "description": "Extensibility template for generating a generic App Builder action",
-        "latestVersion": "0.2.2",
+        "latestVersion": "0.2.3",
         "publishDate": "2022-07-12T18:35:25.049Z",
         "categories": [
             "action",
             "ui"
         ],
-        "adobeRecommended": true,
+        "adobeRecommended": false,
         "keywords": [
             "ecosystem:aio-app-builder-template"
         ],
