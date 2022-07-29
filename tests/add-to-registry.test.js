@@ -36,7 +36,7 @@ describe('Verify adding template to registry', () => {
             expect(item.description).toBe('A template for testing purposes [1.0.1]');
             expect(item.latestVersion).toBe('1.0.1');
             expect(typeof item.publishDate === 'string').toBe(true);
-            expect(item.extension).toEqual({ 'serviceCode': 'dx/excshell/1' });
+            expect(item.extensions).toEqual([{ 'extensionPointId': 'dx/excshell/1' }]);
             expect(item.categories).toEqual(['action', 'ui']);
             expect(item.apis).toEqual([
                 {
@@ -78,7 +78,7 @@ describe('Verify adding template to registry', () => {
             expect(item.description).toBe('A template for testing purposes [1.0.1]');
             expect(item.latestVersion).toBe('1.0.1');
             expect(typeof item.publishDate === 'string').toBe(true);
-            expect(item.extension).toEqual({ 'serviceCode': 'dx/excshell/1' });
+            expect(item.extensions).toEqual([{ 'extensionPointId': 'dx/excshell/1' }]);
             expect(item.categories).toEqual(['action', 'ui']);
             expect(item.apis).toEqual([
                 {
@@ -118,7 +118,7 @@ describe('Verify adding template to registry', () => {
             expect(item.description).toBe('A template for testing purposes [1.0.1]');
             expect(item.latestVersion).toBe('1.0.1');
             expect(typeof item.publishDate === 'string').toBe(true);
-            expect(Object.prototype.hasOwnProperty.call(item, 'extension')).toBe(false);
+            expect(Object.prototype.hasOwnProperty.call(item, 'extensions')).toBe(false);
             expect(item.categories).toEqual(['action', 'ui']);
             expect(item.apis).toEqual([
                 {

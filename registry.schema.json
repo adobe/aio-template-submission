@@ -38,18 +38,13 @@
         "description": "The date the template was published in the ISO 8601 format",
         "pattern": "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d+)?)(?:Z|([+-])(\\d{2}):(\\d{2}))$"
       },
-      "extension": {
-        "type": "object",
-        "description": "It contains the extension metadata if the template implements an extension point",
-        "properties": {
-          "serviceCode": {
-            "type": "string"
-          }
-        },
-        "additionalProperties": true,
-        "required": [
-          "serviceCode"
-        ]
+      "extensions": {
+        "type": "array",
+        "description": "Extension points that a template implements",
+        "minItems": 1,
+        "items": {
+          "$ref": "#/definitions/extension"
+        }
       },
       "categories": {
         "type": "array",
@@ -123,5 +118,19 @@
       "status",
       "links"
     ]
+  },
+  "definitions": {
+    "extension": {
+      "type": "object",
+      "properties": {
+        "extensionPointId": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "extensionPointId"
+      ]
+    }
   }
 }

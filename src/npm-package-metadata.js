@@ -35,9 +35,9 @@ function getNpmPackageMetadata(packagePath) {
         "keywords": [].concat(packageJsonData.keywords),
         "categories": [].concat(installYmlData.categories)
     }
-    // "extension", "apis", "runtime", "event" are optional
-    if (installYmlData.extension) {
-        npmPackageMetadata["extension"] = installYmlData.extension;
+    // "extensions", "apis", "runtime", "event" are optional
+    if (installYmlData.extensions) {
+        npmPackageMetadata["extensions"] = installYmlData.extensions;
     }
     if (installYmlData.apis) {
         npmPackageMetadata["apis"] = installYmlData.apis;

@@ -43,8 +43,8 @@ const { isInRegistry, addToRegistry, getFromRegistry, updateInRegistry, TEMPLATE
             }
         }
 
-        if (npmPackageMetadata.extension) {
-            templateData['extension'] = npmPackageMetadata.extension;
+        if (npmPackageMetadata.extensions) {
+            templateData['extensions'] = npmPackageMetadata.extensions;
         }
         if (npmPackageMetadata.apis) {
             templateData['apis'] = npmPackageMetadata.apis;
