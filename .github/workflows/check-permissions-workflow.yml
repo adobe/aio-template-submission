@@ -37,14 +37,16 @@ jobs:
       error: ${{ steps.is-admin.outputs.error }}
       is-admin: ${{ steps.is-admin.outputs.is-admin }}
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2.4.2
+      - name: Install dependencies
+        run: npm install
       - name: Validate creator of request is admin
         id: is-admin
         env:
-          USERNAME: ${{ secrets.ADOBE_BOT_GITHUB_USERNAME }}
-          TOKEN: ${{ secrets.ADOBE_BOT_GITHUB_TOKEN }}
+          ALLOWLIST_ADMINS: ${{ secrets.ALLOWLIST_ADMINS }}
         run: |
-          state=$(curl -s -u "$USERNAME:$TOKEN" "https://api.github.com/orgs/adobe/teams/devx-services/memberships/${{ inputs.user-login }}" | jq -r '.state')
-          if [ "${{ inputs.user-login }}" = "adobe-bot" ] || [ "${state}" = "active" ]; then echo "::set-output name=is-admin::true"; else echo "::set-output name=error:::x: Submitter is not an admin belonging to devx-services team. Admins can remove and update any templates."; fi;
+          node src/is-admin.js ${{ inputs.user-login }}
   is-owner:
     name: Validate matching add-template issue
     runs-on: ubuntu-latest
@@ -55,7 +57,7 @@ jobs:
     if: ${{ always() && needs.is-admin.outputs.is-admin != 'true' }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.4.2
       - name: Install dependencies
         run: npm install
       - name: Validate creator of request

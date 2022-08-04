@@ -5,7 +5,8 @@
   "description": "Run validation checks on NPM packages that are App Builder templates",
   "license": "Apache-2.0",
   "scripts": {
-    "test": "jest --ci",
+    "test": "npm run lint:check && npm run unit-tests",
+    "unit-tests": "jest --ci",
     "lint:check": "eslint --ext .js .",
     "lint:fix": "eslint --ext .js --fix ."
   },
@@ -41,21 +42,31 @@
   },
   "jest": {
     "rootDir": ".",
-    "collectCoverage": true,
+    "testEnvironment": "node",
+    "verbose": true,
+    "setupFilesAfterEnv": [
+      "./tests/jest.setup.js"
+    ],
     "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/",
       "<rootDir>/tests/__fixtures__/"
     ],
+    "collectCoverage": true,
     "coveragePathIgnorePatterns": [
       "<rootDir>/tests/__fixtures__/"
     ],
+    "collectCoverageFrom": [],
     "reporters": [
       "default",
       "jest-junit"
     ],
-    "testEnvironment": "node",
-    "setupFilesAfterEnv": [
-      "./jest.setup.js"
-    ]
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    }
   },
   "engines": {
     "node": "^16"

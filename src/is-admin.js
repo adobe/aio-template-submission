@@ -9,16 +9,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const fs = jest.requireActual('fs');
-const path = require('path');
+const core = require('@actions/core');
 
-jest.setTimeout(30000);
+const admins = process.env.ALLOWLIST_ADMINS.split(',');
+const myArgs = process.argv.slice(2);
+const userLogin = myArgs[0];
 
-const fixturesFolder = path.join(__dirname, 'tests/__fixtures__');
-global.fixturePath = (file) => {
-    return `${fixturesFolder}/${file}`;
-}
-// helper for fixtures
-global.fixtureFile = (file) => {
-    return fs.readFileSync(global.fixturePath(file)).toString();
+if (admins.includes(userLogin)) {
+  core.setOutput('is-admin', 'true');
+} else {
+  core.setOutput('error', ':x: Submitter is not an admin. Admins can remove and update any templates.');
 }
