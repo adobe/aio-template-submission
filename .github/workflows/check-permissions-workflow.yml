@@ -2,6 +2,9 @@ name: Reusable Workflow For Checking Permissions
 
 on:
   workflow_call:
+    secrets:
+      ALLOWLIST_ADMINS:
+        required: true
     inputs:
       user-login:
         required: true

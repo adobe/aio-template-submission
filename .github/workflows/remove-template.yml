@@ -48,6 +48,8 @@ jobs:
   check-permissions:
     needs: [parse-issue-form-body, set-owner-repo]
     uses: ./.github/workflows/check-permissions-workflow.yml
+    secrets:
+      ALLOWLIST_ADMINS: ${{ secrets.ALLOWLIST_ADMINS }}
     with:
       user-login: ${{ github.event.issue.user.login }}
       npm-package: ${{ needs.parse-issue-form-body.outputs.npm-package }}
