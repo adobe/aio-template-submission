@@ -57,7 +57,8 @@
             "ui",
             "graphql-mesh",
             "ci-cd",
-            "events"
+            "events",
+            "helper-template"
           ]
         }
       },
