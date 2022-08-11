@@ -29,12 +29,12 @@
         "author": "Adobe Inc.",
         "name": "@adobe/generator-app-asset-compute",
         "description": "Extensibility template for generator-aio-app",
-        "latestVersion": "0.2.2",
+        "latestVersion": "0.2.3",
         "publishDate": "2022-06-09T03:20:08.366Z",
         "categories": [
             "action"
         ],
-        "adobeRecommended": true,
+        "adobeRecommended": false,
         "keywords": [
             "yeoman",
             "generator",
