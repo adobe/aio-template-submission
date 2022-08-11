@@ -36,9 +36,7 @@ function generateRegistryItem(templateName, templateStatus = TEMPLATE_STATUS_APP
                 'description': 'A template for testing purposes',
                 'latestVersion': '1.0.1',
                 'publishDate': (new Date(Date.now())).toISOString(),
-                'extension': {
-                    'serviceCode': 'dx/excshell/1'
-                },
+                'extensions': [{ 'extensionPointId': 'dx/excshell/1' }],
                 'categories': [
                     'action',
                     'ui'

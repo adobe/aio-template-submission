@@ -21,7 +21,7 @@ describe('Verify grabbing npm package metadata', () => {
                 'name': '@adobe/app-builder-template',
                 'description': 'A template for testing purposes [1.0.1]',
                 'version': '1.0.1',
-                'extension': { 'serviceCode': 'dx/excshell/1' },
+                'extensions': [{ 'extensionPointId': 'dx/excshell/1' }],
                 'categories': ['action', 'ui'],
                 'apis': [
                     {
@@ -61,6 +61,6 @@ describe('Verify grabbing npm package metadata', () => {
                 'keywords': ['aio', 'adobeio', 'app', 'templates', 'aio-app-builder-template']
             }
         );
-        expect(Object.prototype.hasOwnProperty.call(npmPackageMetadata, 'extension')).toBe(false);
+        expect(Object.prototype.hasOwnProperty.call(npmPackageMetadata, 'extensions')).toBe(false);
     });
 });

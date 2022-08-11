@@ -41,8 +41,8 @@ const { TEMPLATE_STATUS_APPROVED } = require('../src/registry');
             }
         }
 
-        if (npmPackageMetadata.extension) {
-            templateData['extension'] = npmPackageMetadata.extension;
+        if (npmPackageMetadata.extensions) {
+            templateData['extensions'] = npmPackageMetadata.extensions;
         }
         if (npmPackageMetadata.apis) {
             templateData['apis'] = npmPackageMetadata.apis;
