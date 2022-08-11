@@ -10,7 +10,7 @@
             "action",
             "ui"
         ],
-        "adobeRecommended": false,
+        "adobeRecommended": true,
         "keywords": [
             "ecosystem:aio-app-builder-template"
         ],
@@ -36,7 +36,7 @@
         "categories": [
             "action"
         ],
-        "adobeRecommended": false,
+        "adobeRecommended": true,
         "keywords": [
             "yeoman",
             "generator",
@@ -116,7 +116,7 @@
             "action",
             "ui"
         ],
-        "adobeRecommended": false,
+        "adobeRecommended": true,
         "keywords": [
             "ecosystem:aio-app-builder-template"
         ],
