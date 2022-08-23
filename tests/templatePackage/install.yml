@@ -40,3 +40,4 @@ runtime: true
 event:
   consumer:
     name: registration-name
+    
