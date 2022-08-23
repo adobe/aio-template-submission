@@ -9,45 +9,17 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const axios = require('axios').default;
-
-const STARGAZERS_THRESHOLD = 10;
+const parsePackageName = require("parse-pkg-name");
 
 /**
- * Grab the stargazers count for the specified GitHub repo
+ * Templates are recommended if they are published by @adobe
  *
- * @private
- * @param {string} gitHubUrl the GitHub repo URL
- * @returns {Promise<number>}
- */
-async function getStargazersCount(gitHubUrl) {
-    const repo = gitHubUrl.replace('https://github.com/', '');
-
-    let stargazersCount;
-    const githubApiUrl = 'https://api.github.com/repos/' + repo;
-    await axios({
-        'method': 'get',
-        'url': githubApiUrl
-    })
-        .then(response => {
-            stargazersCount = response.data['stargazers_count'];
-        })
-        .catch(e => {
-            const errorMessage = `:x: Error occurred during fetching "${githubApiUrl}". ${e.message}`;
-            throw new Error(errorMessage);
-        });
-    return stargazersCount;
-}
-
-/**
- * We expect the GitHub repo to have more than STARGAZERS_THRESHOLD stargazers in order to be featured
  *
- * @param {string} gitHubUrl the GitHub repo URL
+ * @param {string} name the name of the NPM package
  * @returns {Promise<boolean>}
  */
-async function isAdobeRecommended(gitHubUrl) {
-    let stargazersCount = await getStargazersCount(gitHubUrl);
-    return stargazersCount > STARGAZERS_THRESHOLD;
+function isAdobeRecommended(name) {
+    return parsePackageName(name).org == "adobe"
 }
 
 module.exports = {

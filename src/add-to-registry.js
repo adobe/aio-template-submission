@@ -25,7 +25,7 @@ const { isInRegistry, addToRegistry, getFromRegistry, updateInRegistry, TEMPLATE
         const npmUrl = 'https://www.npmjs.com/package/' + myArgs[2];
 
         const npmPackageMetadata = getNpmPackageMetadata(packagePath);
-        const adobeRecommended = await isAdobeRecommended(gitHubUrl);
+        const adobeRecommended = isAdobeRecommended(npmPackageMetadata.name);
 
         let templateData = {
             "author": npmPackageMetadata.author,

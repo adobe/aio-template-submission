@@ -35,7 +35,13 @@ describe('Verify grabbing npm package metadata', () => {
                         "code": "Runtime"
                     }
                 ],
-                'keywords': ['aio', 'adobeio', 'app', 'templates', 'aio-app-builder-template']
+                'keywords': ['aio', 'adobeio', 'app', 'templates', 'aio-app-builder-template'],
+                'event': {
+                    'consumer': {
+                        'name': 'registration-name'
+                    },
+                },
+                'runtime': true
             }
         );
     });
@@ -49,15 +55,6 @@ describe('Verify grabbing npm package metadata', () => {
                 'description': 'A template for testing purposes [1.0.1]',
                 'version': '1.0.1',
                 'categories': ['action', 'ui'],
-                'apis': [
-                    {
-                        "code": "AnalyticsSDK",
-                        "credentials": "OAuth"
-                    },
-                    {
-                        "code": "Runtime"
-                    }
-                ],
                 'keywords': ['aio', 'adobeio', 'app', 'templates', 'aio-app-builder-template']
             }
         );
