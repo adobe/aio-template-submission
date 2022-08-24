@@ -22,7 +22,6 @@
     "ajv-formats": "^2.1.1",
     "axios": "^0.26.1",
     "fs": "0.0.1-security",
-    "parse-pkg-name": "^2.0.0",
     "uuid": "^8.3.2",
     "validate-npm-package-name": "^4.0.0",
     "yaml": "^2.0.0"

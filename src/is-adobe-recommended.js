@@ -9,8 +9,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const parsePackageName = require("parse-pkg-name");
-
 /**
  * Templates are recommended if they are published by @adobe
  *
@@ -19,7 +17,7 @@ const parsePackageName = require("parse-pkg-name");
  * @returns {Promise<boolean>}
  */
 function isAdobeRecommended(name) {
-    return parsePackageName(name).org == "adobe"
+    return name.startsWith('@adobe/')
 }
 
 module.exports = {
