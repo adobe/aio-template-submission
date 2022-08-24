@@ -34,3 +34,10 @@ apis:
     credentials: OAuth
   - code: CampaignStandard
   - code: Runtime
+
+runtime: true
+
+event:
+  consumer:
+    name: registration-name
+    
