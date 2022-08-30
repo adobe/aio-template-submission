@@ -90,5 +90,32 @@
             }
         ],
         "runtime": true
+    },
+    {
+        "id": "85bb93d2-6f6b-46b7-a0ce-de5fb519dab7",
+        "author": "Adobe Inc.",
+        "name": "@adobe/generator-app-api-mesh",
+        "description": "Extensibility template for Adobe API Mesh, for App Builder",
+        "latestVersion": "0.1.0",
+        "publishDate": "2022-08-30T15:57:20.919Z",
+        "categories": [
+            "action",
+            "graphql-mesh"
+        ],
+        "adobeRecommended": true,
+        "keywords": [
+            "ecosystem:aio-app-builder-template"
+        ],
+        "status": "Approved",
+        "links": {
+            "npm": "https://www.npmjs.com/package/@adobe/generator-app-api-mesh",
+            "github": "https://github.com/adobe/generator-app-api-mesh"
+        },
+        "apis": [
+            {
+                "code": "GraphQLServiceSDK"
+            }
+        ],
+        "runtime": true
     }
 ]
