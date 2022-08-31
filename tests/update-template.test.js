@@ -107,4 +107,34 @@ describe('Verify updating template in registry', () => {
             await require(script);
         });
     });
+
+    test('Verify that "update-template.js" deletes from Template Registry record deleted install.yml properties', async () => {
+        const gitHubUrl = 'https://github.com/company1/app-builder-template';
+        const npmPackageName = '@company1/app-builder-template';
+        const adobeRecommended = false;
+        isAdobeRecommended.mockReturnValue(adobeRecommended);
+        const existingRegistryItem = generateRegistryItem(npmPackageName);
+        getFromRegistry.mockReturnValue(existingRegistryItem);
+        updateInRegistry.mockImplementation((item) => {
+            expect(item).toEqual({
+                'id': existingRegistryItem.id,
+                'name': existingRegistryItem.name,
+                'status': TEMPLATE_STATUS_APPROVED,
+                'links': existingRegistryItem.links,
+                'author': 'Company1 Inc.',
+                'description': 'A template for testing purposes [1.0.1]',
+                'latestVersion': '1.0.1',
+                'publishDate': existingRegistryItem.publishDate,
+                'categories': ['action', 'ui'],
+                'adobeRecommended': adobeRecommended,
+                'keywords': ['aio', 'adobeio', 'app', 'templates', 'aio-app-builder-template']
+            });
+        });
+
+        const script = '../src/update-template.js';
+        process.argv = ['node', script, 'tests/templatePackageNotImplementingExtensionPoint', gitHubUrl, npmPackageName];
+        jest.isolateModules(async () => {
+            await require(script);
+        });
+    });
 });
