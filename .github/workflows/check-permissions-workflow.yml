@@ -34,7 +34,7 @@ defaults:
 
 jobs:
   is-admin:
-    name: Check if issue submitted by admin on devx-services team
+    name: Check if an issue submitted or commented by a Github user with admin permissions
     runs-on: ubuntu-latest
     outputs:
       error: ${{ steps.is-admin.outputs.error }}

@@ -55,7 +55,7 @@ const { TEMPLATE_STATUS_APPROVED } = require('../src/registry');
         }
 
         const savedTemplate = getFromRegistry(npmPackageMetadata.name);
-        if(!savedTemplate.publishDate) {
+        if (!savedTemplate.publishDate) {
             templateData["publishDate"] = (new Date(Date.now())).toISOString()
         }
         const updatedTemplate = { ...savedTemplate, ...templateData };
