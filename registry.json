@@ -57,11 +57,6 @@
         "adobeRecommended": true,
         "keywords": [
             "ecosystem:aio-app-builder-template"
-        ],
-        "extensions": [
-            {
-                "extensionPointId": "dx/excshell/1"
-            }
         ]
     },
     {
