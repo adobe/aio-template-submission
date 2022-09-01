@@ -27,8 +27,6 @@ workspaces:
   - Production
   - Development
 
-runtime: true
-
 # required services, listed by their SDK code
 # any config for the service is listed under the service
 apis:
@@ -36,6 +34,8 @@ apis:
     credentials: OAuth
   - code: CampaignStandard
   - code: Runtime
+
+runtime: true
 
 event:
   consumer:
