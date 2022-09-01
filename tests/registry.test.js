@@ -40,7 +40,7 @@ describe('Verify "Template Registry" operations', () => {
         registryItems.push(generateRegistryItem('@adobe/template-1'));
         registryItems.push(generateRegistryItem('@adobe/template-2'));
         registry.__set__('getRegistry', () => registryItems);
-        expect(registry.isInRegistry('@adobe/template-1')).toEqual(true);
+        expect(registry.isInRegistry('@adobe/template-1')).toBe(true);
     });
 
     test('Verify that isInRegistry() returns false for non-existing template', () => {
@@ -51,7 +51,7 @@ describe('Verify "Template Registry" operations', () => {
         registryItems.push(generateRegistryItem('@adobe/template-1'));
         registryItems.push(generateRegistryItem('@adobe/template-2'));
         registry.__set__('getRegistry', () => registryItems);
-        expect(registry.isInRegistry('@adobe/template-none')).toEqual(false);
+        expect(registry.isInRegistry('@adobe/template-none')).toBe(false);
     });
 
     test('Verify that addToRegistry() adds template', () => {

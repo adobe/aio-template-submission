@@ -17,7 +17,7 @@ const { isInRegistry, addToRegistry, getFromRegistry, updateInRegistry, TEMPLATE
 jest.mock('../src/registry');
 
 beforeEach(() => {
-    jest.resetAllMocks();
+    jest.clearAllMocks();
 });
 
 describe('Verify adding template to registry', () => {
@@ -46,13 +46,8 @@ describe('Verify adding template to registry', () => {
                     "code": "Runtime"
                 }
             ]);
-            expect(item.runtime).toEqual(true)
-            expect(item.event).toEqual({
-                "consumer": {
-                    "name": "registration-name"
-                }
-            })
-            expect(item.adobeRecommended).toEqual(true);
+            expect(item.runtime).toBe(true);
+            expect(item.adobeRecommended).toBe(true);
             expect(item.keywords.sort()).toEqual(['aio', 'adobeio', 'app', 'templates', 'aio-app-builder-template'].sort());
             expect(item.status).toBe(TEMPLATE_STATUS_APPROVED);
             expect(item.links).toEqual({ 'npm': `https://www.npmjs.com/package/${npmPackageName}`, 'github': gitHubUrl });
@@ -92,7 +87,8 @@ describe('Verify adding template to registry', () => {
                     "code": "Runtime"
                 }
             ]);
-            expect(item.adobeRecommended).toEqual(true);
+            expect(item.event).toEqual({ 'consumer': { 'name': 'registration-name', 'description': 'registration-description', 'events_of_interest': [{ 'provider_id': 'provider-id-1', 'event-code': 'event-code-1' }] }, 'provider': { 'label': 'provider-name', 'description': 'provider-description', 'docs-url': 'provider-docs-url', 'events': [{ 'event_code': 'event-code-1', 'label': 'event-1-label', 'description': 'event-1-description' }] } });
+            expect(item.adobeRecommended).toBe(true);
             expect(item.keywords.sort()).toEqual(['aio', 'adobeio', 'app', 'templates', 'aio-app-builder-template'].sort());
             expect(item.status).toBe(TEMPLATE_STATUS_APPROVED);
             expect(item.links).toEqual(inVerificationRegistryItem.links);
@@ -118,7 +114,7 @@ describe('Verify adding template to registry', () => {
             expect(typeof item.publishDate === 'string').toBe(true);
             expect(Object.prototype.hasOwnProperty.call(item, 'extensions')).toBe(false);
             expect(item.categories).toEqual(['action', 'ui']);
-            expect(item.adobeRecommended).toEqual(false);
+            expect(item.adobeRecommended).toBe(false);
             expect(item.keywords.sort()).toEqual(['aio', 'adobeio', 'app', 'templates', 'aio-app-builder-template'].sort());
             expect(item.status).toBe(TEMPLATE_STATUS_APPROVED);
             expect(item.links).toEqual({ 'npm': `https://www.npmjs.com/package/${npmPackageName}`, 'github': gitHubUrl });

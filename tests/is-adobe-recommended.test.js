@@ -12,15 +12,15 @@ governing permissions and limitations under the License.
 const { isAdobeRecommended } = require('../src/is-adobe-recommended');
 
 describe('Verify templates are correctly identified as Adobe recommended', () => {
-    test('Verify that @adobe template is recommended', async () => {
-        expect(isAdobeRecommended("@adobe/aio-template-example")).toEqual(true)
+    test('Verify that @adobe template is recommended', () => {
+        expect(isAdobeRecommended("@adobe/aio-template-example")).toBe(true);
     });
 
-    test('Verify third-party template is not recommended', async () => {
-        expect(isAdobeRecommended("@company/aio-template-example")).toEqual(false)
+    test('Verify third-party template is not recommended', () => {
+        expect(isAdobeRecommended("@company/aio-template-example")).toBe(false);
     });
 
-    test('Verify third-party template under no org is not recommended', async () => {
-        expect(isAdobeRecommended("aio-template-example")).toEqual(false)
+    test('Verify third-party template under no org is not recommended', () => {
+        expect(isAdobeRecommended("aio-template-example")).toBe(false);
     });
 });

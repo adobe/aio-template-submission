@@ -14,10 +14,10 @@ governing permissions and limitations under the License.
  *
  *
  * @param {string} name the name of the NPM package
- * @returns {Promise<boolean>}
+ * @returns {boolean}
  */
 function isAdobeRecommended(name) {
-    return name.startsWith('@adobe/')
+    return name.startsWith('@adobe/');
 }
 
 module.exports = {

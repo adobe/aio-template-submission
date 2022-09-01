@@ -26,6 +26,8 @@ const { TEMPLATE_STATUS_APPROVED } = require('../src/registry');
         const npmPackageMetadata = getNpmPackageMetadata(packagePath);
         const adobeRecommended = isAdobeRecommended(npmPackageMetadata.name);
 
+        const savedTemplate = getFromRegistry(npmPackageMetadata.name);
+
         let templateData = {
             "author": npmPackageMetadata.author,
             "name": npmPackageMetadata.name,
@@ -41,21 +43,29 @@ const { TEMPLATE_STATUS_APPROVED } = require('../src/registry');
             }
         }
 
+        // checking optional properties
         if (npmPackageMetadata.extensions) {
             templateData['extensions'] = npmPackageMetadata.extensions;
+        } else {
+            delete savedTemplate['extensions']; // this property can be removed from install.yml
         }
         if (npmPackageMetadata.apis) {
             templateData['apis'] = npmPackageMetadata.apis;
+        } else {
+            delete savedTemplate['apis']; // this property can be removed from install.yml
         }
         if (npmPackageMetadata.runtime) {
             templateData['runtime'] = npmPackageMetadata.runtime;
+        } else {
+            delete savedTemplate['runtime']; // this property can be removed from install.yml
         }
         if (npmPackageMetadata.event) {
             templateData['event'] = npmPackageMetadata.event;
+        } else {
+            delete savedTemplate['event']; // this property can be removed from install.yml
         }
 
-        const savedTemplate = getFromRegistry(npmPackageMetadata.name);
-        if(!savedTemplate.publishDate) {
+        if (!savedTemplate.publishDate) {
             templateData["publishDate"] = (new Date(Date.now())).toISOString()
         }
         const updatedTemplate = { ...savedTemplate, ...templateData };
