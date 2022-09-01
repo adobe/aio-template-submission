@@ -96,7 +96,11 @@ describe('Verify updating template in registry', () => {
         });
 
         const script = '../src/update-template.js';
+<<<<<<< HEAD
         process.argv = ['node', script, 'tests/templatePackage', gitHubUrl, npmPackageName, TEMPLATE_STATUS_APPROVED];
+=======
+        process.argv = ['node', script, 'tests/templatePackage', gitHubUrl, npmPackageName, 'approved'];
+>>>>>>> 533af20 (Create needs-additional-verification workflow for third party templates)
         jest.isolateModules(async () => {
             await require(script);
         });
