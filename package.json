@@ -37,8 +37,7 @@
     "jest": "^27.5.1",
     "jest-junit": "^14.0.0",
     "jest-nock": "^0.2.2",
-    "jest-when": "^3.5.1",
-    "rewire": "^6.0.0"
+    "jest-when": "^3.5.1"
   },
   "jest": {
     "rootDir": ".",
@@ -64,7 +63,7 @@
       "global": {
         "branches": 98,
         "lines": 95,
-        "statements": 94
+        "statements": 96
       }
     }
   },
