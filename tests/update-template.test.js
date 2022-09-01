@@ -10,14 +10,12 @@ governing permissions and limitations under the License.
 */
 
 const { generateRegistryItem } = require('./helper');
-const { isAdobeRecommended } = require('../src/is-adobe-recommended');
 const { getFromRegistry, updateInRegistry, TEMPLATE_STATUS_APPROVED, TEMPLATE_STATUS_IN_VERIFICATION }
     = require('../src/registry');
 
 const gitHubUrl = 'https://github.com/adobe/app-builder-template';
 const npmPackageName = '@adobe/app-builder-template';
 
-jest.mock('../src/is-adobe-recommended');
 jest.mock('../src/registry');
 
 beforeEach(() => {
@@ -26,8 +24,6 @@ beforeEach(() => {
 
 describe('Verify updating template in registry', () => {
     test('Verify that "update-template.js" updates template', async () => {
-        const adobeRecommended = false;
-        isAdobeRecommended.mockReturnValue(adobeRecommended);
         const existingRegistryItem = generateRegistryItem(npmPackageName);
         getFromRegistry.mockReturnValue(existingRegistryItem);
         updateInRegistry.mockImplementation((item) => {
@@ -49,7 +45,7 @@ describe('Verify updating template in registry', () => {
                     { 'code': 'Runtime' }
                 ],
                 'event': existingRegistryItem.event,
-                'adobeRecommended': adobeRecommended,
+                'adobeRecommended': true,
                 'keywords': ['aio', 'adobeio', 'app', 'templates', 'aio-app-builder-template']
             });
         });
@@ -62,8 +58,6 @@ describe('Verify updating template in registry', () => {
     });
 
     test('Verify that "update-template.js" sets publishDate if missing', async () => {
-        const adobeRecommended = true;
-        isAdobeRecommended.mockReturnValue(adobeRecommended);
         const newRegistryItemAddedViaAPI = {
             'id': 'some-id',
             'name': npmPackageName,
@@ -87,7 +81,7 @@ describe('Verify updating template in registry', () => {
                 'description': 'A template for testing purposes [1.0.1]',
                 'latestVersion': '1.0.1',
                 'categories': ['action', 'ui'],
-                'adobeRecommended': adobeRecommended,
+                'adobeRecommended': true,
                 'keywords': ['aio', 'adobeio', 'app', 'templates', 'aio-app-builder-template'],
                 'extensions': [{ 'extensionPointId': 'dx/excshell/1' }],
                 'apis': [
@@ -111,8 +105,6 @@ describe('Verify updating template in registry', () => {
     test('Verify that "update-template.js" deletes from Template Registry record deleted install.yml properties', async () => {
         const gitHubUrl = 'https://github.com/company1/app-builder-template';
         const npmPackageName = '@company1/app-builder-template';
-        const adobeRecommended = false;
-        isAdobeRecommended.mockReturnValue(adobeRecommended);
         const existingRegistryItem = generateRegistryItem(npmPackageName);
         getFromRegistry.mockReturnValue(existingRegistryItem);
         updateInRegistry.mockImplementation((item) => {
@@ -126,7 +118,7 @@ describe('Verify updating template in registry', () => {
                 'latestVersion': '1.0.1',
                 'publishDate': existingRegistryItem.publishDate,
                 'categories': ['action', 'ui'],
-                'adobeRecommended': adobeRecommended,
+                'adobeRecommended': false,
                 'keywords': ['aio', 'adobeio', 'app', 'templates', 'aio-app-builder-template']
             });
         });

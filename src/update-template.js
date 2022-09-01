@@ -24,7 +24,7 @@ const { TEMPLATE_STATUS_APPROVED } = require('../src/registry');
         const npmUrl = 'https://www.npmjs.com/package/' + myArgs[2];
 
         const npmPackageMetadata = getNpmPackageMetadata(packagePath);
-        const adobeRecommended = await isAdobeRecommended(gitHubUrl);
+        const adobeRecommended = isAdobeRecommended(npmPackageMetadata.name);
 
         const savedTemplate = getFromRegistry(npmPackageMetadata.name);
 

@@ -9,40 +9,18 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const { expect, describe, test } = require('@jest/globals');
-const nock = require('nock');
 const { isAdobeRecommended } = require('../src/is-adobe-recommended');
 
-const GITHUB_REPO = 'test/app-builder-template';
-
-describe('Verify "Adobe Recommended" flag calculations', () => {
-    test('Verify that popular Github repo can be recommended', async () => {
-        nock('https://api.github.com')
-            .get(`/repos/${GITHUB_REPO}`)
-            .times(1)
-            .reply(200, { 'stargazers_count': 100 });
-
-        await expect(isAdobeRecommended(`https://github.com/${GITHUB_REPO}`))
-            .resolves.toBe(true);
+describe('Verify templates are correctly identified as Adobe recommended', () => {
+    test('Verify that @adobe template is recommended', () => {
+        expect(isAdobeRecommended("@adobe/aio-template-example")).toBe(true);
     });
 
-    test('Verify that not very popular Github repo cannot be recommended', async () => {
-        nock('https://api.github.com')
-            .get(`/repos/${GITHUB_REPO}`)
-            .times(1)
-            .reply(200, { 'stargazers_count': 10 });
-
-        await expect(isAdobeRecommended(`https://github.com/${GITHUB_REPO}`))
-            .resolves.toBe(false);
+    test('Verify third-party template is not recommended', () => {
+        expect(isAdobeRecommended("@company/aio-template-example")).toBe(false);
     });
 
-    test('Verify that exception is thrown for non-existing Github repo', async () => {
-        nock('https://api.github.com')
-            .get('/repos/non-existing-repo')
-            .times(1)
-            .reply(404);
-
-        await expect(isAdobeRecommended('https://github.com/non-existing-repo'))
-            .rejects.toThrow(':x: Error occurred during fetching "https://api.github.com/repos/non-existing-repo". Request failed with status code 404');
+    test('Verify third-party template under no org is not recommended', () => {
+        expect(isAdobeRecommended("aio-template-example")).toBe(false);
     });
 });
