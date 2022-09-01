@@ -33,24 +33,18 @@ describe('Verify "Template Registry" operations', () => {
     });
 
     test('Verify that isInRegistry() returns true for existing template', () => {
-        const rewire = require('rewire');
-        const registry = rewire('../src/registry');
-
         let registryItems = [];
         registryItems.push(generateRegistryItem('@adobe/template-1'));
         registryItems.push(generateRegistryItem('@adobe/template-2'));
-        registry.__set__('getRegistry', () => registryItems);
+        when(fs.readFileSync).calledWith('registry.json').mockReturnValue(JSON.stringify(registryItems, null, 4));
         expect(registry.isInRegistry('@adobe/template-1')).toBe(true);
     });
 
     test('Verify that isInRegistry() returns false for non-existing template', () => {
-        const rewire = require('rewire');
-        const registry = rewire('../src/registry');
-
         let registryItems = [];
         registryItems.push(generateRegistryItem('@adobe/template-1'));
         registryItems.push(generateRegistryItem('@adobe/template-2'));
-        registry.__set__('getRegistry', () => registryItems);
+        when(fs.readFileSync).calledWith('registry.json').mockReturnValue(JSON.stringify(registryItems, null, 4));
         expect(registry.isInRegistry('@adobe/template-none')).toBe(false);
     });
 
