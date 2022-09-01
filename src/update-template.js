@@ -13,7 +13,7 @@ const core = require('@actions/core');
 const { isAdobeRecommended } = require('./is-adobe-recommended');
 const { getNpmPackageMetadata } = require('./npm-package-metadata');
 const { getFromRegistry, updateInRegistry } = require('./registry');
-const { TEMPLATE_STATUS_APPROVED } = require('../src/registry');
+const { TEMPLATE_STATUS_APPROVED, TEMPLATE_STATUS_REJECTED } = require('../src/registry');
 
 // Simple script that collects template metadata and updates it in the registry
 (async () => {
@@ -22,6 +22,7 @@ const { TEMPLATE_STATUS_APPROVED } = require('../src/registry');
         const packagePath = myArgs[0];
         const gitHubUrl = myArgs[1];
         const npmUrl = 'https://www.npmjs.com/package/' + myArgs[2];
+        const status = myArgs[3]
 
         const npmPackageMetadata = getNpmPackageMetadata(packagePath);
         const adobeRecommended = isAdobeRecommended(npmPackageMetadata.name);
@@ -36,13 +37,18 @@ const { TEMPLATE_STATUS_APPROVED } = require('../src/registry');
             "categories": npmPackageMetadata.categories,
             "adobeRecommended": adobeRecommended,
             "keywords": npmPackageMetadata.keywords,
-            "status": TEMPLATE_STATUS_APPROVED,
             "links": {
                 "npm": npmUrl,
                 "github": gitHubUrl
             }
         }
 
+        if(status == 'approved') {
+            templateData["status"] = TEMPLATE_STATUS_APPROVED
+        }
+        if(status == 'rejected') {
+            templateData["status"] = TEMPLATE_STATUS_REJECTED
+        } 
         // checking optional properties
         if (npmPackageMetadata.extensions) {
             templateData['extensions'] = npmPackageMetadata.extensions;

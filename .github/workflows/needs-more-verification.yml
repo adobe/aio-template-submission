@@ -1,0 +1,34 @@
+name: Reusable Workflow For Checking Additional Verification Step
+
+on:
+  workflow_call:
+    inputs:
+      npm-package:
+        required: true
+        type: string
+    outputs:
+      more-verification-required: 
+        value: ${{ jobs.needs-more-verification.outputs.more-verification }}
+      error:
+        value: ${{ jobs.needs-more-verification.outputs.error }}
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  needs-more-verification:
+    name: Check if template needs more verification
+    runs-on: ubuntu-latest
+    outputs:
+      more-verification: ${{ steps.more-verification-script.outputs.more-verification }}
+      error: ${{ steps.more-verification-script.outputs.error }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2.4.2
+      - name: Install dependencies
+        run: npm install
+      - name: Run script
+        id: more-verification-script
+        run: |
+          node src/needs-more-verification.js ${{ inputs.npm-package }}

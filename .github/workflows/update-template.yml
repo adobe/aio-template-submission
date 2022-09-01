@@ -79,7 +79,7 @@ jobs:
         id: run-update-template
         run: |
           npm v ${{ needs.parse-issue-form-body.outputs.npm-package }} dist.tarball | xargs curl | tar -xz
-          node src/update-template.js $GITHUB_WORKSPACE/package ${{ needs.parse-issue-form-body.outputs.github-link }} ${{ needs.parse-issue-form-body.outputs.npm-package }}
+          node src/update-template.js $GITHUB_WORKSPACE/package ${{ needs.parse-issue-form-body.outputs.github-link }} ${{ needs.parse-issue-form-body.outputs.npm-package }} ''
       - name: Commit and push changes
         uses: EndBug/add-and-commit@v8.0.2
         with:
@@ -87,14 +87,29 @@ jobs:
           default_author: github_actions
           message: Update ${{ needs.parse-issue-form-body.outputs.npm-package }} template in Template Registry
           push: true
-  success-close-issue:
+  needs-more-verification:
+    needs: [parse-issue-form-body, update-template]
+    uses: ./.github/workflows/needs-more-verification.yml
+    with:
+      npm-package: ${{ needs.parse-issue-form-body.outputs.npm-package }}
+  success-update-template:
     name: Close issue
     runs-on: ubuntu-latest
-    needs: [update-template]
+    needs: [update-template, needs-more-verification]
     steps:
-      - uses: peter-evans/close-issue@v1
+      - uses: ben-z/actions-comment-on-issue@1.0.2
         with:
-          comment: ":white_check_mark: The template has been updated in Template Registry."
+          message: ":white_check_mark: The template has been updated in Template Registry."
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: ben-z/actions-comment-on-issue@1.0.2
+        if: needs.needs-more-verification.outputs.more-verification-required == 'true'
+        with:
+          message: |
+            Detected that the template is still in verification. The Adobe team will validate your template and provide our feedback shortly.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: peter-evans/close-issue@v1
+        if: needs.needs-more-verification.outputs.more-verification-required == 'false'
+        with:
           token: ${{ secrets.GITHUB_TOKEN }}
   updating-failed-comment:
     name: Updating failed
