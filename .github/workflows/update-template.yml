@@ -63,23 +63,37 @@ jobs:
     with:
       github-link: ${{ needs.parse-issue-form-body.outputs.github-link }}
       npm-package: ${{ needs.parse-issue-form-body.outputs.npm-package }}
+  needs-more-verification:
+    needs: [parse-issue-form-body]
+    uses: ./.github/workflows/needs-more-verification.yml
+    with:
+      npm-package: ${{ needs.parse-issue-form-body.outputs.npm-package }}
   update-template:
     name: Update template in registry
     runs-on: ubuntu-latest
     outputs:
       error: ${{ steps.run-update-template.outputs.error }}
-    needs: [parse-issue-form-body, validate-template]
+    needs: [parse-issue-form-body, validate-template, needs-more-verification]
     if: ${{ always() && (needs.validate-template.outputs.check-npm-package-status == 'success' && needs.validate-template.outputs.check-github-link-status == 'success') }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Install dependencies
         run: npm install
+      - name: Set status
+        id: set-status-parameter
+        run: |
+          if ${{ needs.needs-more-verification.outputs.more-verification-required == 'true' }}
+          then
+            echo '::set-output name=status::InVerification'
+          else
+            echo '::set-output name=status::'
+          fi
       - name: Change registry.json
         id: run-update-template
         run: |
           npm v ${{ needs.parse-issue-form-body.outputs.npm-package }} dist.tarball | xargs curl | tar -xz
-          node src/update-template.js $GITHUB_WORKSPACE/package ${{ needs.parse-issue-form-body.outputs.github-link }} ${{ needs.parse-issue-form-body.outputs.npm-package }} ''
+          node src/update-template.js $GITHUB_WORKSPACE/package ${{ needs.parse-issue-form-body.outputs.github-link }} ${{ needs.parse-issue-form-body.outputs.npm-package }} ${{ steps.set-status-parameter.outputs.status }}
       - name: Commit and push changes
         uses: EndBug/add-and-commit@v8.0.2
         with:
@@ -87,11 +101,6 @@ jobs:
           default_author: github_actions
           message: Update ${{ needs.parse-issue-form-body.outputs.npm-package }} template in Template Registry
           push: true
-  needs-more-verification:
-    needs: [parse-issue-form-body, update-template]
-    uses: ./.github/workflows/needs-more-verification.yml
-    with:
-      npm-package: ${{ needs.parse-issue-form-body.outputs.npm-package }}
   success-update-template:
     name: Close issue
     runs-on: ubuntu-latest

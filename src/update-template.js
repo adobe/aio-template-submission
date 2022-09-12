@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 const core = require('@actions/core');
 const { isAdobeRecommended } = require('./is-adobe-recommended');
 const { getNpmPackageMetadata } = require('./npm-package-metadata');
-const { getFromRegistry, updateInRegistry } = require('./registry');
+const { getFromRegistry, updateInRegistry, TEMPLATE_STATUS_ERROR, TEMPLATE_STATUS_IN_VERIFICATION } = require('./registry');
 const { TEMPLATE_STATUS_APPROVED, TEMPLATE_STATUS_REJECTED } = require('../src/registry');
 
 // Simple script that collects template metadata and updates it in the registry
@@ -43,12 +43,19 @@ const { TEMPLATE_STATUS_APPROVED, TEMPLATE_STATUS_REJECTED } = require('../src/r
             }
         }
 
-        if(status == 'approved') {
-            templateData["status"] = TEMPLATE_STATUS_APPROVED
+        switch(status) {
+            case TEMPLATE_STATUS_APPROVED:
+            case TEMPLATE_STATUS_REJECTED:
+            case TEMPLATE_STATUS_ERROR:
+            case TEMPLATE_STATUS_IN_VERIFICATION:
+                templateData["status"] = status
+                break;
+            case '':
+                break;
+            default:
+                throw new Error(':x: Invalid template status.');
         }
-        if(status == 'rejected') {
-            templateData["status"] = TEMPLATE_STATUS_REJECTED
-        } 
+
         // checking optional properties
         if (npmPackageMetadata.extensions) {
             templateData['extensions'] = npmPackageMetadata.extensions;

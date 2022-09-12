@@ -10,7 +10,6 @@ governing permissions and limitations under the License.
 */
 
 const core = require('@actions/core');
-const { isInRegistry, getFromRegistry, TEMPLATE_STATUS_APPROVED } = require('./registry');
 
 /**
  * Criteria for needing additional verification:
@@ -25,22 +24,13 @@ const { isInRegistry, getFromRegistry, TEMPLATE_STATUS_APPROVED } = require('./r
 }
 
 (async () => {
-  try {
-    const myArgs = process.argv.slice(2);
-    const npmPackage = myArgs[0];
+  const myArgs = process.argv.slice(2);
+  const npmPackage = myArgs[0];
 
-    let existingTemplateApproved = false
-    if (isInRegistry(npmPackage)) {
-      const savedTemplate = getFromRegistry(npmPackage);
-      existingTemplateApproved = savedTemplate.status === TEMPLATE_STATUS_APPROVED
-    }
-    if (needsMoreVerification(npmPackage) && !existingTemplateApproved) {
-      core.setOutput('more-verification', 'true');
-    } else {
-      core.setOutput('more-verification', 'false');
-    }
-  } catch (e) {
-    core.setOutput('error', `:x: ${e.message}`);
-    throw e;
+  if (needsMoreVerification(npmPackage)) {
+    core.setOutput('more-verification', 'true');
+  } else {
+    core.setOutput('more-verification', 'false');
   }
+  
 })();
