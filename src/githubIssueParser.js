@@ -19,7 +19,7 @@ const { getFromRegistry } = require('./registry');
  */
 
 const GITHUB_REPO_LINK_LABEL = 'Link to GitHub repo';
-const NPM_PACKAGE_NAME_LABEL = 'Name of NPM package';
+const NPM_PACKAGE_NAME_LABEL = 'npm package name';
 
 /**
  * Parses a "Template Review Request" issue payload.
