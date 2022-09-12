@@ -1,0 +1,160 @@
+name: Template Approval for 3rd Party Templates
+
+defaults:
+  run:
+    shell: bash
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  parse-issue-form-body:
+    name: Parse issue form body
+    runs-on: ubuntu-latest
+    if: github.event_name == 'issue_comment' && github.event.comment.body == '/approve' && (contains(github.event.issue.labels.*.name, 'add-template') || contains(github.event.issue.labels.*.name, 'update-template'))
+    outputs:
+      github-link: ${{ steps.parse-issue-form-body.outputs.github-link }}
+      npm-package: ${{ steps.parse-issue-form-body.outputs.npm-package }}
+      error: ${{ steps.parse-issue-form-body.outputs.error }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
+      - name: Get type of request
+        id: get-type
+        run: |
+          if ${{ contains(github.event.issue.labels.*.name, 'add-template') }}
+          then
+            echo '::set-output name=REQUEST_TYPE::review-request'
+          fi
+          if ${{ contains(github.event.issue.labels.*.name, 'update-template') }}
+          then
+            echo '::set-output name=REQUEST_TYPE::update-request'
+          fi
+      - name: Parse issue form body
+        id: parse-issue-form-body
+        run: |
+          node src/parse-issue-form-body.js ${{ steps.get-type.outputs.REQUEST_TYPE }}
+        env:
+          GITHUB_ISSUE_PAYLOAD: ${{ github.event.issue.body }}
+  set-owner-repo:
+    name: Set the owner and repo name.
+    runs-on: ubuntu-latest
+    needs: [parse-issue-form-body]
+    outputs:
+      github-repo-owner: ${{ steps.set-values.outputs.github-repo-owner }}
+      github-repo: ${{ steps.set-values.outputs.github-repo }}
+    steps:
+      - name: Set the owner and repo name.
+        id: set-values
+        run: |
+          ownerRepo='${{ github.repository }}'
+          owner='${{ github.repository_owner }}'
+          echo "::set-output name=github-repo-owner::$owner"
+          github_repo=${ownerRepo#"$owner/"}
+          echo "::set-output name=github-repo::$github_repo"
+  check-permissions:
+    needs: [parse-issue-form-body, set-owner-repo]
+    uses: ./.github/workflows/check-permissions-workflow.yml
+    secrets:
+      ALLOWLIST_ADMINS: ${{ secrets.ALLOWLIST_ADMINS }}
+    with:
+      user-login: ${{ github.event.issue.user.login }}
+      npm-package: ${{ needs.parse-issue-form-body.outputs.npm-package }}
+      github-repo-owner: ${{ needs.set-owner-repo.outputs.github-repo-owner }}
+      github-repo: ${{ needs.set-owner-repo.outputs.github-repo }}
+  validate-template:
+    needs: [parse-issue-form-body, check-permissions]
+    if: ${{ always() && needs.parse-issue-form-body.result == 'success' && needs.check-permissions.outputs.is-admin == 'true' }}
+    uses: ./.github/workflows/validate-template-workflow.yml
+    with:
+      github-link: ${{ needs.parse-issue-form-body.outputs.github-link }}
+      npm-package: ${{ needs.parse-issue-form-body.outputs.npm-package }}
+  update-approval:
+    name: Update template in registry
+    runs-on: ubuntu-latest
+    outputs:
+      error: ${{ steps.run-update-template.outputs.error }}
+    needs: [parse-issue-form-body, validate-template]
+    if: ${{ always() && (needs.validate-template.outputs.check-npm-package-status == 'success' && needs.validate-template.outputs.check-github-link-status == 'success') }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
+      - name: Change registry.json
+        id: run-update-template
+        run: |
+          npm v ${{ needs.parse-issue-form-body.outputs.npm-package }} dist.tarball | xargs curl | tar -xz
+          node src/update-template.js $GITHUB_WORKSPACE/package ${{ needs.parse-issue-form-body.outputs.github-link }} ${{ needs.parse-issue-form-body.outputs.npm-package }} 'approved'
+      - name: Commit and push changes
+        uses: EndBug/add-and-commit@v8.0.2
+        with:
+          add: registry.json
+          default_author: github_actions
+          message: Approve ${{ needs.parse-issue-form-body.outputs.npm-package }} template in Template Registry
+          push: true
+  success-close-issue:
+    name: Close issue and any open matching issues
+    runs-on: ubuntu-latest
+    needs: [update-approval, parse-issue-form-body, set-owner-repo]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2.4.2
+      - name: Install dependencies
+        run: npm install
+      - name: Set label to search
+        id: get-label
+        run: |
+          if ${{ contains(github.event.issue.labels.*.name, 'add-template') }}
+          then
+            echo '::set-output name=label::update-template'
+          fi
+          if ${{ contains(github.event.issue.labels.*.name, 'update-template') }}
+          then
+            echo '::set-output name=label::add-template'
+          fi
+      - name: Get issue number of matching open issue
+        id: matching-open-issue
+        run: |
+          node src/get-matching-open-issue.js ${{ steps.get-label.outputs.label }} ${{ needs.parse-issue-form-body.outputs.npm-package }} ${{ needs.set-owner-repo.outputs.github-repo-owner }} ${{ needs.set-owner-repo.outputs.github-repo }}
+      - name: Close matching open issue
+        uses: peter-evans/close-issue@v1
+        if: steps.matching-open-issue.outputs.issue-number != ''
+        with:
+          issue-number: ${{ steps.matching-open-issue.outputs.issue-number }}
+          comment: |
+            :white_check_mark: The template has been approved in Template Registry. See issue #${{ github.event.issue.number }}.
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: ben-z/actions-comment-on-issue@1.0.2
+        if: steps.matching-open-issue.outputs.issue-number != ''
+        with:
+          message: |
+            Matching issue #${{ steps.matching-open-issue.outputs.issue-number }} closed.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: peter-evans/close-issue@v1
+        with:
+          comment: |
+            :white_check_mark: The template has been approved in Template Registry.
+          token: ${{ secrets.GITHUB_TOKEN }}
+  updating-failed-comment:
+    name: Updating failed
+    runs-on: ubuntu-latest
+    needs: [parse-issue-form-body, check-permissions, validate-template, update-approval]
+    if: ${{ always() && (needs.parse-issue-form-body.result == 'failure' || (needs.parse-issue-form-body.result != 'skipped' && (needs.validate-template.outputs.check-github-link-status != 'success' || needs.update-approval.result == 'failure' || needs.update-approval.result == 'skipped' || (needs.check-permissions.outputs.is-admin != 'true' && needs.check-permissions.outputs.is-admin-error != '')))) }}
+    steps:
+      - uses: ben-z/actions-comment-on-issue@1.0.2
+        with:
+          message: |
+            Unable to approve template:
+            ${{ needs.parse-issue-form-body.outputs.error }}
+            ${{ needs.check-permissions.outputs.is-admin-error }}
+            ${{ needs.validate-template.outputs.check-github-link-error }}
+            ${{ needs.validate-template.outputs.check-npm-package-name-error }}
+            ${{ needs.validate-template.outputs.check-npm-package-metadata-error }}
+            ${{ needs.validate-template.outputs.check-npm-package-error }}
+            ${{ needs.update-approval.outputs.error }}
+            Fix all mentioned issues and comment `/approve` to try again.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
