@@ -54,7 +54,7 @@ describe('Verify adding template to registry', () => {
         });
 
         const script = '../src/add-to-registry.js';
-        process.argv = ['node', script, 'tests/templatePackage', gitHubUrl, npmPackageName];
+        process.argv = ['node', script, 'tests/templatePackage', gitHubUrl, npmPackageName, 'false'];
         jest.isolateModules(async () => {
             await require(script);
         });
@@ -90,12 +90,12 @@ describe('Verify adding template to registry', () => {
             expect(item.event).toEqual({ 'consumer': { 'name': 'registration-name', 'description': 'registration-description', 'events_of_interest': [{ 'provider_id': 'provider-id-1', 'event-code': 'event-code-1' }] }, 'provider': { 'label': 'provider-name', 'description': 'provider-description', 'docs-url': 'provider-docs-url', 'events': [{ 'event_code': 'event-code-1', 'label': 'event-1-label', 'description': 'event-1-description' }] } });
             expect(item.adobeRecommended).toBe(true);
             expect(item.keywords.sort()).toEqual(['aio', 'adobeio', 'app', 'templates', 'aio-app-builder-template'].sort());
-            expect(item.status).toBe(TEMPLATE_STATUS_APPROVED);
+            expect(item.status).toBe(TEMPLATE_STATUS_IN_VERIFICATION);
             expect(item.links).toEqual(inVerificationRegistryItem.links);
         });
 
         const script = '../src/add-to-registry.js';
-        process.argv = ['node', script, 'tests/templatePackage', gitHubUrl, npmPackageName];
+        process.argv = ['node', script, 'tests/templatePackage', gitHubUrl, npmPackageName, 'true'];
         jest.isolateModules(async () => {
             await require(script);
         });
@@ -116,12 +116,12 @@ describe('Verify adding template to registry', () => {
             expect(item.categories).toEqual(['action', 'ui']);
             expect(item.adobeRecommended).toBe(false);
             expect(item.keywords.sort()).toEqual(['aio', 'adobeio', 'app', 'templates', 'aio-app-builder-template'].sort());
-            expect(item.status).toBe(TEMPLATE_STATUS_APPROVED);
+            expect(item.status).toBe(TEMPLATE_STATUS_IN_VERIFICATION);
             expect(item.links).toEqual({ 'npm': `https://www.npmjs.com/package/${npmPackageName}`, 'github': gitHubUrl });
         });
 
         const script = '../src/add-to-registry.js';
-        process.argv = ['node', script, 'tests/templatePackageNotImplementingExtensionPoint', gitHubUrl, npmPackageName];
+        process.argv = ['node', script, 'tests/templatePackageNotImplementingExtensionPoint', gitHubUrl, npmPackageName, 'true'];
         jest.isolateModules(async () => {
             await require(script);
         });

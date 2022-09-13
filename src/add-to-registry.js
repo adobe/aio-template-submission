@@ -23,6 +23,7 @@ const { isInRegistry, addToRegistry, getFromRegistry, updateInRegistry, TEMPLATE
         const packagePath = myArgs[0];
         const gitHubUrl = myArgs[1];
         const npmUrl = 'https://www.npmjs.com/package/' + myArgs[2];
+        const needsMoreVerification = myArgs[3]
 
         const npmPackageMetadata = getNpmPackageMetadata(packagePath);
         const adobeRecommended = isAdobeRecommended(npmPackageMetadata.name);
@@ -36,13 +37,17 @@ const { isInRegistry, addToRegistry, getFromRegistry, updateInRegistry, TEMPLATE
             "categories": npmPackageMetadata.categories,
             "adobeRecommended": adobeRecommended,
             "keywords": npmPackageMetadata.keywords,
-            "status": TEMPLATE_STATUS_APPROVED,
             "links": {
                 "npm": npmUrl,
                 "github": gitHubUrl
             }
         }
 
+        if(needsMoreVerification === 'false') {
+            templateData["status"] = TEMPLATE_STATUS_APPROVED
+        } else {
+            templateData["status"] = TEMPLATE_STATUS_IN_VERIFICATION
+        }
         if (npmPackageMetadata.extensions) {
             templateData['extensions'] = npmPackageMetadata.extensions;
         }

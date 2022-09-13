@@ -10,13 +10,13 @@ governing permissions and limitations under the License.
 */
 
 const { generateRegistryItem } = require('./helper');
-const { getFromRegistry, updateInRegistry, TEMPLATE_STATUS_APPROVED, TEMPLATE_STATUS_IN_VERIFICATION }
+const { getFromRegistry, updateInRegistry, TEMPLATE_STATUS_APPROVED, TEMPLATE_STATUS_IN_VERIFICATION, TEMPLATE_STATUS_REJECTED }
     = require('../src/registry');
-
 const gitHubUrl = 'https://github.com/adobe/app-builder-template';
 const npmPackageName = '@adobe/app-builder-template';
 
 jest.mock('../src/registry');
+jest.mock('@actions/core');
 
 beforeEach(() => {
     jest.clearAllMocks();
@@ -51,7 +51,7 @@ describe('Verify updating template in registry', () => {
         });
 
         const script = '../src/update-template.js';
-        process.argv = ['node', script, 'tests/templatePackage', gitHubUrl, npmPackageName];
+        process.argv = ['node', script, 'tests/templatePackage', gitHubUrl, npmPackageName, ''];
         jest.isolateModules(async () => {
             await require(script);
         });
@@ -96,7 +96,7 @@ describe('Verify updating template in registry', () => {
         });
 
         const script = '../src/update-template.js';
-        process.argv = ['node', script, 'tests/templatePackage', gitHubUrl, npmPackageName];
+        process.argv = ['node', script, 'tests/templatePackage', gitHubUrl, npmPackageName, TEMPLATE_STATUS_APPROVED];
         jest.isolateModules(async () => {
             await require(script);
         });
@@ -111,7 +111,7 @@ describe('Verify updating template in registry', () => {
             expect(item).toEqual({
                 'id': existingRegistryItem.id,
                 'name': existingRegistryItem.name,
-                'status': TEMPLATE_STATUS_APPROVED,
+                'status': TEMPLATE_STATUS_REJECTED,
                 'links': existingRegistryItem.links,
                 'author': 'Company1 Inc.',
                 'description': 'A template for testing purposes [1.0.1]',
@@ -124,7 +124,7 @@ describe('Verify updating template in registry', () => {
         });
 
         const script = '../src/update-template.js';
-        process.argv = ['node', script, 'tests/templatePackageNotImplementingExtensionPoint', gitHubUrl, npmPackageName];
+        process.argv = ['node', script, 'tests/templatePackageNotImplementingExtensionPoint', gitHubUrl, npmPackageName, TEMPLATE_STATUS_REJECTED];
         jest.isolateModules(async () => {
             await require(script);
         });

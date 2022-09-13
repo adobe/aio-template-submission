@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 const core = require('@actions/core');
 const { isAdobeRecommended } = require('./is-adobe-recommended');
 const { getNpmPackageMetadata } = require('./npm-package-metadata');
-const { getFromRegistry, updateInRegistry } = require('./registry');
-const { TEMPLATE_STATUS_APPROVED } = require('../src/registry');
+const { getFromRegistry, updateInRegistry, TEMPLATE_STATUS_ERROR, TEMPLATE_STATUS_IN_VERIFICATION } = require('./registry');
+const { TEMPLATE_STATUS_APPROVED, TEMPLATE_STATUS_REJECTED } = require('../src/registry');
 
 // Simple script that collects template metadata and updates it in the registry
 (async () => {
@@ -22,6 +22,7 @@ const { TEMPLATE_STATUS_APPROVED } = require('../src/registry');
         const packagePath = myArgs[0];
         const gitHubUrl = myArgs[1];
         const npmUrl = 'https://www.npmjs.com/package/' + myArgs[2];
+        const status = myArgs[3]
 
         const npmPackageMetadata = getNpmPackageMetadata(packagePath);
         const adobeRecommended = isAdobeRecommended(npmPackageMetadata.name);
@@ -36,11 +37,23 @@ const { TEMPLATE_STATUS_APPROVED } = require('../src/registry');
             "categories": npmPackageMetadata.categories,
             "adobeRecommended": adobeRecommended,
             "keywords": npmPackageMetadata.keywords,
-            "status": TEMPLATE_STATUS_APPROVED,
             "links": {
                 "npm": npmUrl,
                 "github": gitHubUrl
             }
+        }
+
+        switch(status) {
+            case TEMPLATE_STATUS_APPROVED:
+            case TEMPLATE_STATUS_REJECTED:
+            case TEMPLATE_STATUS_ERROR:
+            case TEMPLATE_STATUS_IN_VERIFICATION:
+                templateData["status"] = status
+                break;
+            case '':
+                break;
+            default:
+                throw new Error(':x: Invalid template status.');
         }
 
         // checking optional properties
