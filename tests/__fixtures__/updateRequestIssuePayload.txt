@@ -1,3 +1,2 @@
-### "Name of NPM package"
-
+### npm package name
 @adobe/app-builder-template

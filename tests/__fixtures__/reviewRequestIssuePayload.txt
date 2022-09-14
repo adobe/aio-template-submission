@@ -1,7 +1,7 @@
-### "Link to GitHub repo"
+### Link to GitHub repo
 
 https://github.com/adobe/app-builder-template
 
-### "Name of NPM package"
+### npm package name
 
 @adobe/app-builder-template
