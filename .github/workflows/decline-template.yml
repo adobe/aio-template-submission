@@ -66,11 +66,32 @@ jobs:
       npm-package: ${{ needs.parse-issue-form-body.outputs.npm-package }}
       github-repo-owner: ${{ needs.set-owner-repo.outputs.github-repo-owner }}
       github-repo: ${{ needs.set-owner-repo.outputs.github-repo }}
-  update-request-close-issue:
-    name: Close issue if approval declined on update request
+  update-request-rejected:
+    name: Update template status to rejected if approval declined on update request
     runs-on: ubuntu-latest
     needs: [parse-issue-form-body, check-permissions]
     if: ${{ always() && needs.parse-issue-form-body.result == 'success' && needs.parse-issue-form-body.outputs.request-type == 'update-request' && needs.check-permissions.outputs.is-admin == 'true' }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
+      - name: Change registry.json
+        id: run-update-template
+        run: |
+          npm v ${{ needs.parse-issue-form-body.outputs.npm-package }} dist.tarball | xargs curl | tar -xz
+          node src/update-template.js $GITHUB_WORKSPACE/package ${{ needs.parse-issue-form-body.outputs.github-link }} ${{ needs.parse-issue-form-body.outputs.npm-package }} 'Rejected'
+      - name: Commit and push changes
+        uses: EndBug/add-and-commit@v8.0.2
+        with:
+          add: registry.json
+          default_author: github_actions
+          message: Approve ${{ needs.parse-issue-form-body.outputs.npm-package }} template in Template Registry
+          push: true
+  update-request-close-issue:
+    name: Close update-template issue after template declined
+    runs-on: ubuntu-latest
+    needs: [update-request-rejected]
     steps:
       - uses: peter-evans/close-issue@v1
         with:
