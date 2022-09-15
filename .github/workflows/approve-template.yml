@@ -97,43 +97,10 @@ jobs:
           message: Approve ${{ needs.parse-issue-form-body.outputs.npm-package }} template in Template Registry
           push: true
   success-close-issue:
-    name: Close issue and any open matching issues
+    name: Close issue
     runs-on: ubuntu-latest
     needs: [update-approval, parse-issue-form-body, set-owner-repo]
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2.4.2
-      - name: Install dependencies
-        run: npm install
-      - name: Set label to search
-        id: get-label
-        run: |
-          if ${{ contains(github.event.issue.labels.*.name, 'add-template') }}
-          then
-            echo '::set-output name=label::update-template'
-          fi
-          if ${{ contains(github.event.issue.labels.*.name, 'update-template') }}
-          then
-            echo '::set-output name=label::add-template'
-          fi
-      - name: Get issue number of matching open issue
-        id: matching-open-issue
-        run: |
-          node src/check-matching-open-issue.js ${{ steps.get-label.outputs.label }} ${{ needs.parse-issue-form-body.outputs.npm-package }} ${{ needs.set-owner-repo.outputs.github-repo-owner }} ${{ needs.set-owner-repo.outputs.github-repo }}
-      - name: Close matching open issue
-        uses: peter-evans/close-issue@v1
-        if: steps.matching-open-issue.outputs.issue-number != ''
-        with:
-          issue-number: ${{ steps.matching-open-issue.outputs.issue-number }}
-          comment: |
-            :white_check_mark: The template has been approved in Template Registry. See issue #${{ github.event.issue.number }}.
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: ben-z/actions-comment-on-issue@1.0.2
-        if: steps.matching-open-issue.outputs.issue-number != ''
-        with:
-          message: |
-            Matching issue #${{ steps.matching-open-issue.outputs.issue-number }} closed.
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: peter-evans/close-issue@v1
         with:
           comment: |
