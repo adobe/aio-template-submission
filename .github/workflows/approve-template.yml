@@ -119,7 +119,7 @@ jobs:
       - name: Get issue number of matching open issue
         id: matching-open-issue
         run: |
-          node src/get-matching-open-issue.js ${{ steps.get-label.outputs.label }} ${{ needs.parse-issue-form-body.outputs.npm-package }} ${{ needs.set-owner-repo.outputs.github-repo-owner }} ${{ needs.set-owner-repo.outputs.github-repo }}
+          node src/check-matching-open-issue.js ${{ steps.get-label.outputs.label }} ${{ needs.parse-issue-form-body.outputs.npm-package }} ${{ needs.set-owner-repo.outputs.github-repo-owner }} ${{ needs.set-owner-repo.outputs.github-repo }}
       - name: Close matching open issue
         uses: peter-evans/close-issue@v1
         if: steps.matching-open-issue.outputs.issue-number != ''

@@ -18,22 +18,18 @@ const axios = require('axios').default;
  * @param {string} npmPackage template name
  * @param {string} githubRepoOwner a Github repo owner, for example, "adobe"
  * @param {string} githubRepo a Github repo name, for example, "aio-template-submission"
- * @returns {Promise<number>} issue number
+ * @returns {Promise<Object>} issue
  */
  async function getTemplateGithubIssues(label, npmPackage, githubRepoOwner, githubRepo) {
   const url = `https://api.github.com/repos/${githubRepoOwner}/${githubRepo}/issues?state=open&labels=${label}`;
-  try {
-    const response = await axios.get(url)
-    if (response.data.length !== 0) {
-      let found = response.data.find(element => element.body.includes(npmPackage));
-      if (found !== undefined) {
-        return found
-      }
+  const response = await axios.get(url)
+  if (response.data.length !== 0) {
+    let found = response.data.find(element => element.body.includes(npmPackage));
+    if (found !== undefined) {
+      return found
     }
-    return {}
-  } catch (e) {
-    return e.response
   }
+  return {}
 }
 
 module.exports = {

@@ -10,7 +10,7 @@ governing permissions and limitations under the License.
 */
 
 const core = require('@actions/core');
-const axios = require('axios').default;
+const { getTemplateGithubIssues } = require('../src/get-matching-open-issue');
 
 (async () => {
   try {
@@ -20,27 +20,13 @@ const axios = require('axios').default;
     const githubRepoOwner = myArgs[2];
     const githubRepo = myArgs[3];
 
-    const url = `https://api.github.com/repos/${githubRepoOwner}/${githubRepo}/issues?state=open&labels=${label}`;
-    await axios.get(url)
-      .then(response => {
-        if (response.status !== 200) {
-          let errorMessage = `The response code is ${response.status}`;
-          throw new Error(errorMessage);
-        }
-        if (response.data.length !== 0) {
-          let found = response.data.find(element => element.body.includes(npmPackage));
-          if (found !== undefined) {
-            console.log('Github open issue for approved template found: ' + found.html_url);
-            core.setOutput('issue-number', found.number);
-          }
-        } else {
-          console.log('No open issues for approved template found');
-        }
-      })
-      .catch(e => {
-        let errorMessage = `Error occurred during fetching "${url}". ${e.message}`;
-        throw new Error(errorMessage);
-      });
+    const matchingOpenIssue = getTemplateGithubIssues(label, npmPackage, githubRepoOwner, githubRepo)
+    if('number' in matchingOpenIssue) {
+      console.log('Github open issue for approved template found: ' + matchingOpenIssue.number);
+      core.setOutput('issue-number', matchingOpenIssue.number);
+    } else {
+      console.log('No open Github issue for approved template found')
+    }
   } catch (e) {
     core.setOutput('error', `:x: ${e.message}`);
     throw e;

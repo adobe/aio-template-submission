@@ -98,6 +98,6 @@ describe('Get matching open issue of approved template', () => {
       .times(1)
       .reply(404);
     await expect(getTemplateGithubIssues(label, npmPackage, githubRepoOwner, githubRepo))
-        .resolves.toHaveProperty("status", 404)
+        .rejects.toThrowError()
   });
 });
