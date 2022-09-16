@@ -86,7 +86,7 @@ jobs:
         with:
           add: registry.json
           default_author: github_actions
-          message: Approve ${{ needs.parse-issue-form-body.outputs.npm-package }} template in Template Registry
+          message: Decline ${{ needs.parse-issue-form-body.outputs.npm-package }} template in Template Registry
           push: true
   update-request-close-issue:
     name: Close update-template issue after template declined

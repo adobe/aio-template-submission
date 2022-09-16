@@ -32,8 +32,8 @@ describe('Third-party template needs more verification', () => {
       const npmPackage = '@adobe/app-builder-template';
       const script = '../src/needs-more-verification.js';
       process.argv = ['node', script, npmPackage];
-      jest.isolateModules(async () => {
-          await require(script);
+      jest.isolateModules(() => {
+        require(script);
       });
       expect(core.setOutput).toHaveBeenCalledWith('more-verification', 'false');
     });
