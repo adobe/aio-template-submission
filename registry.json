@@ -138,5 +138,26 @@
                 "extensionPointId": "aem/cf-console-admin/1"
             }
         ]
+    },
+    {
+        "id": "5c319909-47fb-4180-9e61-f51326cc762c",
+        "author": "Adobe Inc.",
+        "name": "@adobe/generator-add-web-assets-exc-raw-html",
+        "description": "Extensibility template for generating Experience Cloud Shell web assets (raw HTML)",
+        "latestVersion": "0.2.2",
+        "publishDate": "2022-09-21T11:41:51.129Z",
+        "categories": [
+            "ui",
+            "helper-template"
+        ],
+        "adobeRecommended": true,
+        "keywords": [
+            "ecosystem:aio-app-builder-template"
+        ],
+        "links": {
+            "npm": "https://www.npmjs.com/package/@adobe/generator-add-web-assets-exc-raw-html",
+            "github": "https://github.com/adobe/generator-add-web-assets-exc-raw-html"
+        },
+        "status": "Approved"
     }
 ]
