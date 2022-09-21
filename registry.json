@@ -159,5 +159,26 @@
             "github": "https://github.com/adobe/generator-add-web-assets-exc-raw-html"
         },
         "status": "Approved"
+    },
+    {
+        "id": "f9580dcf-5b98-4b82-8402-e7e2e9243ea9",
+        "author": "Adobe Inc.",
+        "name": "@adobe/generator-add-web-assets-exc-react",
+        "description": "Extensibility template for generating Experience Cloud Shell web assets (React)",
+        "latestVersion": "0.2.3",
+        "publishDate": "2022-09-21T11:44:44.250Z",
+        "categories": [
+            "ui",
+            "helper-template"
+        ],
+        "adobeRecommended": true,
+        "keywords": [
+            "ecosystem:aio-app-builder-template"
+        ],
+        "links": {
+            "npm": "https://www.npmjs.com/package/@adobe/generator-add-web-assets-exc-react",
+            "github": "https://github.com/adobe/generator-add-web-assets-exc-react"
+        },
+        "status": "Approved"
     }
 ]
