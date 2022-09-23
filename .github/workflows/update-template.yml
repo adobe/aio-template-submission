@@ -30,32 +30,39 @@ jobs:
           node src/parse-issue-form-body.js 'update-request'
         env:
           GITHUB_ISSUE_PAYLOAD: ${{ github.event.issue.body }}
-  set-owner-repo:
-    name: Set the owner and repo name.
+  set-owner-repo-user:
+    name: Set the owner, repo name and user login.
     runs-on: ubuntu-latest
     needs: [parse-issue-form-body]
     outputs:
       github-repo-owner: ${{ steps.set-values.outputs.github-repo-owner }}
       github-repo: ${{ steps.set-values.outputs.github-repo }}
+      user-login: ${{ steps.set-values.outputs.user-login }}
     steps:
-      - name: Set the owner and repo name.
+      - name: Set the owner, repo name and user login.
         id: set-values
         run: |
+          if ${{ github.event_name == 'issue_comment' }}
+          then
+            echo '::set-output name=user-login::${{ github.event.comment.user.login }}'
+          else
+            echo '::set-output name=user-login::${{ github.event.issue.user.login }}'
+          fi
           ownerRepo='${{ github.repository }}'
           owner='${{ github.repository_owner }}'
           echo "::set-output name=github-repo-owner::$owner"
           github_repo=${ownerRepo#"$owner/"}
           echo "::set-output name=github-repo::$github_repo"
   check-permissions:
-    needs: [parse-issue-form-body, set-owner-repo]
+    needs: [parse-issue-form-body, set-owner-repo-user]
     uses: ./.github/workflows/check-permissions-workflow.yml
     secrets:
       ALLOWLIST_ADMINS: ${{ secrets.ALLOWLIST_ADMINS }}
     with:
-      user-login: ${{ github.event.issue.user.login }}
+      user-login: ${{ needs.set-owner-repo-user.outputs.user-login }}
       npm-package: ${{ needs.parse-issue-form-body.outputs.npm-package }}
-      github-repo-owner: ${{ needs.set-owner-repo.outputs.github-repo-owner }}
-      github-repo: ${{ needs.set-owner-repo.outputs.github-repo }}
+      github-repo-owner: ${{ needs.set-owner-repo-user.outputs.github-repo-owner }}
+      github-repo: ${{ needs.set-owner-repo-user.outputs.github-repo }}
   validate-template:
     needs: [parse-issue-form-body, check-permissions]
     if: ${{ always() && needs.parse-issue-form-body.result == 'success' && (needs.check-permissions.outputs.is-admin == 'true' || needs.check-permissions.outputs.is-owner == 'true') }}

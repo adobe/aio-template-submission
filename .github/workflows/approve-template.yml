@@ -61,7 +61,7 @@ jobs:
     secrets:
       ALLOWLIST_ADMINS: ${{ secrets.ALLOWLIST_ADMINS }}
     with:
-      user-login: ${{ github.event.issue.user.login }}
+      user-login: ${{ github.event.comment.user.login }}
       npm-package: ${{ needs.parse-issue-form-body.outputs.npm-package }}
       github-repo-owner: ${{ needs.set-owner-repo.outputs.github-repo-owner }}
       github-repo: ${{ needs.set-owner-repo.outputs.github-repo }}
