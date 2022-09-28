@@ -180,5 +180,14 @@
             "github": "https://github.com/adobe/generator-add-web-assets-exc-react"
         },
         "status": "Approved"
+    },
+    {
+        "id": "7022c5d1-b94d-4423-a772-4656be16a7e3",
+        "name": "@none/app-builder-template",
+        "status": "InVerification",
+        "links": {
+            "npm": "https://www.npmjs.com/package/@none/app-builder-template",
+            "github": "https://github.com/none/app-builder-template"
+        }
     }
 ]
