@@ -114,32 +114,6 @@
         "runtime": true
     },
     {
-        "id": "c4bf546d-4ac7-4269-9b50-2e7a02497c42",
-        "author": "Adobe Inc.",
-        "name": "@adobe/aem-cf-admin-ui-ext-tpl",
-        "description": "Extensibility Template for AEM Content Fragment Admin UI",
-        "latestVersion": "1.0.0-beta.5",
-        "publishDate": "2022-09-15T23:31:10.316Z",
-        "categories": [
-            "action",
-            "ui"
-        ],
-        "adobeRecommended": true,
-        "keywords": [
-            "ecosystem:aio-app-builder-templates"
-        ],
-        "links": {
-            "npm": "https://www.npmjs.com/package/@adobe/aem-cf-admin-ui-ext-tpl",
-            "github": "https://github.com/adobe/aem-cf-admin-ui-ext-tpl"
-        },
-        "status": "Approved",
-        "extensions": [
-            {
-                "extensionPointId": "aem/cf-console-admin/1"
-            }
-        ]
-    },
-    {
         "id": "5c319909-47fb-4180-9e61-f51326cc762c",
         "author": "Adobe Inc.",
         "name": "@adobe/generator-add-web-assets-exc-raw-html",
