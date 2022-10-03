@@ -189,5 +189,33 @@
             "npm": "https://www.npmjs.com/package/@none/app-builder-template",
             "github": "https://github.com/none/app-builder-template"
         }
+    },
+    {
+        "id": "fa39b0ac-c04c-470b-a42a-374e830fbeb1",
+        "author": "Adobe Inc.",
+        "name": "@adobe/generator-add-action-asset-compute",
+        "description": "Extensibility template for generator-aio-app",
+        "latestVersion": "0.2.2",
+        "publishDate": "2022-10-03T09:57:04.934Z",
+        "categories": [
+            "action",
+            "helper-template"
+        ],
+        "adobeRecommended": true,
+        "keywords": [
+            "yeoman",
+            "generator",
+            "codegen",
+            "aio",
+            "adobeio",
+            "app",
+            "templates",
+            "ecosystem:aio-app-builder-template"
+        ],
+        "links": {
+            "npm": "https://www.npmjs.com/package/@adobe/generator-add-action-asset-compute",
+            "github": "https://github.com/adobe/generator-add-action-asset-compute"
+        },
+        "status": "Approved"
     }
 ]
