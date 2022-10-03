@@ -191,5 +191,31 @@
             "github": "https://github.com/adobe/generator-add-action-asset-compute"
         },
         "status": "Approved"
+    },
+    {
+        "id": "09803bdf-7c36-45ce-b869-074943367618",
+        "author": "Adobe Inc.",
+        "name": "@adobe/aem-cf-admin-ui-ext-tpl",
+        "description": "Extensibility Template for AEM Content Fragment Admin UI",
+        "latestVersion": "1.0.0-beta.6",
+        "publishDate": "2022-10-03T14:58:15.980Z",
+        "categories": [
+            "action",
+            "ui"
+        ],
+        "adobeRecommended": true,
+        "keywords": [
+            "ecosystem:aio-app-builder-templates"
+        ],
+        "links": {
+            "npm": "https://www.npmjs.com/package/@adobe/aem-cf-admin-ui-ext-tpl",
+            "github": "https://github.com/adobe/aem-cf-admin-ui-ext-tpl"
+        },
+        "status": "Approved",
+        "extensions": [
+            {
+                "extensionPointId": "aem/cf-console-admin/1"
+            }
+        ]
     }
 ]
