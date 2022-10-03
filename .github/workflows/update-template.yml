@@ -94,7 +94,7 @@ jobs:
           then
             echo '::set-output name=status::InVerification'
           else
-            echo '::set-output name=status::'
+            echo "::set-output name=status::''"
           fi
       - name: Change registry.json
         id: run-update-template
