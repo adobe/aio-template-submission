@@ -83,18 +83,21 @@ jobs:
           echo "::set-output name=status::success";
   check-npm-package:
     name: Validate template
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     needs: [check-npm-package-metadata, check-github-link]
     if: ${{ needs.check-github-link.outputs.error == '' }}
     strategy:
       matrix:
-        node-version: [12.x, 14.x]
+        node-version: [14.x, 16.x]
+        os: [ubuntu-latest, windows-latest]
     outputs:
       error: ${{ steps.check-installation-and-tests.outputs.error }}
       status: ${{ steps.check-installation-and-tests.outputs.status }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
