@@ -159,7 +159,7 @@
         "author": "Adobe Inc.",
         "name": "@adobe/generator-add-action-asset-compute",
         "description": "Extensibility template for generator-aio-app",
-        "latestVersion": "0.2.2",
+        "latestVersion": "0.2.3",
         "publishDate": "2022-10-03T09:57:04.934Z",
         "categories": [
             "action",
@@ -180,7 +180,12 @@
             "npm": "https://www.npmjs.com/package/@adobe/generator-add-action-asset-compute",
             "github": "https://github.com/adobe/generator-add-action-asset-compute"
         },
-        "status": "Approved"
+        "status": "Approved",
+        "apis": [
+            {
+                "code": "AssetComputeSDK"
+            }
+        ]
     },
     {
         "id": "09803bdf-7c36-45ce-b869-074943367618",
