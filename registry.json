@@ -90,7 +90,7 @@
         "author": "Adobe Inc.",
         "name": "@adobe/generator-app-api-mesh",
         "description": "Extensibility template for Adobe API Mesh, for App Builder",
-        "latestVersion": "0.1.0",
+        "latestVersion": "0.1.1",
         "publishDate": "2022-08-30T15:57:20.919Z",
         "categories": [
             "action",
