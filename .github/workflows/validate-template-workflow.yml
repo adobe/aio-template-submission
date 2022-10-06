@@ -41,14 +41,19 @@ jobs:
       status: ${{ steps.check-github-link.outputs.status }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.4.2
+        with:
+          fetch-depth: 0
+      - name: Install dependencies
+        run: npm install
       - name: Check GitHub link
         id: check-github-link
         run: |
           failed=0
           git ls-remote --tags ${{ inputs.github-link }} || failed=1
           if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: A link to the GitHub repo is incorrect or the GitHub repo is not public."; exit 1; fi;
-          echo "::set-output name=status::success";
+          node src/check-github-link-package-name.js ${{ inputs.npm-package }} ${{ inputs.github-link }}
+          if [ ${failed} -eq 0 ]; then echo "::set-output name=status::success"; fi;
   check-npm-package-name:
     name: Check NPM package name
     runs-on: ubuntu-latest
@@ -72,7 +77,9 @@ jobs:
       status: ${{ steps.check-npm-package-metadata.outputs.status }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.4.2
+        with:
+          fetch-depth: 0
       - name: Install dependencies
         run: npm install
       - name: Download NPM package and check its metadata
@@ -95,7 +102,7 @@ jobs:
       status: ${{ steps.check-installation-and-tests.outputs.status }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.4.2
         with:
           fetch-depth: 0
       - name: Use Node.js ${{ matrix.node-version }}
