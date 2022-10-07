@@ -42,6 +42,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2.4.2
+        with:
+          fetch-depth: 0
       - name: Install dependencies
         run: npm install
       - name: Validate creator of request is admin
@@ -61,6 +63,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2.4.2
+        with:
+          fetch-depth: 0
       - name: Install dependencies
         run: npm install
       - name: Validate creator of request
