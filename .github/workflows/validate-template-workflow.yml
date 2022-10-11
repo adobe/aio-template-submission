@@ -126,15 +126,15 @@ jobs:
           npm init --yes
           npm install ${{ inputs.npm-package }} || failed=1
           if ${{ matrix.node-version == '14.x' }}; then nodeVersion='14'; else nodeVersion='16'; fi;
-          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os}}-$nodeVersion-error:::x: Package installation failed."; exit 1; fi;
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os }}-$nodeVersion-error:::x: Node version ${{ matrix.node-version}}, OS ${{ matrix.os }}...Package installation failed."; exit 1; fi;
           cd .. && mkdir "npm-package-src"
           git clone ${{ inputs.github-link }} "npm-package-src" || failed=1
-          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os}}-$nodeVersion-error:::x: Failed cloning the GitHub repository."; exit 1; fi;
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os }}-$nodeVersion-error:::x: Failed cloning the GitHub repository."; exit 1; fi;
           cd "npm-package-src"
           git checkout `npm view ${{ inputs.npm-package }} gitHead` || failed=1
-          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os}}-$nodeVersion-error:::x: Failed switching to the GitHub commit hash."; exit 1; fi;
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os }}-$nodeVersion-error:::x: Failed switching to the GitHub commit hash."; exit 1; fi;
           npm install --legacy-peer-deps || failed=1
-          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os}}-$nodeVersion-error:::x: Package dependencies installation failed."; exit 1; fi;
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os }}-$nodeVersion-error:::x: Package dependencies installation failed."; exit 1; fi;
           npm test || failed=1
-          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os}}-$nodeVersion-error:::x: Package tests failed."; exit 1; fi;
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os }}-$nodeVersion-error:::x: Package tests failed."; exit 1; fi;
         #  echo "::set-output name=${{ matrix.os}}-${{ matrix.node-version }}-status::success";
