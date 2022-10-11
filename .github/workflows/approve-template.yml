@@ -125,7 +125,10 @@ jobs:
             ${{ needs.validate-template.outputs.check-github-link-error }}
             ${{ needs.validate-template.outputs.check-npm-package-name-error }}
             ${{ needs.validate-template.outputs.check-npm-package-metadata-error }}
-            ${{ needs.validate-template.outputs.check-npm-package-error }}
+            ${{ needs.validate-template.outputs.check-npm-package-ubuntu-latest-14x-error }}
+            ${{ needs.validate-template.outputs.check-npm-package-ubuntu-latest-16x-error }}
+            ${{ needs.validate-template.outputs.check-npm-package-windows-latest-14x-error }}
+            ${{ needs.validate-template.outputs.check-npm-package-windows-latest-16x-error }}
             ${{ needs.update-approval.outputs.error }}
             Fix all mentioned issues and comment `/approve` to try again.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
