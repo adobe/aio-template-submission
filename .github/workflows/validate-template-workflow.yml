@@ -134,7 +134,7 @@ jobs:
           git checkout `npm view ${{ inputs.npm-package }} gitHead` || failed=1
           if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os }}-$nodeVersion-error:::x: Failed switching to the GitHub commit hash."; exit 1; fi;
           npm install --legacy-peer-deps || failed=1
-          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os }}-$nodeVersion-error:::x: Package dependencies installation failed."; exit 1; fi;
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os }}-$nodeVersion-error:::x: Node version ${{ matrix.node-version}}, OS ${{ matrix.os }}...Package dependencies installation failed."; exit 1; fi;
           npm test || failed=1
           if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os }}-$nodeVersion-error:::x: Package tests failed."; exit 1; fi;
         #  echo "::set-output name=${{ matrix.os}}-${{ matrix.node-version }}-status::success";
