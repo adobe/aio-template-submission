@@ -159,7 +159,7 @@
         "author": "Adobe Inc.",
         "name": "@adobe/generator-add-action-asset-compute",
         "description": "Extensibility template for generator-aio-app",
-        "latestVersion": "0.2.4",
+        "latestVersion": "0.2.5",
         "publishDate": "2022-10-03T09:57:04.934Z",
         "categories": [
             "action",
