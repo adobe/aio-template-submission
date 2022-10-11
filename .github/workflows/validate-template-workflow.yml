@@ -100,14 +100,15 @@ jobs:
     needs: [check-npm-package-metadata, check-github-link]
     # if: ${{ needs.check-github-link.outputs.error == '' }}
     strategy:
+      fail-fast: false
       matrix:
         node-version: [14.x, 16.x]
         os: [ubuntu-latest, windows-latest]
     outputs:
-      ubuntu-latest-14x-error: ${{ steps.check-installation-and-tests.outputs.ubuntu-latest-14.x-error }}
-      ubuntu-latest-16x-error: ${{ steps.check-installation-and-tests.outputs.ubuntu-latest-16.x-error }}
-      windows-latest-14x-error: ${{ steps.check-installation-and-tests.outputs.windows-latest-14.x-error }}
-      windows-latest-16x-error: ${{ steps.check-installation-and-tests.outputs.windows-latest-16.x-error }}
+      ubuntu-latest-14x-error: ${{ steps.check-installation-and-tests.outputs.ubuntu-latest-14-error }}
+      ubuntu-latest-16x-error: ${{ steps.check-installation-and-tests.outputs.ubuntu-latest-16-error }}
+      windows-latest-14x-error: ${{ steps.check-installation-and-tests.outputs.windows-latest-14-error }}
+      windows-latest-16x-error: ${{ steps.check-installation-and-tests.outputs.windows-latest-16-error }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2.4.2
@@ -124,15 +125,16 @@ jobs:
           cd .. && mkdir "npm-package" && cd "npm-package"
           npm init --yes
           npm install ${{ inputs.npm-package }} || failed=1
-          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os}}-${{ matrix.node-version }}-error:::x: Package installation failed."; exit 1; fi;
+          if ${{ matrix.node-version == '14.x' }}; then nodeVersion='14'; else nodeVersion='16'; fi;
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os}}-$nodeVersion-error:::x: Package installation failed."; exit 1; fi;
           cd .. && mkdir "npm-package-src"
           git clone ${{ inputs.github-link }} "npm-package-src" || failed=1
-          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os}}-${{ matrix.node-version }}-error:::x: Failed cloning the GitHub repository."; exit 1; fi;
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os}}-$nodeVersion-error:::x: Failed cloning the GitHub repository."; exit 1; fi;
           cd "npm-package-src"
           git checkout `npm view ${{ inputs.npm-package }} gitHead` || failed=1
-          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os}}-${{ matrix.node-version }}-error:::x: Failed switching to the GitHub commit hash."; exit 1; fi;
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os}}-$nodeVersion-error:::x: Failed switching to the GitHub commit hash."; exit 1; fi;
           npm install --legacy-peer-deps || failed=1
-          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os}}-${{ matrix.node-version }}-error:::x: Package dependencies installation failed."; exit 1; fi;
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os}}-$nodeVersion-error:::x: Package dependencies installation failed."; exit 1; fi;
           npm test || failed=1
-          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os}}-${{ matrix.node-version }}-error:::x: Package tests failed."; exit 1; fi;
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os}}-$nodeVersion-error:::x: Package tests failed."; exit 1; fi;
         #  echo "::set-output name=${{ matrix.os}}-${{ matrix.node-version }}-status::success";
