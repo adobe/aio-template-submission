@@ -22,10 +22,16 @@ on:
         value: ${{ jobs.check-npm-package-metadata.outputs.error }}
       check-npm-package-metadata-status:
         value: ${{ jobs.check-npm-package-metadata.outputs.status }}
-      check-npm-package-error:
-        value: ${{ jobs.check-npm-package.outputs.error }}
-      check-npm-package-status:
-        value: ${{ jobs.check-npm-package.outputs.status }}
+      check-npm-package-ubuntu-latest-14x-error:
+        value: ${{ jobs.check-npm-package.outputs.ubuntu-latest-14x-error }}
+      check-npm-package-ubuntu-latest-16x-error:
+        value: ${{ jobs.check-npm-package.outputs.ubuntu-latest-16x-error }}
+      check-npm-package-windows-latest-14x-error:
+        value: ${{ jobs.check-npm-package.outputs.windows-latest-14x-error }}
+      check-npm-package-windows-latest-16x-error:
+        value: ${{ jobs.check-npm-package.outputs.windows-latest-16x-error }}
+      #check-npm-package-status:
+      #  value: ${{ jobs.check-npm-package.outputs.status }}
 
 defaults:
   run:
@@ -92,14 +98,16 @@ jobs:
     name: Validate template
     runs-on: ${{ matrix.os }}
     needs: [check-npm-package-metadata, check-github-link]
-    if: ${{ needs.check-github-link.outputs.error == '' }}
+    # if: ${{ needs.check-github-link.outputs.error == '' }}
     strategy:
       matrix:
         node-version: [14.x, 16.x]
         os: [ubuntu-latest, windows-latest]
     outputs:
-      error: ${{ steps.check-installation-and-tests.outputs.error }}
-      status: ${{ steps.check-installation-and-tests.outputs.status }}
+      ubuntu-latest-14x-error: ${{ steps.check-installation-and-tests.outputs.ubuntu-latest-14.x-error }}
+      ubuntu-latest-16x-error: ${{ steps.check-installation-and-tests.outputs.ubuntu-latest-16.x-error }}
+      windows-latest-14x-error: ${{ steps.check-installation-and-tests.outputs.windows-latest-14.x-error }}
+      windows-latest-16x-error: ${{ steps.check-installation-and-tests.outputs.windows-latest-16.x-error }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2.4.2
@@ -116,15 +124,15 @@ jobs:
           cd .. && mkdir "npm-package" && cd "npm-package"
           npm init --yes
           npm install ${{ inputs.npm-package }} || failed=1
-          if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: Package installation failed."; exit 1; fi;
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os}}-${{ matrix.node-version }}-error:::x: Package installation failed."; exit 1; fi;
           cd .. && mkdir "npm-package-src"
           git clone ${{ inputs.github-link }} "npm-package-src" || failed=1
-          if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: Failed cloning the GitHub repository."; exit 1; fi;
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os}}-${{ matrix.node-version }}-error:::x: Failed cloning the GitHub repository."; exit 1; fi;
           cd "npm-package-src"
           git checkout `npm view ${{ inputs.npm-package }} gitHead` || failed=1
-          if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: Failed switching to the GitHub commit hash."; exit 1; fi;
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os}}-${{ matrix.node-version }}-error:::x: Failed switching to the GitHub commit hash."; exit 1; fi;
           npm install --legacy-peer-deps || failed=1
-          if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: Package dependencies installation failed."; exit 1; fi;
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os}}-${{ matrix.node-version }}-error:::x: Package dependencies installation failed."; exit 1; fi;
           npm test || failed=1
-          if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: Package tests failed."; exit 1; fi;
-          echo "::set-output name=status::success";
+          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os}}-${{ matrix.node-version }}-error:::x: Package tests failed."; exit 1; fi;
+        #  echo "::set-output name=${{ matrix.os}}-${{ matrix.node-version }}-status::success";

@@ -47,7 +47,7 @@ jobs:
     name: Add to Template Registry
     runs-on: ubuntu-latest
     needs: [parse-issue-form-body, validate-template, needs-more-verification]
-    if: ${{ always() && (needs.validate-template.outputs.check-npm-package-status == 'success' && needs.validate-template.outputs.check-github-link-status == 'success') }}
+    # if: ${{ always() && (needs.validate-template.outputs.check-npm-package-status == 'success' && needs.validate-template.outputs.check-github-link-status == 'success') }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2.4.2
@@ -100,7 +100,10 @@ jobs:
             ${{ needs.validate-template.outputs.check-github-link-error }}
             ${{ needs.validate-template.outputs.check-npm-package-name-error }}
             ${{ needs.validate-template.outputs.check-npm-package-metadata-error }}
-            ${{ needs.validate-template.outputs.check-npm-package-error }}
+            ${{ needs.validate-template.outputs.check-npm-package-ubuntu-latest-14x-error }}
+            ${{ needs.validate-template.outputs.check-npm-package-ubuntu-latest-16x-error }}
+            ${{ needs.validate-template.outputs.check-npm-package-windows-latest-14x-error }}
+            ${{ needs.validate-template.outputs.check-npm-package-windows-latest-16x-error }}
             ${{ needs.add-to-registry.outputs.error }}
 
             Fix all mentioned issues and comment `/check` to run checks again.
