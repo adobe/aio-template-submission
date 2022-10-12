@@ -30,8 +30,6 @@ on:
         value: ${{ jobs.check-npm-package.outputs.windows-latest-14x-error }}
       check-npm-package-windows-latest-16x-error:
         value: ${{ jobs.check-npm-package.outputs.windows-latest-16x-error }}
-      #check-npm-package-status:
-      #  value: ${{ jobs.check-npm-package.outputs.status }}
 
 defaults:
   run:
@@ -137,4 +135,3 @@ jobs:
           if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os }}-$nodeVersion-error:::x: Node version ${{ matrix.node-version}}, OS ${{ matrix.os }}...Package dependencies installation failed."; exit 1; fi;
           npm test || failed=1
           if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os }}-$nodeVersion-error:::x: Node version ${{ matrix.node-version}}, OS ${{ matrix.os }}...Package tests failed."; exit 1; fi;
-        #  echo "::set-output name=${{ matrix.os}}-${{ matrix.node-version }}-status::success";

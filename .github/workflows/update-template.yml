@@ -83,7 +83,6 @@ jobs:
     outputs:
       error: ${{ steps.run-update-template.outputs.error }}
     needs: [parse-issue-form-body, validate-template, needs-more-verification]
-    # if: ${{ always() && (needs.validate-template.outputs.check-npm-package-status == 'success' && needs.validate-template.outputs.check-github-link-status == 'success') }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2.4.2
