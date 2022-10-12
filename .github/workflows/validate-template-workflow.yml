@@ -45,7 +45,7 @@ jobs:
       status: ${{ steps.check-github-link.outputs.status }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.4.2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Install dependencies
@@ -81,7 +81,7 @@ jobs:
       status: ${{ steps.check-npm-package-metadata.outputs.status }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.4.2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Install dependencies
@@ -109,11 +109,11 @@ jobs:
       windows-latest-16x-error: ${{ steps.check-installation-and-tests.outputs.windows-latest-16-error }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.4.2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
       - name: Check installation and tests
