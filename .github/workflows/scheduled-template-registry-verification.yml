@@ -23,13 +23,13 @@ jobs:
       - name: Get today's date
         id: date
         run: |
-          echo "::set-output name=today::$(date '+%m/%d/%Y')"
+          echo "TODAY=$(date '+%m/%d/%Y')" >> $GITHUB_OUTPUT
       - name: Create "Template Registry Verification" Issue
         uses: imjohnbo/issue-bot@v3.3.6
         id: issue
         with:
           labels: "verify-template-registry, template-auto-verification"
-          title: '"Template Registry Verification" (${{ steps.date.outputs.today }})'
+          title: '"Template Registry Verification" (${{ steps.date.outputs.TODAY }})'
           body: |
             ### Template Registry Verification
           pinned: false

@@ -29,11 +29,11 @@ jobs:
         run: |
           if ${{ contains(github.event.issue.labels.*.name, 'add-template') }}
           then
-            echo '::set-output name=REQUEST_TYPE::review-request'
+            echo "REQUEST_TYPE=review-request" >> $GITHUB_OUTPUT
           fi
           if ${{ contains(github.event.issue.labels.*.name, 'update-template') }}
           then
-            echo '::set-output name=REQUEST_TYPE::update-request'
+            echo "REQUEST_TYPE=update-request" >> $GITHUB_OUTPUT
           fi
       - name: Parse issue form body
         id: parse-issue-form-body
@@ -46,17 +46,17 @@ jobs:
     runs-on: ubuntu-latest
     needs: [parse-issue-form-body]
     outputs:
-      github-repo-owner: ${{ steps.set-values.outputs.github-repo-owner }}
-      github-repo: ${{ steps.set-values.outputs.github-repo }}
+      github-repo-owner: ${{ steps.set-values.outputs.GITHUB_REPO_OWNER }}
+      github-repo: ${{ steps.set-values.outputs.GITHUB_REPO }}
     steps:
       - name: Set the owner and repo name.
         id: set-values
         run: |
           ownerRepo='${{ github.repository }}'
           owner='${{ github.repository_owner }}'
-          echo "::set-output name=github-repo-owner::$owner"
+          echo "GITHUB_REPO_OWNER=$owner" >> $GITHUB_OUTPUT
           github_repo=${ownerRepo#"$owner/"}
-          echo "::set-output name=github-repo::$github_repo"
+          echo "GITHUB_REPO=$github_repo" >> $GITHUB_OUTPUT
   check-permissions:
     needs: [parse-issue-form-body, set-owner-repo]
     uses: ./.github/workflows/check-permissions-workflow.yml

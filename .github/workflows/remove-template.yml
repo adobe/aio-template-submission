@@ -36,24 +36,24 @@ jobs:
     runs-on: ubuntu-latest
     needs: [parse-issue-form-body]
     outputs:
-      github-repo-owner: ${{ steps.set-values.outputs.github-repo-owner }}
-      github-repo: ${{ steps.set-values.outputs.github-repo }}
-      user-login: ${{ steps.set-values.outputs.user-login }}
+      github-repo-owner: ${{ steps.set-values.outputs.GITHUB_REPO_OWNER }}
+      github-repo: ${{ steps.set-values.outputs.GITHUB_REPO }}
+      user-login: ${{ steps.set-values.outputs.USER_LOGIN }}
     steps:
       - name: Set the owner, repo name and user login.
         id: set-values
         run: |
           if ${{ github.event_name == 'issue_comment' }}
           then
-            echo '::set-output name=user-login::${{ github.event.comment.user.login }}'
+            echo "USER_LOGIN=${{ github.event.comment.user.login }}" >> $GITHUB_OUTPUT
           else
-            echo '::set-output name=user-login::${{ github.event.issue.user.login }}'
+            echo "USER_LOGIN=${{ github.event.issue.user.login }}" >> $GITHUB_OUTPUT
           fi
           ownerRepo='${{ github.repository }}'
           owner='${{ github.repository_owner }}'
-          echo "::set-output name=github-repo-owner::$owner"
+          echo "GITHUB_REPO_OWNER=$owner" >> $GITHUB_OUTPUT
           github_repo=${ownerRepo#"$owner/"}
-          echo "::set-output name=github-repo::$github_repo"
+          echo "GITHUB_REPO=$github_repo" >> $GITHUB_OUTPUT
   check-permissions:
     needs: [parse-issue-form-body, set-owner-repo-user]
     uses: ./.github/workflows/check-permissions-workflow.yml
