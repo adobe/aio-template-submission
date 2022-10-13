@@ -23,13 +23,13 @@ jobs:
       - name: Get today's date
         id: date
         run: |
-          echo "::set-output name=today::$(date '+%m/%d/%Y')"
+          echo "TODAY=$(date '+%m/%d/%Y')" >> $GITHUB_OUTPUT
       - name: Create "Template Registry Verification" Issue
         uses: imjohnbo/issue-bot@v3.3.6
         id: issue
         with:
           labels: "verify-template-registry, template-auto-verification"
-          title: '"Template Registry Verification" (${{ steps.date.outputs.today }})'
+          title: '"Template Registry Verification" (${{ steps.date.outputs.TODAY }})'
           body: |
             ### Template Registry Verification
           pinned: false
@@ -45,7 +45,7 @@ jobs:
       error: ${{ steps.check-registry.outputs.error }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.4.2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Install dependencies
@@ -65,7 +65,7 @@ jobs:
     needs: [create-issue, check-registry]
     if: ${{ needs.check-registry.outputs.templates-to-process == 0 }}
     steps:
-      - uses: peter-evans/close-issue@v1.0.3
+      - uses: peter-evans/close-issue@v2.0.3
         with:
           issue-number: ${{ needs.create-issue.outputs.issue-number }}
           comment: ":white_check_mark: All template packages in Template Registry are available and contain the latest information. Nothing to update."

@@ -41,11 +41,11 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     outputs:
-      error: ${{ steps.check-github-link.outputs.error }}
-      status: ${{ steps.check-github-link.outputs.status }}
+      error: ${{ steps.check-github-link.outputs.ERROR }}
+      status: ${{ steps.check-github-link.outputs.STATUS }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.4.2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Install dependencies
@@ -55,33 +55,33 @@ jobs:
         run: |
           failed=0
           git ls-remote --tags ${{ inputs.github-link }} || failed=1
-          if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: A link to the GitHub repo is incorrect or the GitHub repo is not public."; exit 1; fi;
+          if [ ${failed} -eq 1 ]; then echo "ERROR=:x: A link to the GitHub repo is incorrect or the GitHub repo is not public." >> $GITHUB_OUTPUT; exit 1; fi;
           node src/check-github-link-package-name.js ${{ inputs.npm-package }} ${{ inputs.github-link }}
-          if [ ${failed} -eq 0 ]; then echo "::set-output name=status::success"; fi;
+          if [ ${failed} -eq 0 ]; then echo "STATUS=success" >> $GITHUB_OUTPUT; fi;
   check-npm-package-name:
     name: Check NPM package name
     runs-on: ubuntu-latest
     outputs:
-      error: ${{ steps.check-npm-package-name.outputs.error }}
-      status: ${{ steps.check-npm-package-name.outputs.status }}
+      error: ${{ steps.check-npm-package-name.outputs.ERROR }}
+      status: ${{ steps.check-npm-package-name.outputs.STATUS }}
     steps:
       - name: Check NPM package name
         id: check-npm-package-name
         run: |
           failed=0
           npm view ${{ inputs.npm-package }} name || failed=1
-          if [ ${failed} -eq 1 ]; then echo "::set-output name=error:::x: A NPM package name is incorrect or the NPM package doesn't exist."; exit 1; fi;
-          echo "::set-output name=status::success";
+          if [ ${failed} -eq 1 ]; then echo "ERROR=:x: A NPM package name is incorrect or the NPM package doesn't exist." >> $GITHUB_OUTPUT; exit 1; fi;
+          echo "STATUS=success" >> $GITHUB_OUTPUT;
   check-npm-package-metadata:
     name: Check NPM package metadata
     runs-on: ubuntu-latest
     needs: [check-npm-package-name]
     outputs:
-      error: ${{ steps.check-npm-package-metadata.outputs.error }}
-      status: ${{ steps.check-npm-package-metadata.outputs.status }}
+      error: ${{ steps.check-npm-package-metadata.outputs.ERROR }}
+      status: ${{ steps.check-npm-package-metadata.outputs.STATUS }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.4.2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Install dependencies
@@ -91,12 +91,11 @@ jobs:
         run: |
           npm v ${{ inputs.npm-package }} dist.tarball | xargs curl | tar -xz
           node src/check-npm-package-metadata.js $GITHUB_WORKSPACE/package
-          echo "::set-output name=status::success";
+          echo "STATUS=success" >> $GITHUB_OUTPUT;
   check-npm-package:
     name: Validate template
     runs-on: ${{ matrix.os }}
     needs: [check-npm-package-metadata, check-github-link]
-    # if: ${{ needs.check-github-link.outputs.error == '' }}
     strategy:
       fail-fast: false
       matrix:
@@ -109,11 +108,11 @@ jobs:
       windows-latest-16x-error: ${{ steps.check-installation-and-tests.outputs.windows-latest-16-error }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.4.2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
       - name: Check installation and tests
@@ -124,14 +123,14 @@ jobs:
           npm init --yes
           npm install ${{ inputs.npm-package }} || failed=1
           if ${{ matrix.node-version == '14.x' }}; then nodeVersion='14'; else nodeVersion='16'; fi;
-          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os }}-$nodeVersion-error:::x: Node version ${{ matrix.node-version}}, OS ${{ matrix.os }}...Package installation failed."; exit 1; fi;
+          if [ ${failed} -eq 1 ]; then echo "${{ matrix.os }}-$nodeVersion-error=:x: Node version ${{ matrix.node-version}}, OS ${{ matrix.os }}...Package installation failed." >> $GITHUB_OUTPUT; exit 1; fi;
           cd .. && mkdir "npm-package-src"
           git clone ${{ inputs.github-link }} "npm-package-src" || failed=1
-          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os }}-$nodeVersion-error:::x: Node version ${{ matrix.node-version}}, OS ${{ matrix.os }}...Failed cloning the GitHub repository."; exit 1; fi;
+          if [ ${failed} -eq 1 ]; then echo "${{ matrix.os }}-$nodeVersion-error=:x: Node version ${{ matrix.node-version}}, OS ${{ matrix.os }}...Failed cloning the GitHub repository." >> $GITHUB_OUTPUT; exit 1; fi;
           cd "npm-package-src"
           git checkout `npm view ${{ inputs.npm-package }} gitHead` || failed=1
-          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os }}-$nodeVersion-error:::x: Node version ${{ matrix.node-version}}, OS ${{ matrix.os }}...Failed switching to the GitHub commit hash."; exit 1; fi;
+          if [ ${failed} -eq 1 ]; then echo "${{ matrix.os }}-$nodeVersion-error=:x: Node version ${{ matrix.node-version}}, OS ${{ matrix.os }}...Failed switching to the GitHub commit hash." >> $GITHUB_OUTPUT; exit 1; fi;
           npm install --legacy-peer-deps || failed=1
-          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os }}-$nodeVersion-error:::x: Node version ${{ matrix.node-version}}, OS ${{ matrix.os }}...Package dependencies installation failed."; exit 1; fi;
+          if [ ${failed} -eq 1 ]; then echo "${{ matrix.os }}-$nodeVersion-error=:x: Node version ${{ matrix.node-version}}, OS ${{ matrix.os }}...Package dependencies installation failed." >> $GITHUB_OUTPUT; exit 1; fi;
           npm test || failed=1
-          if [ ${failed} -eq 1 ]; then echo "::set-output name=${{ matrix.os }}-$nodeVersion-error:::x: Node version ${{ matrix.node-version}}, OS ${{ matrix.os }}...Package tests failed."; exit 1; fi;
+          if [ ${failed} -eq 1 ]; then echo "${{ matrix.os }}-$nodeVersion-error=:x: Node version ${{ matrix.node-version}}, OS ${{ matrix.os }}...Package tests failed." >> $GITHUB_OUTPUT; exit 1; fi;
