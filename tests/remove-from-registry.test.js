@@ -14,7 +14,13 @@ const { when } = require('jest-when');
 const { generateRegistryItem, getRegistryJsonSchema } = require('./helper');
 const fs = require('fs');
 
-jest.mock('fs');
+jest.mock('fs', () => ({
+    promises: {
+      access: jest.fn()
+    },
+    readFileSync: jest.fn(),
+    writeFileSync: jest.fn(),
+  }));
 
 beforeEach(() => {
     jest.clearAllMocks();

@@ -15,7 +15,13 @@ const { when } = require('jest-when');
 const fs = require('fs');
 const registry = require('../src/registry');
 
-jest.mock('fs');
+jest.mock('fs', () => ({
+    promises: {
+      access: jest.fn()
+    },
+    readFileSync: jest.fn(),
+    writeFileSync: jest.fn(),
+  }));
 when(fs.readFileSync).calledWith('registry.schema.json').mockReturnValue(getRegistryJsonSchema());
 
 beforeEach(() => {
