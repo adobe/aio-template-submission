@@ -337,7 +337,7 @@
         "author": "Adobe Inc.",
         "name": "@adobe/generator-add-action-customer-profile",
         "description": "Extensibility template for generating an Adobe Customer Profile App Builder action",
-        "latestVersion": "0.1.1",
+        "latestVersion": "0.1.2",
         "publishDate": "2022-10-20T05:05:46.960Z",
         "categories": [
             "helper-template",
@@ -351,6 +351,11 @@
             "npm": "https://www.npmjs.com/package/@adobe/generator-add-action-customer-profile",
             "github": "https://github.com/adobe/generator-add-action-customer-profile"
         },
-        "status": "Approved"
+        "status": "Approved",
+        "apis": [
+            {
+                "code": "McDataServicesSdk"
+            }
+        ]
     }
 ]
