@@ -316,7 +316,7 @@
         "author": "Adobe Inc.",
         "name": "@adobe/generator-add-action-audience-manager-cd",
         "description": "Extensibility template for generating an Adobe Audience Manager CD App Builder action",
-        "latestVersion": "0.1.1",
+        "latestVersion": "0.1.2",
         "publishDate": "2022-10-20T04:55:25.721Z",
         "categories": [
             "helper-template",
@@ -330,7 +330,12 @@
             "npm": "https://www.npmjs.com/package/@adobe/generator-add-action-audience-manager-cd",
             "github": "https://github.com/adobe/generator-add-action-audience-manager-cd"
         },
-        "status": "Approved"
+        "status": "Approved",
+        "apis": [
+            {
+                "code": "AudienceManagerCustomerSDK"
+            }
+        ]
     },
     {
         "id": "3b28c650-c7d4-4443-b46f-33b428b898fa",
