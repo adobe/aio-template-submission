@@ -238,7 +238,7 @@
         "author": "Adobe Inc.",
         "name": "@adobe/generator-add-action-target",
         "description": "Extensibility template for generating an Adobe Target App Builder action",
-        "latestVersion": "0.1.1",
+        "latestVersion": "0.1.2",
         "publishDate": "2022-10-20T04:38:17.237Z",
         "categories": [
             "helper-template",
@@ -252,7 +252,12 @@
             "npm": "https://www.npmjs.com/package/@adobe/generator-add-action-target",
             "github": "https://github.com/adobe/generator-add-action-target"
         },
-        "status": "Approved"
+        "status": "Approved",
+        "apis": [
+            {
+                "code": "AdobeTargetSDK"
+            }
+        ]
     },
     {
         "id": "884c61f7-386e-461b-b471-b69d37b608a0",
