@@ -232,5 +232,26 @@
             "github": "https://github.com/irenelagno/generator-for-live-stream"
         },
         "status": "InVerification"
+    },
+    {
+        "id": "60c0f3c4-fc25-472a-b2f2-dd7f829a8dc8",
+        "author": "Adobe Inc.",
+        "name": "@adobe/generator-add-action-target",
+        "description": "Extensibility template for generating an Adobe Target App Builder action",
+        "latestVersion": "0.1.1",
+        "publishDate": "2022-10-20T04:38:17.237Z",
+        "categories": [
+            "helper-template",
+            "action"
+        ],
+        "adobeRecommended": true,
+        "keywords": [
+            "ecosystem:aio-app-builder-template"
+        ],
+        "links": {
+            "npm": "https://www.npmjs.com/package/@adobe/generator-add-action-target",
+            "github": "https://github.com/adobe/generator-add-action-target"
+        },
+        "status": "Approved"
     }
 ]
