@@ -212,5 +212,25 @@
                 "extensionPointId": "aem/cf-console-admin/1"
             }
         ]
+    },
+    {
+        "id": "ee4f199c-10b1-47c1-a2b6-1043d9eba3ac",
+        "author": "Iryna Lagno",
+        "name": "@irenelagno/generator-for-live-stream",
+        "description": "First version of template for demo purposes",
+        "latestVersion": "0.0.1",
+        "publishDate": "2022-10-20T01:13:22.961Z",
+        "categories": [
+            "helper-template"
+        ],
+        "adobeRecommended": false,
+        "keywords": [
+            "ecosystem:aio-app-builder-templates"
+        ],
+        "links": {
+            "npm": "https://www.npmjs.com/package/@irenelagno/generator-for-live-stream",
+            "github": "https://github.com/irenelagno/generator-for-live-stream"
+        },
+        "status": "InVerification"
     }
 ]
