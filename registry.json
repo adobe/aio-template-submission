@@ -253,5 +253,26 @@
             "github": "https://github.com/adobe/generator-add-action-target"
         },
         "status": "Approved"
+    },
+    {
+        "id": "884c61f7-386e-461b-b471-b69d37b608a0",
+        "author": "Adobe Inc.",
+        "name": "@adobe/generator-add-action-analytics",
+        "description": "Extensibility template for generating an Adobe Analytics App Builder action",
+        "latestVersion": "0.1.1",
+        "publishDate": "2022-10-20T04:42:57.626Z",
+        "categories": [
+            "helper-template",
+            "action"
+        ],
+        "adobeRecommended": true,
+        "keywords": [
+            "ecosystem:aio-app-builder-template"
+        ],
+        "links": {
+            "npm": "https://www.npmjs.com/package/@adobe/generator-add-action-analytics",
+            "github": "https://github.com/adobe/generator-add-action-analytics"
+        },
+        "status": "Approved"
     }
 ]
