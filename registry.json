@@ -290,7 +290,7 @@
         "author": "Adobe Inc.",
         "name": "@adobe/generator-add-action-campaign-standard",
         "description": "Extensibility template for generating an Adobe Campaign Standard App Builder action",
-        "latestVersion": "0.1.1",
+        "latestVersion": "0.1.2",
         "publishDate": "2022-10-20T04:49:44.961Z",
         "categories": [
             "helper-template",
@@ -304,7 +304,12 @@
             "npm": "https://www.npmjs.com/package/@adobe/generator-add-action-campaign-standard",
             "github": "https://github.com/adobe/generator-add-action-campaign-standard"
         },
-        "status": "Approved"
+        "status": "Approved",
+        "apis": [
+            {
+                "code": "CampaignSDK"
+            }
+        ]
     },
     {
         "id": "8ddad05a-2b70-4ca3-93c2-59ed13297e9a",
