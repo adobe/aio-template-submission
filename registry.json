@@ -259,7 +259,7 @@
         "author": "Adobe Inc.",
         "name": "@adobe/generator-add-action-analytics",
         "description": "Extensibility template for generating an Adobe Analytics App Builder action",
-        "latestVersion": "0.1.1",
+        "latestVersion": "0.1.2",
         "publishDate": "2022-10-20T04:42:57.626Z",
         "categories": [
             "helper-template",
@@ -273,7 +273,12 @@
             "npm": "https://www.npmjs.com/package/@adobe/generator-add-action-analytics",
             "github": "https://github.com/adobe/generator-add-action-analytics"
         },
-        "status": "Approved"
+        "status": "Approved",
+        "apis": [
+            {
+                "code": "AdobeAnalyticsSDK"
+            }
+        ]
     },
     {
         "id": "d113019d-1162-44d3-bb5c-6b6485b9f16a",
