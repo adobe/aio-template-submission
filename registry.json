@@ -274,5 +274,26 @@
             "github": "https://github.com/adobe/generator-add-action-analytics"
         },
         "status": "Approved"
+    },
+    {
+        "id": "d113019d-1162-44d3-bb5c-6b6485b9f16a",
+        "author": "Adobe Inc.",
+        "name": "@adobe/generator-add-action-campaign-standard",
+        "description": "Extensibility template for generating an Adobe Campaign Standard App Builder action",
+        "latestVersion": "0.1.1",
+        "publishDate": "2022-10-20T04:49:44.961Z",
+        "categories": [
+            "helper-template",
+            "action"
+        ],
+        "adobeRecommended": true,
+        "keywords": [
+            "ecosystem:aio-app-builder-template"
+        ],
+        "links": {
+            "npm": "https://www.npmjs.com/package/@adobe/generator-add-action-campaign-standard",
+            "github": "https://github.com/adobe/generator-add-action-campaign-standard"
+        },
+        "status": "Approved"
     }
 ]
