@@ -316,5 +316,26 @@
             "github": "https://github.com/adobe/generator-add-action-audience-manager-cd"
         },
         "status": "Approved"
+    },
+    {
+        "id": "3b28c650-c7d4-4443-b46f-33b428b898fa",
+        "author": "Adobe Inc.",
+        "name": "@adobe/generator-add-action-customer-profile",
+        "description": "Extensibility template for generating an Adobe Customer Profile App Builder action",
+        "latestVersion": "0.1.1",
+        "publishDate": "2022-10-20T05:05:46.960Z",
+        "categories": [
+            "helper-template",
+            "action"
+        ],
+        "adobeRecommended": true,
+        "keywords": [
+            "ecosystem:aio-app-builder-template"
+        ],
+        "links": {
+            "npm": "https://www.npmjs.com/package/@adobe/generator-add-action-customer-profile",
+            "github": "https://github.com/adobe/generator-add-action-customer-profile"
+        },
+        "status": "Approved"
     }
 ]
