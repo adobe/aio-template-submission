@@ -65,7 +65,7 @@ jobs:
     needs: [create-issue, check-registry]
     if: ${{ needs.check-registry.outputs.templates-to-process == 0 }}
     steps:
-      - uses: peter-evans/close-issue@v2.0.3
+      - uses: peter-evans/close-issue@v2
         with:
           issue-number: ${{ needs.create-issue.outputs.issue-number }}
           comment: ":white_check_mark: All template packages in Template Registry are available and contain the latest information. Nothing to update."
