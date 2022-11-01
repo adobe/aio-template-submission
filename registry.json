@@ -362,5 +362,30 @@
                 "code": "McDataServicesSdk"
             }
         ]
+    },
+    {
+        "id": "05813a61-8f1c-4584-b20c-8a51fbfef5df",
+        "author": "Adobe Inc.",
+        "name": "@adobe/generator-app-aem-react",
+        "description": "Template for AEM React SPA based on WKND content.",
+        "latestVersion": "0.0.1-beta.3",
+        "publishDate": "2022-11-01T22:06:59.154Z",
+        "categories": [
+            "ui"
+        ],
+        "adobeRecommended": true,
+        "keywords": [
+            "ecosystem:aio-app-builder-templates"
+        ],
+        "links": {
+            "npm": "https://www.npmjs.com/package/@adobe/generator-app-aem-react",
+            "github": "https://github.com/adobe/generator-app-aem-react"
+        },
+        "status": "Approved",
+        "extensions": [
+            {
+                "extensionPointId": "aem/spa/1"
+            }
+        ]
     }
 ]
