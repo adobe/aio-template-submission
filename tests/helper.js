@@ -55,7 +55,6 @@ function generateRegistryItem(templateName, templateStatus = TEMPLATE_STATUS_APP
                     }
                 ],
                 'event': { 'consumer': { 'name': 'registration-name', 'description': 'registration-description', 'events_of_interest': [{ 'provider_id': 'provider-id-1', 'event-code': 'event-code-1' }] }, 'provider': { 'label': 'provider-name', 'description': 'provider-description', 'docs-url': 'provider-docs-url', 'events': [{ 'event_code': 'event-code-1', 'label': 'event-1-label', 'description': 'event-1-description' }] } },
-                'adobeRecommended': true,
                 'keywords': [
                     'aio',
                     'adobeio',

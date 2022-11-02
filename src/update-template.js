@@ -10,7 +10,6 @@ governing permissions and limitations under the License.
 */
 
 const core = require('@actions/core');
-const { isAdobeRecommended } = require('./is-adobe-recommended');
 const { getNpmPackageMetadata } = require('./npm-package-metadata');
 const { getFromRegistry, updateInRegistry, TEMPLATE_STATUS_ERROR, TEMPLATE_STATUS_IN_VERIFICATION } = require('./registry');
 const { TEMPLATE_STATUS_APPROVED, TEMPLATE_STATUS_REJECTED } = require('../src/registry');

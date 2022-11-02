@@ -25,6 +25,7 @@ beforeEach(() => {
 describe('Verify updating template in registry', () => {
     test('Verify that "update-template.js" updates template', async () => {
         const existingRegistryItem = generateRegistryItem(npmPackageName);
+        existingRegistryItem['adobeRecommended'] = true
         getFromRegistry.mockReturnValue(existingRegistryItem);
         updateInRegistry.mockImplementation((item) => {
             expect(item).toEqual({
@@ -81,7 +82,6 @@ describe('Verify updating template in registry', () => {
                 'description': 'A template for testing purposes [1.0.1]',
                 'latestVersion': '1.0.1',
                 'categories': ['action', 'ui'],
-                'adobeRecommended': true,
                 'keywords': ['aio', 'adobeio', 'app', 'templates', 'aio-app-builder-template'],
                 'extensions': [{ 'extensionPointId': 'dx/excshell/1' }],
                 'apis': [
@@ -106,6 +106,7 @@ describe('Verify updating template in registry', () => {
         const gitHubUrl = 'https://github.com/company1/app-builder-template';
         const npmPackageName = '@company1/app-builder-template';
         const existingRegistryItem = generateRegistryItem(npmPackageName);
+        existingRegistryItem['adobeRecommended'] = false
         getFromRegistry.mockReturnValue(existingRegistryItem);
         updateInRegistry.mockImplementation((item) => {
             expect(item).toEqual({
