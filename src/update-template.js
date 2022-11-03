@@ -10,7 +10,6 @@ governing permissions and limitations under the License.
 */
 
 const core = require('@actions/core');
-const { isAdobeRecommended } = require('./is-adobe-recommended');
 const { getNpmPackageMetadata } = require('./npm-package-metadata');
 const { getFromRegistry, updateInRegistry, TEMPLATE_STATUS_ERROR, TEMPLATE_STATUS_IN_VERIFICATION } = require('./registry');
 const { TEMPLATE_STATUS_APPROVED, TEMPLATE_STATUS_REJECTED } = require('../src/registry');
@@ -25,7 +24,6 @@ const { TEMPLATE_STATUS_APPROVED, TEMPLATE_STATUS_REJECTED } = require('../src/r
         const status = myArgs[3]
 
         const npmPackageMetadata = getNpmPackageMetadata(packagePath);
-        const adobeRecommended = isAdobeRecommended(npmPackageMetadata.name);
 
         const savedTemplate = getFromRegistry(npmPackageMetadata.name);
 
@@ -35,7 +33,6 @@ const { TEMPLATE_STATUS_APPROVED, TEMPLATE_STATUS_REJECTED } = require('../src/r
             "description": npmPackageMetadata.description,
             "latestVersion": npmPackageMetadata.version,
             "categories": npmPackageMetadata.categories,
-            "adobeRecommended": adobeRecommended,
             "keywords": npmPackageMetadata.keywords,
             "links": {
                 "npm": npmUrl,

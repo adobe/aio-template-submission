@@ -57,6 +57,42 @@ describe('Verify updating template in registry', () => {
         });
     });
 
+    test('Verify that adobeRecommended flag is not updated after creation', async () => {
+        const existingRegistryItem = generateRegistryItem(npmPackageName);
+        existingRegistryItem['adobeRecommended'] = false
+        existingRegistryItem['status'] = TEMPLATE_STATUS_IN_VERIFICATION
+        getFromRegistry.mockReturnValue(existingRegistryItem);
+        updateInRegistry.mockImplementation((item) => {
+            expect(item).toEqual({
+                'id': existingRegistryItem.id,
+                'name': existingRegistryItem.name,
+                'status': TEMPLATE_STATUS_APPROVED,
+                'links': existingRegistryItem.links,
+                'author': 'Adobe Inc.',
+                'description': 'A template for testing purposes [1.0.1]',
+                'latestVersion': '1.0.1',
+                'publishDate': existingRegistryItem.publishDate,
+                'extensions': [{ 'extensionPointId': 'dx/excshell/1' }],
+                'categories': ['action', 'ui'],
+                'runtime': true,
+                'apis': [
+                    { 'code': 'AnalyticsSDK', 'credentials': 'OAuth' },
+                    { 'code': 'CampaignStandard' },
+                    { 'code': 'Runtime' }
+                ],
+                'event': existingRegistryItem.event,
+                'adobeRecommended': false,
+                'keywords': ['aio', 'adobeio', 'app', 'templates', 'aio-app-builder-template']
+            });
+        });
+
+        const script = '../src/update-template.js';
+        process.argv = ['node', script, 'tests/templatePackage', gitHubUrl, npmPackageName, TEMPLATE_STATUS_APPROVED];
+        jest.isolateModules(async () => {
+            await require(script);
+        });
+    });
+
     test('Verify that "update-template.js" sets publishDate if missing', async () => {
         const newRegistryItemAddedViaAPI = {
             'id': 'some-id',
@@ -81,7 +117,6 @@ describe('Verify updating template in registry', () => {
                 'description': 'A template for testing purposes [1.0.1]',
                 'latestVersion': '1.0.1',
                 'categories': ['action', 'ui'],
-                'adobeRecommended': true,
                 'keywords': ['aio', 'adobeio', 'app', 'templates', 'aio-app-builder-template'],
                 'extensions': [{ 'extensionPointId': 'dx/excshell/1' }],
                 'apis': [
@@ -118,7 +153,7 @@ describe('Verify updating template in registry', () => {
                 'latestVersion': '1.0.1',
                 'publishDate': existingRegistryItem.publishDate,
                 'categories': ['action', 'ui'],
-                'adobeRecommended': false,
+                'adobeRecommended': true,
                 'keywords': ['aio', 'adobeio', 'app', 'templates', 'aio-app-builder-template']
             });
         });
