@@ -25,7 +25,6 @@ beforeEach(() => {
 describe('Verify updating template in registry', () => {
     test('Verify that "update-template.js" updates template', async () => {
         const existingRegistryItem = generateRegistryItem(npmPackageName);
-        existingRegistryItem['adobeRecommended'] = true
         getFromRegistry.mockReturnValue(existingRegistryItem);
         updateInRegistry.mockImplementation((item) => {
             expect(item).toEqual({
