@@ -368,7 +368,7 @@
         "author": "Adobe Inc.",
         "name": "@adobe/generator-app-aem-react",
         "description": "Template for AEM React SPA based on WKND content.",
-        "latestVersion": "0.0.1-beta.3",
+        "latestVersion": "0.0.1-beta.5",
         "publishDate": "2022-11-01T22:06:59.154Z",
         "categories": [
             "ui"
