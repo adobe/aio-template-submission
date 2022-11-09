@@ -158,8 +158,8 @@
         "id": "fa39b0ac-c04c-470b-a42a-374e830fbeb1",
         "author": "Adobe Inc.",
         "name": "@adobe/generator-add-action-asset-compute",
-        "description": "Extensibility template for generator-aio-app",
-        "latestVersion": "0.2.5",
+        "description": "Extensibility template for generating an Adobe Asset Compute action",
+        "latestVersion": "1.0.0",
         "publishDate": "2022-10-03T09:57:04.934Z",
         "categories": [
             "action",
