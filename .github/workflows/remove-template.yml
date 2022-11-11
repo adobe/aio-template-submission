@@ -106,7 +106,7 @@ jobs:
       - uses: ben-z/actions-comment-on-issue@1.0.2
         with:
           message: |
-            The following checks failed:
+            ###Failed Checks
 
             ${{ needs.parse-issue-form-body.outputs.error }}
             ${{ needs.check-permissions.outputs.is-admin-error }}
