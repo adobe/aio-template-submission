@@ -27,7 +27,7 @@ describe('Verify creation of Github issues and comments', () => {
             .post('/repos/adobe/aio-template-submission/issues', {
                 'title': `Remove ${TEMPLATE_NAME} as npm/github links are not valid anymore`,
                 'labels': ['remove-template', 'template-auto-verification'],
-                'body': `### "Name of NPM package"\n${TEMPLATE_NAME}`
+                'body': `### npm package name\n${TEMPLATE_NAME}`
             })
             .times(1)
             .reply(200, { 'number': ISSUE_NUMBER });
@@ -41,7 +41,7 @@ describe('Verify creation of Github issues and comments', () => {
             .post('/repos/adobe/aio-template-submission/issues', {
                 'title': `Update ${TEMPLATE_NAME} as there is the newest ${TEMPLATE_LATEST_VERSION} version`,
                 'labels': ['update-template', 'template-auto-verification'],
-                'body': `### "Name of NPM package"\n${TEMPLATE_NAME}`
+                'body': `### npm package name\n${TEMPLATE_NAME}`
             })
             .times(1)
             .reply(200, { 'number': ISSUE_NUMBER });
