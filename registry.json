@@ -368,7 +368,7 @@
         "author": "Adobe Inc.",
         "name": "@adobe/generator-app-aem-react",
         "description": "Template for AEM React SPA based on WKND content.",
-        "latestVersion": "0.0.1-beta.5",
+        "latestVersion": "0.0.1-beta.6",
         "publishDate": "2022-11-01T22:06:59.154Z",
         "categories": [
             "ui"
@@ -381,11 +381,6 @@
             "npm": "https://www.npmjs.com/package/@adobe/generator-app-aem-react",
             "github": "https://github.com/adobe/generator-app-aem-react"
         },
-        "status": "Approved",
-        "extensions": [
-            {
-                "extensionPointId": "aem/spa/1"
-            }
-        ]
+        "status": "Approved"
     }
 ]
