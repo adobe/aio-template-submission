@@ -31,7 +31,7 @@ async function createRemoveIssue(githubToken, templateName, githubRepoOwner, git
         'repo': githubRepo,
         'title': `Remove ${templateName} as npm/github links are not valid anymore`,
         'labels': [GITHUB_LABEL_TEMPLATE_REMOVAL, GITHUB_LABEL_TEMPLATE_AUTO_VERIFICATION],
-        'body': `### "Name of NPM package"\n${templateName}`
+        'body': `### npm package name\n${templateName}`
     });
     return response.data.number;
 }
@@ -53,7 +53,7 @@ async function createUpdateIssue(githubToken, templateName, templateLatestVersio
         'repo': githubRepo,
         'title': `Update ${templateName} as there is the newest ${templateLatestVersion} version`,
         'labels': [GITHUB_LABEL_TEMPLATE_UPDATING, GITHUB_LABEL_TEMPLATE_AUTO_VERIFICATION],
-        'body': `### "Name of NPM package"\n${templateName}`
+        'body': `### npm package name\n${templateName}`
     });
     return response.data.number;
 }
