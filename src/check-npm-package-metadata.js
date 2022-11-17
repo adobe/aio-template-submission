@@ -25,7 +25,7 @@ const metadata = require('@adobe/aio-lib-template-validation');
 
   let errors = [];
   for (const failure of results.failures) {
-    errors.push(`**${failure.description}**\n`);
+    errors.push(`\n**${failure.description}**\n`);
     for (const error of failure.errors) {
       errors.push(`:x: ${error.message}`);
       if (error.suggestion) {
