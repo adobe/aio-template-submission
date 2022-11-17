@@ -24,11 +24,18 @@ const metadata = require('@adobe/aio-lib-template-validation');
 
   if (results.stats.failures !== 0) {
     let errors = [];
-    for (const test of results.failures) {
-      errors.push(`:x: ${test.message}`);
+    for (const failure of results.failures) {
+      errors.push(`\n**${failure.description}**\n`);
+      for (const error of failure.errors) {
+        errors.push(`:x: ${error.message}`);
+        if (error.suggestion) {
+          errors.push(`${error.suggestion}`);
+        }
+      }
     }
     let errorMessage = errors.join('\n');
     core.setOutput('error', `${errorMessage}`);
     throw new Error(errorMessage);
   }
+
 })();
