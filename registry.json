@@ -382,5 +382,26 @@
             "github": "https://github.com/adobe/generator-app-aem-react"
         },
         "status": "Approved"
+    },
+    {
+        "id": "fb4e72bc-598e-4e7d-87b9-b83494508942",
+        "author": "Adobe Inc.",
+        "name": "@adobe/commerce-events-ext-tpl",
+        "description": "Extensibility template for handling Commerce events",
+        "latestVersion": "1.0.0-beta.2",
+        "publishDate": "2022-11-29T23:06:55.827Z",
+        "categories": [
+            "action"
+        ],
+        "adobeRecommended": true,
+        "keywords": [
+            "ecosystem:aio-app-builder-templates"
+        ],
+        "links": {
+            "npm": "https://www.npmjs.com/package/@adobe/commerce-events-ext-tpl",
+            "github": "https://github.com/adobe/commerce-events-ext-tpl"
+        },
+        "status": "Approved",
+        "runtime": true
     }
 ]
