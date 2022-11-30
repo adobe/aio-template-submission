@@ -388,10 +388,11 @@
         "author": "Adobe Inc.",
         "name": "@adobe/commerce-events-ext-tpl",
         "description": "Extensibility template for handling Commerce events",
-        "latestVersion": "1.0.0-beta.2",
+        "latestVersion": "1.0.0-beta.3",
         "publishDate": "2022-11-29T23:06:55.827Z",
         "categories": [
-            "action"
+            "action",
+            "events"
         ],
         "adobeRecommended": true,
         "keywords": [
@@ -402,6 +403,11 @@
             "github": "https://github.com/adobe/commerce-events-ext-tpl"
         },
         "status": "Approved",
-        "runtime": true
+        "runtime": true,
+        "apis": [
+            {
+                "code": "AdobeIOManagementAPISDK"
+            }
+        ]
     }
 ]
