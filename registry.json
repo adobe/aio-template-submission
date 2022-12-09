@@ -214,26 +214,6 @@
         ]
     },
     {
-        "id": "ee4f199c-10b1-47c1-a2b6-1043d9eba3ac",
-        "author": "Iryna Lagno",
-        "name": "@irenelagno/generator-for-live-stream",
-        "description": "First version of template for demo purposes",
-        "latestVersion": "0.0.1",
-        "publishDate": "2022-10-20T15:45:39.916Z",
-        "categories": [
-            "helper-template"
-        ],
-        "adobeRecommended": false,
-        "keywords": [
-            "ecosystem:aio-app-builder-templates"
-        ],
-        "links": {
-            "npm": "https://www.npmjs.com/package/@irenelagno/generator-for-live-stream",
-            "github": "https://github.com/irenelagno/generator-for-live-stream"
-        },
-        "status": "InVerification"
-    },
-    {
         "id": "60c0f3c4-fc25-472a-b2f2-dd7f829a8dc8",
         "author": "Adobe Inc.",
         "name": "@adobe/generator-add-action-target",
