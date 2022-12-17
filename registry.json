@@ -368,7 +368,7 @@
         "author": "Adobe Inc.",
         "name": "@adobe/commerce-events-ext-tpl",
         "description": "Extensibility template for handling Commerce events",
-        "latestVersion": "1.0.0-beta.5",
+        "latestVersion": "1.0.0-beta.6",
         "publishDate": "2022-11-30T21:31:33.103Z",
         "categories": [
             "action",
