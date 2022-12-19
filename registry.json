@@ -270,7 +270,7 @@
         "author": "Adobe Inc.",
         "name": "@adobe/generator-add-action-campaign-standard",
         "description": "Extensibility template for generating an Adobe Campaign Standard App Builder action",
-        "latestVersion": "0.1.2",
+        "latestVersion": "0.1.3",
         "publishDate": "2022-10-20T04:49:44.961Z",
         "categories": [
             "helper-template",
