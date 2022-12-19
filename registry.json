@@ -117,7 +117,7 @@
         "author": "Adobe Inc.",
         "name": "@adobe/generator-add-web-assets-exc-raw-html",
         "description": "Extensibility template for generating Experience Cloud Shell web assets (raw HTML)",
-        "latestVersion": "0.2.2",
+        "latestVersion": "0.2.3",
         "publishDate": "2022-09-21T11:41:51.129Z",
         "categories": [
             "ui",
