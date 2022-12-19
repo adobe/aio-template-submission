@@ -4,7 +4,7 @@
         "author": "Adobe Inc.",
         "name": "@adobe/generator-app-asset-compute",
         "description": "Extensibility template for generator-aio-app",
-        "latestVersion": "1.0.0",
+        "latestVersion": "1.0.1",
         "publishDate": "2022-06-09T03:20:08.366Z",
         "categories": [
             "action"
