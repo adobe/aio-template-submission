@@ -47,7 +47,7 @@
         },
         "author": "Adobe Inc.",
         "description": "Extensibility template for generating a generic App Builder action",
-        "latestVersion": "0.2.8",
+        "latestVersion": "0.2.9",
         "publishDate": "2022-07-12T18:35:25.049Z",
         "categories": [
             "helper-template",
