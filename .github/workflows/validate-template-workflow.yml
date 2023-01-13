@@ -39,7 +39,6 @@ jobs:
   check-github-link:
     name: Check GitHub link
     runs-on: ubuntu-latest
-    continue-on-error: true
     outputs:
       error: ${{ steps.check-github-link.outputs.ERROR }}
       status: ${{ steps.check-github-link.outputs.STATUS }}
