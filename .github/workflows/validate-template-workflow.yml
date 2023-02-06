@@ -100,7 +100,7 @@ jobs:
       - name: Check statuses of previous steps
         id: check-previous-steps
         run: |
-          if [ ${{needs.check-github-link.outputs.status}} != 'success' || ${{needs.check-npm-package-metadata.outputs.status}} != 'success' ]; then exit 1; fi;
+          if [ '${{ needs.check-github-link.outputs.status }}' != 'success' ] || [ '${{ needs.check-npm-package-metadata.outputs.status }}' != 'success' ]; then exit 1; fi;
   check-npm-package:
     name: Validate template
     runs-on: ${{ matrix.os }}
