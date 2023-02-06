@@ -32,5 +32,4 @@ const core = require('@actions/core');
   } else {
     core.setOutput('more-verification', 'false');
   }
-  
 })();

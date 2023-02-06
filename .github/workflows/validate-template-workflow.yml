@@ -45,7 +45,7 @@ jobs:
       status: ${{ steps.check-github-link.outputs.STATUS }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3.0
         with:
           fetch-depth: 0
       - name: Install dependencies
@@ -81,7 +81,7 @@ jobs:
       status: ${{ steps.check-npm-package-metadata.outputs.STATUS }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3.0
         with:
           fetch-depth: 0
       - name: Install dependencies
@@ -92,10 +92,19 @@ jobs:
           npm v ${{ inputs.npm-package }} dist.tarball | xargs curl | tar -xz
           node src/check-npm-package-metadata.js $GITHUB_WORKSPACE/package
           echo "STATUS=success" >> $GITHUB_OUTPUT;
+  check-npm-package-step-requirements:
+    name: Check if we can move to the "check-npm-package" step
+    runs-on: ubuntu-latest
+    needs: [check-github-link, check-npm-package-metadata]
+    steps:
+      - name: Check statuses of previous steps
+        id: check-previous-steps
+        run: |
+          if [ ${{needs.check-github-link.outputs.status}} != 'success' || ${{needs.check-npm-package-metadata.outputs.status}} != 'success' ]; then exit 1; fi;
   check-npm-package:
     name: Validate template
     runs-on: ${{ matrix.os }}
-    needs: [check-npm-package-metadata, check-github-link]
+    needs: [check-npm-package-step-requirements]
     strategy:
       fail-fast: false
       matrix:
@@ -108,7 +117,7 @@ jobs:
       windows-latest-16x-error: ${{ steps.check-installation-and-tests.outputs.windows-latest-16-error }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3.0
         with:
           fetch-depth: 0
       - name: Use Node.js ${{ matrix.node-version }}

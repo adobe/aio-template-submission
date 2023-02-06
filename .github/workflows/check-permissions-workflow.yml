@@ -41,7 +41,7 @@ jobs:
       is-admin: ${{ steps.is-admin.outputs.is-admin }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3.0
         with:
           fetch-depth: 0
       - name: Install dependencies
@@ -62,7 +62,7 @@ jobs:
     if: ${{ always() && needs.is-admin.outputs.is-admin != 'true' }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3.0
         with:
           fetch-depth: 0
       - name: Install dependencies
