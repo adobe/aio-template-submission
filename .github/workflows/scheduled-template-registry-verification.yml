@@ -45,7 +45,7 @@ jobs:
       error: ${{ steps.check-registry.outputs.error }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3.0
         with:
           fetch-depth: 0
       - name: Install dependencies
