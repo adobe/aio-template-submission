@@ -12,7 +12,6 @@ jobs:
   parse-issue-form-body:
     name: Parse issue form body
     runs-on: ubuntu-latest
-    container: node:16-alpine
     if: github.event_name == 'issue_comment' && github.event.comment.body == '/approve' && (contains(github.event.issue.labels.*.name, 'add-template') || contains(github.event.issue.labels.*.name, 'update-template'))
     outputs:
       github-link: ${{ steps.parse-issue-form-body.outputs.github-link }}
@@ -23,6 +22,10 @@ jobs:
         uses: actions/checkout@v3.3.0
         with:
           fetch-depth: 0
+      - name: Use node 16
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: 16
       - name: Install dependencies
         run: npm install
       - name: Get type of request
@@ -45,7 +48,6 @@ jobs:
   set-owner-repo:
     name: Set the owner and repo name.
     runs-on: ubuntu-latest
-    container: node:16-alpine
     needs: [parse-issue-form-body]
     outputs:
       github-repo-owner: ${{ steps.set-values.outputs.GITHUB_REPO_OWNER }}
@@ -79,7 +81,6 @@ jobs:
   update-approval:
     name: Update template in registry
     runs-on: ubuntu-latest
-    container: node:16-alpine
     outputs:
       error: ${{ steps.run-update-template.outputs.error }}
     needs: [parse-issue-form-body, validate-template]
@@ -88,6 +89,10 @@ jobs:
         uses: actions/checkout@v3.3.0
         with:
           fetch-depth: 0
+      - name: Use node 16
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: 16
       - name: Install dependencies
         run: npm install
       - name: Change registry.json
@@ -105,7 +110,6 @@ jobs:
   success-close-issue:
     name: Close issue
     runs-on: ubuntu-latest
-    container: node:16-alpine
     needs: [update-approval, parse-issue-form-body, set-owner-repo]
     steps:
       - uses: peter-evans/close-issue@v2
@@ -116,7 +120,6 @@ jobs:
   updating-failed-comment:
     name: Updating failed
     runs-on: ubuntu-latest
-    container: node:16-alpine
     needs: [parse-issue-form-body, check-permissions, validate-template, update-approval]
     if: ${{ always() && (needs.parse-issue-form-body.result == 'failure' || (needs.parse-issue-form-body.result != 'skipped' && (needs.validate-template.outputs.check-github-link-status != 'success' || needs.update-approval.result == 'failure' || needs.update-approval.result == 'skipped' || (needs.check-permissions.outputs.is-admin != 'true' && needs.check-permissions.outputs.is-admin-error != '')))) }}
     steps:

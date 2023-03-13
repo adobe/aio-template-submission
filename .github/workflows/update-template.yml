@@ -14,7 +14,6 @@ jobs:
   parse-issue-form-body:
     name: Parse Issue Form Body
     runs-on: ubuntu-latest
-    container: node:16-alpine
     if: (github.event.label.name == 'update-template') || (github.event_name == 'issue_comment' && github.event.comment.body == '/update')
     outputs:
       github-link: ${{ steps.parse-issue-form-body.outputs.github-link }}
@@ -25,6 +24,10 @@ jobs:
         uses: actions/checkout@v3.3.0
         with:
           fetch-depth: 0
+      - name: Use node 16
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: 16
       - name: Install dependencies
         run: npm install
       - name: Parse Issue Form Body
@@ -36,7 +39,6 @@ jobs:
   set-owner-repo-user:
     name: Set the owner, repo name and user login.
     runs-on: ubuntu-latest
-    container: node:16-alpine
     needs: [parse-issue-form-body]
     outputs:
       github-repo-owner: ${{ steps.set-values.outputs.GITHUB_REPO_OWNER }}
@@ -82,7 +84,6 @@ jobs:
   update-template:
     name: Update template in registry
     runs-on: ubuntu-latest
-    container: node:16-alpine
     outputs:
       error: ${{ steps.run-update-template.outputs.error }}
     needs: [parse-issue-form-body, validate-template, needs-more-verification]
@@ -91,6 +92,10 @@ jobs:
         uses: actions/checkout@v3.3.0
         with:
           fetch-depth: 0
+      - name: Use node 16
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: 16
       - name: Install dependencies
         run: npm install
       - name: Set status
@@ -117,7 +122,6 @@ jobs:
   success-update-template:
     name: Close issue
     runs-on: ubuntu-latest
-    container: node:16-alpine
     needs: [update-template, needs-more-verification]
     steps:
       - uses: ben-z/actions-comment-on-issue@1.0.2
@@ -137,7 +141,6 @@ jobs:
   updating-failed-comment:
     name: Updating failed
     runs-on: ubuntu-latest
-    container: node:16-alpine
     needs: [parse-issue-form-body, check-permissions, validate-template, update-template]
     if: ${{ always() && (needs.parse-issue-form-body.result == 'failure' || (needs.parse-issue-form-body.result != 'skipped' && (needs.validate-template.outputs.check-github-link-status != 'success' || needs.update-template.result == 'failure' || needs.update-template.result == 'skipped' || (needs.check-permissions.outputs.is-admin != 'true' && needs.check-permissions.outputs.is-owner != 'true' && (needs.check-permissions.outputs.is-admin-error != '' || needs.check-permissions.outputs.is-owner-error != ''))))) }}
     steps:

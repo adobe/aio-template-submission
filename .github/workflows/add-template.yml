@@ -14,7 +14,6 @@ jobs:
   parse-issue-form-body:
     name: Parse issue form body
     runs-on: ubuntu-latest
-    container: node:16-alpine
     if: (github.event.label.name == 'add-template') || (github.event_name == 'issue_comment' && github.event.comment.body == '/check')
     outputs:
       github-link: ${{ steps.parse-issue-form-body.outputs.github-link }}
@@ -25,6 +24,10 @@ jobs:
         uses: actions/checkout@v3.3.0
         with:
           fetch-depth: 0
+      - name: Use node 16
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: 16
       - name: Install dependencies
         run: npm install
       - name: Parse issue form body
@@ -47,13 +50,16 @@ jobs:
   add-to-registry:
     name: Add to Template Registry
     runs-on: ubuntu-latest
-    container: node:16-alpine
     needs: [parse-issue-form-body, validate-template, needs-more-verification]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3.3.0
         with:
           fetch-depth: 0
+      - name: Use node 16
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: 16
       - name: Install dependencies
         run: npm install
       - name: Collect metadata and save to registry.json
@@ -73,7 +79,6 @@ jobs:
   success-add-to-registry:
     name: Comment regarding template status and close if fully approved
     runs-on: ubuntu-latest
-    container: node:16-alpine
     needs: [add-to-registry, needs-more-verification]
     steps:
       - uses: ben-z/actions-comment-on-issue@1.0.2
@@ -90,7 +95,6 @@ jobs:
   fail-validation-comment:
     name: Validation failed
     runs-on: ubuntu-latest
-    container: node:16-alpine
     needs: [parse-issue-form-body, validate-template, add-to-registry]
     if: ${{ always() && (needs.parse-issue-form-body.result == 'failure' || (needs.parse-issue-form-body.result != 'skipped' && (needs.validate-template.outputs.check-github-link-status != 'success' || needs.add-to-registry.result == 'failure' || needs.add-to-registry.result == 'skipped'))) }}
     steps:

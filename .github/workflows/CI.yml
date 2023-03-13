@@ -5,11 +5,14 @@ on: pull_request
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: node:16-alpine
     steps:
       - uses: actions/checkout@v3.3.0
         with:
           fetch-depth: 0
+      - name: Use node 16
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: 16
       - name: Install modules
         run: npm i
       - name: Run ESLint
