@@ -12,6 +12,7 @@ jobs:
   parse-issue-form-body:
     name: Parse issue form body
     runs-on: ubuntu-latest
+    container: node:16-alpine
     if: github.event_name == 'issue_comment' && github.event.comment.body == '/decline' && (contains(github.event.issue.labels.*.name, 'add-template') || contains(github.event.issue.labels.*.name, 'update-template'))
     outputs:
       github-link: ${{ steps.parse-issue-form-body.outputs.github-link }}
@@ -45,6 +46,7 @@ jobs:
   set-owner-repo:
     name: Set the owner and repo name.
     runs-on: ubuntu-latest
+    container: node:16-alpine
     needs: [parse-issue-form-body]
     outputs:
       github-repo-owner: ${{ steps.set-values.outputs.GITHUB_REPO_OWNER }}
@@ -71,6 +73,7 @@ jobs:
   update-request-rejected:
     name: Update template status to rejected if approval declined on update request
     runs-on: ubuntu-latest
+    container: node:16-alpine
     needs: [parse-issue-form-body, check-permissions]
     if: ${{ always() && needs.parse-issue-form-body.result == 'success' && needs.parse-issue-form-body.outputs.request-type == 'update-request' && needs.check-permissions.outputs.is-admin == 'true' }}
     steps:
@@ -95,6 +98,7 @@ jobs:
   update-request-close-issue:
     name: Close update-template issue after template declined
     runs-on: ubuntu-latest
+    container: node:16-alpine
     needs: [update-request-rejected]
     steps:
       - uses: peter-evans/close-issue@v2
@@ -104,6 +108,7 @@ jobs:
   add-request-remove-template:
     name: Remove template from registry if approval declined on new template
     runs-on: ubuntu-latest
+    container: node:16-alpine
     outputs:
       error: ${{ steps.run-remove-from-registry.outputs.error }}
     needs: [parse-issue-form-body, check-permissions]
@@ -128,6 +133,7 @@ jobs:
   add-request-close-issue:
     name: Close issue after removing template from registry
     runs-on: ubuntu-latest
+    container: node:16-alpine
     needs: [add-request-remove-template]
     steps:
       - uses: peter-evans/close-issue@v2
@@ -137,6 +143,7 @@ jobs:
   fail-removal-comment:
     name: Removal failed
     runs-on: ubuntu-latest
+    container: node:16-alpine
     needs: [parse-issue-form-body, check-permissions, add-request-remove-template]
     if: ${{ always() && (needs.parse-issue-form-body.result == 'failure' || (needs.parse-issue-form-body.result != 'skipped' && (needs.add-request-remove-template.outputs.error != '' || (needs.check-permissions.outputs.is-admin != 'true' && needs.check-permissions.outputs.is-admin-error != '')))) }}
     steps:

@@ -36,6 +36,7 @@ jobs:
   is-admin:
     name: Check if an issue submitted or commented by a Github user with admin permissions
     runs-on: ubuntu-latest
+    container: node:16-alpine
     outputs:
       error: ${{ steps.is-admin.outputs.error }}
       is-admin: ${{ steps.is-admin.outputs.is-admin }}
@@ -55,6 +56,7 @@ jobs:
   is-owner:
     name: Validate matching add-template issue
     runs-on: ubuntu-latest
+    container: node:16-alpine
     outputs:
       error: ${{ steps.is-owner.outputs.error }}
       is-owner: ${{ steps.is-owner.outputs.is-owner }}

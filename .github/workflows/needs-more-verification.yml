@@ -20,6 +20,7 @@ jobs:
   needs-more-verification:
     name: Check if template needs more verification
     runs-on: ubuntu-latest
+    container: node:16-alpine
     outputs:
       more-verification: ${{ steps.more-verification-script.outputs.more-verification }}
       error: ${{ steps.more-verification-script.outputs.error }}

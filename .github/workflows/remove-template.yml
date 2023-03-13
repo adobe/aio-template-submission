@@ -14,6 +14,7 @@ jobs:
   parse-issue-form-body:
     name: Parse Issue Form Body
     runs-on: ubuntu-latest
+    container: node:16-alpine
     if: (github.event.label.name == 'remove-template') || (github.event_name == 'issue_comment' && github.event.comment.body == '/remove')
     outputs:
       npm-package: ${{ steps.parse-issue-form-body.outputs.npm-package }}
@@ -34,6 +35,7 @@ jobs:
   set-owner-repo-user:
     name: Set the owner, repo name and user login.
     runs-on: ubuntu-latest
+    container: node:16-alpine
     needs: [parse-issue-form-body]
     outputs:
       github-repo-owner: ${{ steps.set-values.outputs.GITHUB_REPO_OWNER }}
@@ -67,6 +69,7 @@ jobs:
   remove-from-registry:
     name: Remove template from registry
     runs-on: ubuntu-latest
+    container: node:16-alpine
     outputs:
       error: ${{ steps.run-remove-from-registry.outputs.error }}
     needs: [parse-issue-form-body, check-permissions]
@@ -91,6 +94,7 @@ jobs:
   success-close-issue:
     name: Close issue
     runs-on: ubuntu-latest
+    container: node:16-alpine
     needs: [remove-from-registry]
     steps:
       - uses: peter-evans/close-issue@v2
@@ -100,6 +104,7 @@ jobs:
   fail-removal-comment:
     name: Removal failed
     runs-on: ubuntu-latest
+    container: node:16-alpine
     needs: [parse-issue-form-body, check-permissions, remove-from-registry]
     if: ${{ always() && (needs.parse-issue-form-body.result == 'failure' || (needs.parse-issue-form-body.result != 'skipped' && (needs.remove-from-registry.outputs.error != '' || (needs.check-permissions.outputs.is-admin != 'true' && needs.check-permissions.outputs.is-owner != 'true' && (needs.check-permissions.outputs.is-admin-error != '' || needs.check-permissions.outputs.is-owner-error != ''))))) }}
     steps:

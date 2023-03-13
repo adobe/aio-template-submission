@@ -15,6 +15,7 @@ jobs:
     # we would like to avoid running any scheduled workflows in forked repos
     if: github.repository == 'adobe/aio-template-submission'
     runs-on: ubuntu-latest
+    container: node:16-alpine
     permissions:
       issues: write
     outputs:
@@ -39,6 +40,7 @@ jobs:
   check-registry:
     name: Create issues to remove unavailable templates, and to update templates that have newest versions
     runs-on: ubuntu-latest
+    container: node:16-alpine
     needs: [create-issue]
     outputs:
       templates-to-process: ${{ steps.check-registry.outputs.templates-to-process }}
@@ -62,6 +64,7 @@ jobs:
   success-close-issue:
     name: Close issue if there are no templates to process
     runs-on: ubuntu-latest
+    container: node:16-alpine
     needs: [create-issue, check-registry]
     if: ${{ needs.check-registry.outputs.templates-to-process == 0 }}
     steps:
@@ -73,6 +76,7 @@ jobs:
   registry-validation-failed-comment:
     name: Template Registry Validation failed
     runs-on: ubuntu-latest
+    container: node:16-alpine
     needs: [check-registry]
     if: ${{ always() && needs.check-registry.outputs.error != '' }}
     steps:
