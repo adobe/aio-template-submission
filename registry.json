@@ -389,5 +389,31 @@
             }
         ],
         "runtime": true
+    },
+    {
+        "id": "fdcefc4b-d859-4265-80bf-5a562df73a80",
+        "author": "Adobe Inc.",
+        "name": "@adobe/aem-cf-editor-ui-ext-tpl",
+        "description": "Extensibility template for AEM Content Fragment Editor",
+        "latestVersion": "1.0.0-beta.4",
+        "publishDate": "2023-04-26T05:03:23.079Z",
+        "categories": [
+            "action",
+            "ui"
+        ],
+        "adobeRecommended": true,
+        "keywords": [
+            "ecosystem:aio-app-builder-templates"
+        ],
+        "links": {
+            "npm": "https://www.npmjs.com/package/@adobe/aem-cf-editor-ui-ext-tpl",
+            "github": "https://github.com/adobe/aem-cf-editor-ui-ext-tpl"
+        },
+        "status": "Approved",
+        "extensions": [
+            {
+                "extensionPointId": "aem/cf-editor/1"
+            }
+        ]
     }
 ]
