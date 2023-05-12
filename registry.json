@@ -395,7 +395,7 @@
         "author": "Adobe Inc.",
         "name": "@adobe/aem-cf-editor-ui-ext-tpl",
         "description": "Extensibility template for AEM Content Fragment Editor",
-        "latestVersion": "1.0.0-beta.9",
+        "latestVersion": "1.0.0-beta.10",
         "publishDate": "2023-04-26T05:03:23.079Z",
         "categories": [
             "action",
