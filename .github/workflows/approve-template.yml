@@ -123,9 +123,10 @@ jobs:
     needs: [parse-issue-form-body, check-permissions, validate-template, update-approval]
     if: ${{ always() && (needs.parse-issue-form-body.result == 'failure' || (needs.parse-issue-form-body.result != 'skipped' && (needs.validate-template.outputs.check-github-link-status != 'success' || needs.update-approval.result == 'failure' || needs.update-approval.result == 'skipped' || (needs.check-permissions.outputs.is-admin != 'true' && needs.check-permissions.outputs.is-admin-error != '')))) }}
     steps:
-      - uses: ben-z/actions-comment-on-issue@1.0.2
+      - uses: peter-evans/create-or-update-comment@v3.0.2
         with:
-          message: |
+          issue-number: ${{ github.event.issue.number }}
+          body: |
             Unable to approve template:
             ${{ needs.parse-issue-form-body.outputs.error }}
             ${{ needs.check-permissions.outputs.is-admin-error }}
@@ -138,4 +139,4 @@ jobs:
             ${{ needs.validate-template.outputs.check-npm-package-windows-latest-16x-error }}
             ${{ needs.update-approval.outputs.error }}
             Fix all mentioned issues and comment `/approve` to try again.
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
