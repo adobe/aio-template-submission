@@ -111,7 +111,7 @@ jobs:
     needs: [parse-issue-form-body, check-permissions, remove-from-registry]
     if: ${{ always() && (needs.parse-issue-form-body.result == 'failure' || (needs.parse-issue-form-body.result != 'skipped' && (needs.remove-from-registry.outputs.error != '' || (needs.check-permissions.outputs.is-admin != 'true' && needs.check-permissions.outputs.is-owner != 'true' && (needs.check-permissions.outputs.is-admin-error != '' || needs.check-permissions.outputs.is-owner-error != ''))))) }}
     steps:
-      - uses: peter-evans/create-or-update-comment@3.0.2
+      - uses: peter-evans/create-or-update-comment@v3.0.2
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |

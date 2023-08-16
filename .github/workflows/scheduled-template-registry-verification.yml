@@ -80,7 +80,7 @@ jobs:
     needs: [check-registry]
     if: ${{ always() && needs.check-registry.outputs.error != '' }}
     steps:
-      - uses: peter-evans/create-or-update-comment@3.0.2
+      - uses: peter-evans/create-or-update-comment@v3.0.2
         with:
           issue-number: ${{ needs.create-issue.outputs.issue-number }}
           body: |

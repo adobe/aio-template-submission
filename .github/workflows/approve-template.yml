@@ -123,7 +123,7 @@ jobs:
     needs: [parse-issue-form-body, check-permissions, validate-template, update-approval]
     if: ${{ always() && (needs.parse-issue-form-body.result == 'failure' || (needs.parse-issue-form-body.result != 'skipped' && (needs.validate-template.outputs.check-github-link-status != 'success' || needs.update-approval.result == 'failure' || needs.update-approval.result == 'skipped' || (needs.check-permissions.outputs.is-admin != 'true' && needs.check-permissions.outputs.is-admin-error != '')))) }}
     steps:
-      - uses: peter-evans/create-or-update-comment@3.0.2
+      - uses: peter-evans/create-or-update-comment@v3.0.2
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
