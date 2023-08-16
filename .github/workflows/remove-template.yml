@@ -111,9 +111,10 @@ jobs:
     needs: [parse-issue-form-body, check-permissions, remove-from-registry]
     if: ${{ always() && (needs.parse-issue-form-body.result == 'failure' || (needs.parse-issue-form-body.result != 'skipped' && (needs.remove-from-registry.outputs.error != '' || (needs.check-permissions.outputs.is-admin != 'true' && needs.check-permissions.outputs.is-owner != 'true' && (needs.check-permissions.outputs.is-admin-error != '' || needs.check-permissions.outputs.is-owner-error != ''))))) }}
     steps:
-      - uses: ben-z/actions-comment-on-issue@1.0.2
+      - uses: peter-evans/create-or-update-comment@3.0.2
         with:
-          message: |
+          issue-number: ${{ github.event.issue.number }}
+          body: |
             ### Failed Checks
 
             ${{ needs.parse-issue-form-body.outputs.error }}
@@ -122,4 +123,4 @@ jobs:
             ${{ needs.remove-from-registry.outputs.error }}
 
             Fix all mentioned issues and comment `/remove` to try again.
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}

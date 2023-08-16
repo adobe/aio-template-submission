@@ -80,8 +80,9 @@ jobs:
     needs: [check-registry]
     if: ${{ always() && needs.check-registry.outputs.error != '' }}
     steps:
-      - uses: ben-z/actions-comment-on-issue@1.0.2
+      - uses: peter-evans/create-or-update-comment@3.0.2
         with:
-          message: |
+          issue-number: ${{ needs.create-issue.outputs.issue-number }}
+          body: |
             ${{ needs.check-registry.outputs.error }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
