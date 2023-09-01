@@ -420,7 +420,7 @@
         "id": "f8162049-17cf-4e12-94eb-022f83ff6f8c",
         "name": "@adobe/generator-add-events-generic",
         "description": "Adds event registrations and a generic action",
-        "latestVersion": "0.1.1",
+        "latestVersion": "0.1.2",
         "publishDate": "2023-08-16T14:19:34.529Z",
         "categories": [
             "helper-template",
