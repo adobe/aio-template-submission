@@ -472,7 +472,7 @@
         "id": "0e7d6b65-3ccc-484a-b9dc-176edaebcde9",
         "name": "@adobe/generator-app-events-generic",
         "description": "Adds event registrations and a generic action",
-        "latestVersion": "0.1.2",
+        "latestVersion": "1.0.0",
         "publishDate": "2023-09-06T04:51:56.546Z",
         "categories": [
             "action",
