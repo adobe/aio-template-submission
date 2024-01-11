@@ -292,32 +292,6 @@
         ]
     },
     {
-        "id": "8ddad05a-2b70-4ca3-93c2-59ed13297e9a",
-        "author": "Adobe Inc.",
-        "name": "@adobe/generator-add-action-audience-manager-cd",
-        "description": "Extensibility template for generating an Adobe Audience Manager CD App Builder action",
-        "latestVersion": "0.1.3",
-        "publishDate": "2022-10-20T04:55:25.721Z",
-        "categories": [
-            "helper-template",
-            "action"
-        ],
-        "adobeRecommended": true,
-        "keywords": [
-            "ecosystem:aio-app-builder-template"
-        ],
-        "links": {
-            "npm": "https://www.npmjs.com/package/@adobe/generator-add-action-audience-manager-cd",
-            "github": "https://github.com/adobe/generator-add-action-audience-manager-cd"
-        },
-        "status": "Approved",
-        "apis": [
-            {
-                "code": "AudienceManagerCustomerSDK"
-            }
-        ]
-    },
-    {
         "id": "05813a61-8f1c-4584-b20c-8a51fbfef5df",
         "author": "Adobe Inc.",
         "name": "@adobe/generator-app-aem-react",
