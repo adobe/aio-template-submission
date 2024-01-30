@@ -25,6 +25,7 @@ const failedTemplates = [];
         'npm-package': npmPackage
       }
     });
+    core.info(JSON.stringify(response, null, 2));
     const runId = response.data.id;
     core.info(`Workflow run triggered. Run ID: ${runId}.`);
     await waitForWorkflowCompletion(octokit, owner, repoName, runId);
