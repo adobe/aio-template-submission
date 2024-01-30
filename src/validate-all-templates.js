@@ -1,4 +1,5 @@
 const { Octokit } = require('@octokit/core');
+const core = require('@actions/core');
 const { getRegistry } = require('./registry');
 const failedTemplates = [];
 
@@ -25,9 +26,9 @@ const failedTemplates = [];
       }
     });
     const runId = response.data.id;
-    console.log(`Workflow run triggered. Waiting for completion...`);
+    core.setOutput(`Workflow run triggered. Waiting for completion...`);
     await waitForWorkflowCompletion(octokit, owner, repoName, runId);
-    console.log(`Workflow run completed.`);
+    core.setOutput(`Workflow run completed.`);
   } catch (error) {
     failedTemplates.push({
       id,
@@ -37,10 +38,18 @@ const failedTemplates = [];
       error: error.message
     });
   }
-  console.log(failedTemplates.join(', '));
+  core.setOutput(failedTemplates.join(', '));
 })();
 
 async function waitForWorkflowCompletion(octokit, owner, repoName, runId) {
+  const test = await octokit.request('GET /repos/{owner}/{repo}/actions/runs/{run_id}', {
+    owner: owner,
+    repo: repoName,
+    run_id: runId
+  });
+
+  core.setOutput(test.data);
+
   let status = 'queued';
 
   while (status !== 'completed') {
@@ -53,11 +62,11 @@ async function waitForWorkflowCompletion(octokit, owner, repoName, runId) {
     status = runDetails.data.status;
 
     if (status === 'in_progress' || status === 'queued') {
-      console.log(`Workflow is still in progress. Waiting...`);
+      core.setOutput(`Workflow is still in progress. Waiting...`);
       // Wait for 3 minutes before checking again
       await new Promise(resolve => setTimeout(resolve, 180000));
     }
   }
 
-  console.log(`Workflow run completed with status: ${status}`);
+  core.setOutput(`Workflow run completed with status: ${status}`);
 }
