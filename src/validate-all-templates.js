@@ -38,7 +38,7 @@ const failedTemplates = [];
       error: error.message
     });
   }
-  core.info(failedTemplates.join(', '));
+  core.info(JSON.stringify(failedTemplates, null, 2));
 })();
 
 async function waitForWorkflowCompletion(octokit, owner, repoName, runId) {
@@ -48,7 +48,7 @@ async function waitForWorkflowCompletion(octokit, owner, repoName, runId) {
     run_id: runId
   });
 
-  core.info(test.data);
+  core.info(JSON.stringify(test.data, null, 2));
 
   let status = 'queued';
 
