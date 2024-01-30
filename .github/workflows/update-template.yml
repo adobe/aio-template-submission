@@ -21,13 +21,13 @@ jobs:
       error: ${{ steps.parse-issue-form-body.outputs.error }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Use node 16
-        uses: actions/setup-node@v3.6.0
+      - name: Use node 20
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
       - name: Install dependencies
         run: npm install
       - name: Parse Issue Form Body
@@ -89,13 +89,13 @@ jobs:
     needs: [parse-issue-form-body, validate-template, needs-more-verification]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Use node 16
-        uses: actions/setup-node@v3.6.0
+      - name: Use node 20
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
       - name: Install dependencies
         run: npm install
       - name: Set status

@@ -45,13 +45,13 @@ jobs:
       status: ${{ steps.check-github-link.outputs.STATUS }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Use node 18
-        uses: actions/setup-node@v3.6.0
+      - name: Use node 20
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
       - name: Install dependencies
         run: npm install
       - name: Check GitHub link
@@ -85,13 +85,13 @@ jobs:
       status: ${{ steps.check-npm-package-metadata.outputs.STATUS }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Use node 18
-        uses: actions/setup-node@v3.6.0
+      - name: Use node 20
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
       - name: Install dependencies
         run: npm install
       - name: Download NPM package and check its metadata
@@ -125,11 +125,11 @@ jobs:
       windows-latest-20x-error: ${{ steps.check-installation-and-tests.outputs.windows-latest-20-error }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3.6.0
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
       - name: Check installation and tests
