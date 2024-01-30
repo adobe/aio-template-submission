@@ -12,8 +12,8 @@ const failedTemplates = [];
   try {
     const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
     await octokit.request('POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches', {
-      owner: '${{ github.repository_owner }}',
-      repo: '${{ github.repository }}',
+      owner: process.env.OWNER,
+      repo: process.env.REPO,
       workflow_id: 'validate-template-workflow.yml',
       ref: 'main',
       inputs: {
@@ -24,6 +24,7 @@ const failedTemplates = [];
   } catch (error) {
     failedTemplates.push({
       id,
+      name,
       githubLink,
       npmPackage,
       error: error.message

@@ -17,9 +17,14 @@ jobs:
           node-version: 20
       - name: Install dependencies
         run: npm install
+      - name: Print
+        run: env | sort
       - name: Validate templates
         id: validate-templates
         run: |
           node src/validate-all-templates.js
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          OWNER: ${{ github.repository_owner }}
+
