@@ -41,9 +41,9 @@ const failedTemplates = [];
 })();
 
 async function waitForWorkflowCompletion(octokit, owner, repoName, runId) {
-  let status = 'in_progress';
+  let status = 'queued';
 
-  while (status === 'in_progress') {
+  while (status !== 'completed') {
     const runDetails = await octokit.request('GET /repos/{owner}/{repo}/actions/runs/{run_id}', {
       owner: owner,
       repo: repoName,
@@ -52,7 +52,7 @@ async function waitForWorkflowCompletion(octokit, owner, repoName, runId) {
 
     status = runDetails.data.status;
 
-    if (status === 'in_progress') {
+    if (status === 'in_progress' || status === 'queued') {
       console.log(`Workflow is still in progress. Waiting...`);
       // Wait for 3 minutes before checking again
       await new Promise(resolve => setTimeout(resolve, 180000));
