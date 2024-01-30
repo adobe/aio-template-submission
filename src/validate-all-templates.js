@@ -26,9 +26,9 @@ const failedTemplates = [];
       }
     });
     const runId = response.data.id;
-    core.setOutput(`Workflow run triggered. Waiting for completion...`);
+    core.info(`Workflow run triggered. Run ID: ${runId}.`);
     await waitForWorkflowCompletion(octokit, owner, repoName, runId);
-    core.setOutput(`Workflow run completed.`);
+    core.info(`Workflow run completed.`);
   } catch (error) {
     failedTemplates.push({
       id,
@@ -38,7 +38,7 @@ const failedTemplates = [];
       error: error.message
     });
   }
-  core.setOutput(failedTemplates.join(', '));
+  core.info(failedTemplates.join(', '));
 })();
 
 async function waitForWorkflowCompletion(octokit, owner, repoName, runId) {
@@ -48,7 +48,7 @@ async function waitForWorkflowCompletion(octokit, owner, repoName, runId) {
     run_id: runId
   });
 
-  core.setOutput(test.data);
+  core.info(test.data);
 
   let status = 'queued';
 
@@ -62,11 +62,11 @@ async function waitForWorkflowCompletion(octokit, owner, repoName, runId) {
     status = runDetails.data.status;
 
     if (status === 'in_progress' || status === 'queued') {
-      core.setOutput(`Workflow is still in progress. Waiting...`);
+      core.info(`Workflow is still in progress. Waiting...`);
       // Wait for 3 minutes before checking again
       await new Promise(resolve => setTimeout(resolve, 180000));
     }
   }
 
-  core.setOutput(`Workflow run completed with status: ${status}`);
+  core.info(`Workflow run completed with status: ${status}`);
 }
