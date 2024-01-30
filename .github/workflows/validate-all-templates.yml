@@ -22,7 +22,21 @@ jobs:
       - name: Validate templates
         id: validate-templates
         run: |
-          node src/validate-all-templates.js
+          node src/validate-all-templates.js > failed-templates.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
+      - name: Create "Manual Run Results" Issue
+        if: failure()
+        uses: imjohnbo/issue-bot@v3.3.6
+        id: issue
+        with:
+          title: 'Manual Run Results'
+          body: |
+              Failed templates:
+              ```
+              $(cat failed-templates.txt)
+              ```
+          pinned: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
