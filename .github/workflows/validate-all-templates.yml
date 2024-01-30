@@ -1,0 +1,58 @@
+name: Validate All Templates
+
+on:
+  workflow_dispatch:
+
+jobs:
+  validate-templates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3.3.0
+        with:
+          fetch-depth: 0
+      - name: Use Node.js 18
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm install
+      - name: Validate templates
+        id: validate-templates
+        run: |
+          const fs = require('fs');
+          const { Octokit } = require("@octokit/core");
+          const registry = JSON.parse(fs.readFileSync('registry.json', 'utf8'));
+          const failedTemplates = [];
+
+          (async function() {
+            const template = registry[0]; // Get the first template
+            const { id, name } = template;
+            const githubLink = template.links.github;
+            const npmPackage = name;
+
+            try {
+              const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+              await octokit.request('POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches', {
+                owner: '${{ github.repository_owner }}',
+                repo: '${{ github.repository }}',
+                workflow_id: 'validate-template-workflow.yml',
+                ref: 'main',
+                inputs: {
+                  'github-link': githubLink,
+                  'npm-package': npmPackage
+                }
+              });
+            } catch (error) {
+              failedTemplates.push({
+                id,
+                githubLink,
+                npmPackage,
+                error: error.message
+              });
+            }
+
+            // ... rest of your code
+          })();
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
