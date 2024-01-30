@@ -11,9 +11,10 @@ const failedTemplates = [];
 
   try {
     const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+    const [owner, repoName] = process.env.REPO.split('/');
     await octokit.request('POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches', {
-      owner: process.env.OWNER,
-      repo: process.env.REPO,
+      owner: owner,
+      repo: repoName,
       workflow_id: 'validate-template-workflow.yml',
       ref: 'main',
       inputs: {
