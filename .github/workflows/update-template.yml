@@ -21,13 +21,13 @@ jobs:
       error: ${{ steps.parse-issue-form-body.outputs.error }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Use node 16
-        uses: actions/setup-node@v3.6.0
+      - name: Use node 20
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
       - name: Install dependencies
         run: npm install
       - name: Parse Issue Form Body
@@ -89,13 +89,13 @@ jobs:
     needs: [parse-issue-form-body, validate-template, needs-more-verification]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Use node 16
-        uses: actions/setup-node@v3.6.0
+      - name: Use node 20
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
       - name: Install dependencies
         run: npm install
       - name: Set status
@@ -158,10 +158,10 @@ jobs:
             ${{ needs.validate-template.outputs.check-github-link-error }}
             ${{ needs.validate-template.outputs.check-npm-package-name-error }}
             ${{ needs.validate-template.outputs.check-npm-package-metadata-error }}
-            ${{ needs.validate-template.outputs.check-npm-package-ubuntu-latest-14x-error }}
-            ${{ needs.validate-template.outputs.check-npm-package-ubuntu-latest-16x-error }}
-            ${{ needs.validate-template.outputs.check-npm-package-windows-latest-14x-error }}
-            ${{ needs.validate-template.outputs.check-npm-package-windows-latest-16x-error }}
+            ${{ needs.validate-template.outputs.check-npm-package-ubuntu-latest-18x-error }}
+            ${{ needs.validate-template.outputs.check-npm-package-ubuntu-latest-20x-error }}
+            ${{ needs.validate-template.outputs.check-npm-package-windows-latest-18x-error }}
+            ${{ needs.validate-template.outputs.check-npm-package-windows-latest-20x-error }}
             ${{ needs.update-template.outputs.error }}
 
             Fix all mentioned issues and comment `/update` to try again.

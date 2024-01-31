@@ -22,14 +22,14 @@ on:
         value: ${{ jobs.check-npm-package-metadata.outputs.error }}
       check-npm-package-metadata-status:
         value: ${{ jobs.check-npm-package-metadata.outputs.status }}
-      check-npm-package-ubuntu-latest-14x-error:
-        value: ${{ jobs.check-npm-package.outputs.ubuntu-latest-14x-error }}
-      check-npm-package-ubuntu-latest-16x-error:
-        value: ${{ jobs.check-npm-package.outputs.ubuntu-latest-16x-error }}
-      check-npm-package-windows-latest-14x-error:
-        value: ${{ jobs.check-npm-package.outputs.windows-latest-14x-error }}
-      check-npm-package-windows-latest-16x-error:
-        value: ${{ jobs.check-npm-package.outputs.windows-latest-16x-error }}
+      check-npm-package-ubuntu-latest-18x-error:
+        value: ${{ jobs.check-npm-package.outputs.ubuntu-latest-18x-error }}
+      check-npm-package-ubuntu-latest-20x-error:
+        value: ${{ jobs.check-npm-package.outputs.ubuntu-latest-20x-error }}
+      check-npm-package-windows-latest-18x-error:
+        value: ${{ jobs.check-npm-package.outputs.windows-latest-18x-error }}
+      check-npm-package-windows-latest-20x-error:
+        value: ${{ jobs.check-npm-package.outputs.windows-latest-20x-error }}
 
 defaults:
   run:
@@ -45,13 +45,13 @@ jobs:
       status: ${{ steps.check-github-link.outputs.STATUS }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Use node 16
-        uses: actions/setup-node@v3.6.0
+      - name: Use node 20
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
       - name: Install dependencies
         run: npm install
       - name: Check GitHub link
@@ -85,13 +85,13 @@ jobs:
       status: ${{ steps.check-npm-package-metadata.outputs.STATUS }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Use node 16
-        uses: actions/setup-node@v3.6.0
+      - name: Use node 20
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
       - name: Install dependencies
         run: npm install
       - name: Download NPM package and check its metadata
@@ -116,20 +116,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [14.x, 16.x]
+        node-version: [18.x, 20.x]
         os: [ubuntu-latest, windows-latest]
     outputs:
-      ubuntu-latest-14x-error: ${{ steps.check-installation-and-tests.outputs.ubuntu-latest-14-error }}
-      ubuntu-latest-16x-error: ${{ steps.check-installation-and-tests.outputs.ubuntu-latest-16-error }}
-      windows-latest-14x-error: ${{ steps.check-installation-and-tests.outputs.windows-latest-14-error }}
-      windows-latest-16x-error: ${{ steps.check-installation-and-tests.outputs.windows-latest-16-error }}
+      ubuntu-latest-18x-error: ${{ steps.check-installation-and-tests.outputs.ubuntu-latest-18-error }}
+      ubuntu-latest-20x-error: ${{ steps.check-installation-and-tests.outputs.ubuntu-latest-20-error }}
+      windows-latest-18x-error: ${{ steps.check-installation-and-tests.outputs.windows-latest-18-error }}
+      windows-latest-20x-error: ${{ steps.check-installation-and-tests.outputs.windows-latest-20-error }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3.6.0
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
       - name: Check installation and tests
@@ -139,7 +139,7 @@ jobs:
           cd .. && mkdir "npm-package" && cd "npm-package"
           npm init --yes
           npm install ${{ inputs.npm-package }} || failed=1
-          if ${{ matrix.node-version == '14.x' }}; then nodeVersion='14'; else nodeVersion='16'; fi;
+          if ${{ matrix.node-version == '18.x' }}; then nodeVersion='18'; else nodeVersion='20'; fi;
           if [ ${failed} -eq 1 ]; then echo "${{ matrix.os }}-$nodeVersion-error=:x: Node version ${{ matrix.node-version}}, OS ${{ matrix.os }}...Package installation failed." >> $GITHUB_OUTPUT; exit 1; fi;
           cd .. && mkdir "npm-package-src"
           git clone ${{ inputs.github-link }} "npm-package-src" || failed=1
