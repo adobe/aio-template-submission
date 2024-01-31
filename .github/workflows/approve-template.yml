@@ -90,7 +90,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Use node 20
-        uses: actions/setup-node@vv
+        uses: actions/setup-node@v4
         with:
           node-version: 20
       - name: Install dependencies
