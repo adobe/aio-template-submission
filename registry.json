@@ -192,7 +192,7 @@
         "author": "Adobe Inc.",
         "name": "@adobe/aem-cf-admin-ui-ext-tpl",
         "description": "Extensibility template for AEM Content Fragment Admin Console",
-        "latestVersion": "1.0.0-beta.24",
+        "latestVersion": "2.0.0",
         "publishDate": "2022-10-03T14:58:15.980Z",
         "categories": [
             "action",
