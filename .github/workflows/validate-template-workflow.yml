@@ -147,7 +147,7 @@ jobs:
           cd "npm-package-src"
           git checkout `npm view ${{ inputs.npm-package }} gitHead` || failed=1
           if [ ${failed} -eq 1 ]; then echo "${{ matrix.os }}-$nodeVersion-error=:x: Node version ${{ matrix.node-version}}, OS ${{ matrix.os }}...Failed switching to the GitHub commit hash." >> $GITHUB_OUTPUT; exit 1; fi;
-          npm install --legacy-peer-deps || failed=1
+          npm install || failed=1
           if [ ${failed} -eq 1 ]; then echo "${{ matrix.os }}-$nodeVersion-error=:x: Node version ${{ matrix.node-version}}, OS ${{ matrix.os }}...Package dependencies installation failed." >> $GITHUB_OUTPUT; exit 1; fi;
           npm test || failed=1
           if [ ${failed} -eq 1 ]; then echo "${{ matrix.os }}-$nodeVersion-error=:x: Node version ${{ matrix.node-version}}, OS ${{ matrix.os }}...Package tests failed." >> $GITHUB_OUTPUT; exit 1; fi;
