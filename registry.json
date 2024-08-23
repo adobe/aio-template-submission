@@ -441,5 +441,31 @@
             }
         ],
         "runtime": true
+    },
+    {
+        "id": "d9dca437-3e87-49ef-923d-46d694053671",
+        "author": "Adobe Inc.",
+        "name": "@adobe/workfront-ui-ext-tpl",
+        "description": "Template for AIO CLI App Builder plugin that allows generating code of UI Extension for Workfront product",
+        "latestVersion": "0.0.3",
+        "publishDate": "2024-08-23T19:50:43.467Z",
+        "categories": [
+            "action",
+            "ui"
+        ],
+        "adobeRecommended": true,
+        "keywords": [
+            "ecosystem:aio-app-builder-templates"
+        ],
+        "links": {
+            "npm": "https://www.npmjs.com/package/@adobe/workfront-ui-ext-tpl",
+            "github": "https://github.com/adobe/workfront-ui-ext-tpl"
+        },
+        "status": "Approved",
+        "extensions": [
+            {
+                "extensionPointId": "workfront/ui/1"
+            }
+        ]
     }
 ]
