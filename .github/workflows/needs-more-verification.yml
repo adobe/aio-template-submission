@@ -35,6 +35,8 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Run script
+        env:
+          NPM_PACKAGE: ${{ inputs.npm-package }}
         id: more-verification-script
         run: |
-          node src/needs-more-verification.js ${{ inputs.npm-package }}
+          node src/needs-more-verification.js "$NPM_PACKAGE"
