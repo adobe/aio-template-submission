@@ -55,12 +55,15 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Check GitHub link
+        env:
+            GITHUB_LINK: ${{ inputs.github-link }}
+            NPM_PACKAGE: ${{ inputs.npm-package }}
         id: check-github-link
         run: |
           failed=0
-          git ls-remote --tags ${{ inputs.github-link }} || failed=1
+          git ls-remote --tags "$GITHUB_LINK" || failed=1
           if [ ${failed} -eq 1 ]; then echo "ERROR=:x: A link to the GitHub repo is incorrect or the GitHub repo is not public." >> $GITHUB_OUTPUT; exit 1; fi;
-          node src/check-github-link-package-name.js ${{ inputs.npm-package }} ${{ inputs.github-link }}
+          node src/check-github-link-package-name.js "$NPM_PACKAGE" "$GITHUB_LINK"
           if [ ${failed} -eq 0 ]; then echo "STATUS=success" >> $GITHUB_OUTPUT; fi;
   check-npm-package-name:
     name: Check NPM package name
@@ -70,10 +73,12 @@ jobs:
       status: ${{ steps.check-npm-package-name.outputs.STATUS }}
     steps:
       - name: Check NPM package name
+        env:
+            NPM_PACKAGE: ${{ inputs.npm-package }}
         id: check-npm-package-name
         run: |
           failed=0
-          npm view ${{ inputs.npm-package }} name || failed=1
+          npm view "$NPM_PACKAGE" name || failed=1
           if [ ${failed} -eq 1 ]; then echo "ERROR=:x: A NPM package name is incorrect or the NPM package doesn't exist." >> $GITHUB_OUTPUT; exit 1; fi;
           echo "STATUS=success" >> $GITHUB_OUTPUT;
   check-npm-package-metadata:
@@ -95,9 +100,11 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Download NPM package and check its metadata
+        env:
+            NPM_PACKAGE: ${{ inputs.npm-package }}
         id: check-npm-package-metadata
         run: |
-          npm v ${{ inputs.npm-package }} dist.tarball | xargs curl | tar -xz
+          npm v "$NPM_PACKAGE" dist.tarball | xargs curl | tar -xz
           node src/check-npm-package-metadata.js $GITHUB_WORKSPACE/package
           echo "STATUS=success" >> $GITHUB_OUTPUT;
   check-npm-package-step-requirements:
@@ -133,19 +140,22 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Check installation and tests
+        env:
+            GITHUB_LINK: ${{ inputs.github-link }}
+            NPM_PACKAGE: ${{ inputs.npm-package }}
         id: check-installation-and-tests
         run: |
           failed=0
           cd .. && mkdir "npm-package" && cd "npm-package"
           npm init --yes
-          npm install ${{ inputs.npm-package }} || failed=1
+          npm install "$NPM_PACKAGE" || failed=1
           if ${{ matrix.node-version == '18.x' }}; then nodeVersion='18'; else nodeVersion='20'; fi;
           if [ ${failed} -eq 1 ]; then echo "${{ matrix.os }}-$nodeVersion-error=:x: Node version ${{ matrix.node-version}}, OS ${{ matrix.os }}...Package installation failed." >> $GITHUB_OUTPUT; exit 1; fi;
           cd .. && mkdir "npm-package-src"
-          git clone ${{ inputs.github-link }} "npm-package-src" || failed=1
+          git clone "$GITHUB_LINK" "npm-package-src" || failed=1
           if [ ${failed} -eq 1 ]; then echo "${{ matrix.os }}-$nodeVersion-error=:x: Node version ${{ matrix.node-version}}, OS ${{ matrix.os }}...Failed cloning the GitHub repository." >> $GITHUB_OUTPUT; exit 1; fi;
           cd "npm-package-src"
-          git checkout `npm view ${{ inputs.npm-package }} gitHead` || failed=1
+          git checkout `npm view "$GITHUB_LINK" gitHead` || failed=1
           if [ ${failed} -eq 1 ]; then echo "${{ matrix.os }}-$nodeVersion-error=:x: Node version ${{ matrix.node-version}}, OS ${{ matrix.os }}...Failed switching to the GitHub commit hash." >> $GITHUB_OUTPUT; exit 1; fi;
           npm install || failed=1
           if [ ${failed} -eq 1 ]; then echo "${{ matrix.os }}-$nodeVersion-error=:x: Node version ${{ matrix.node-version}}, OS ${{ matrix.os }}...Package dependencies installation failed." >> $GITHUB_OUTPUT; exit 1; fi;

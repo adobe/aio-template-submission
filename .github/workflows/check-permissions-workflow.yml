@@ -53,9 +53,10 @@ jobs:
       - name: Validate creator of request is admin
         id: is-admin
         env:
+          USER_LOGIN: ${{ inputs.user-login }}
           ALLOWLIST_ADMINS: ${{ secrets.ALLOWLIST_ADMINS }}
         run: |
-          node src/is-admin.js ${{ inputs.user-login }}
+          node src/is-admin.js "$USER_LOGIN"
   is-owner:
     name: Validate matching add-template issue
     runs-on: ubuntu-latest
@@ -76,6 +77,12 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Validate creator of request
+        env:
+          USER_LOGIN: ${{ inputs.user-login }}
+          NPM_PACKAGE: ${{ inputs.npm-package }}
+          GITHUB_REPO_OWNER: ${{ inputs.github-repo-owner }}
+          GITHUB_REPO: ${{ inputs.github-repo }}
+          ALLOWLIST_ADMINS: ${{ secrets.ALLOWLIST_ADMINS }}
         id: is-owner
         run: |
-          node src/validate-request-author.js ${{ inputs.user-login }} ${{ inputs.npm-package }} ${{ inputs.github-repo-owner }} ${{ inputs.github-repo }}
+          node src/validate-request-author.js "$USER_LOGIN" "$NPM_PACKAGE" "$GITHUB_REPO_OWNER" "$GITHUB_REPO"
