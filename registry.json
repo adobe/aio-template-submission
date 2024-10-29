@@ -467,5 +467,31 @@
                 "extensionPointId": "workfront/ui/1"
             }
         ]
+    },
+    {
+        "id": "8b168709-b517-4dc4-9c07-a9922ee90522",
+        "author": "Adobe Inc.",
+        "name": "@adobe/aem-assets-details-ext-tpl",
+        "description": "Asset Details extension template for the AEM Assets View",
+        "latestVersion": "0.0.4",
+        "publishDate": "2024-10-29T15:36:52.362Z",
+        "categories": [
+            "action",
+            "ui"
+        ],
+        "adobeRecommended": true,
+        "keywords": [
+            "ecosystem:aio-app-builder-templates"
+        ],
+        "links": {
+            "npm": "https://www.npmjs.com/package/@adobe/aem-assets-details-ext-tpl",
+            "github": "https://github.com/adobe/aem-assets-details-ext-tpl"
+        },
+        "status": "Approved",
+        "extensions": [
+            {
+                "extensionPointId": "aem/assets/details/1"
+            }
+        ]
     }
 ]
