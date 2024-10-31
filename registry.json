@@ -447,7 +447,7 @@
         "author": "Adobe Inc.",
         "name": "@adobe/workfront-ui-ext-tpl",
         "description": "Template for AIO CLI App Builder plugin that allows generating code of UI Extension for Workfront product",
-        "latestVersion": "0.0.5",
+        "latestVersion": "0.0.6",
         "publishDate": "2024-08-23T19:50:43.467Z",
         "categories": [
             "action",
