@@ -312,33 +312,6 @@
         "status": "Approved"
     },
     {
-        "id": "31425e71-32d7-4813-86b7-493244796bb2",
-        "author": "Adobe Inc.",
-        "name": "@adobe/commerce-events-ext-tpl",
-        "description": "Extensibility template for handling Commerce events",
-        "latestVersion": "1.0.0-beta.9",
-        "publishDate": "2022-11-30T21:31:33.103Z",
-        "categories": [
-            "action",
-            "events"
-        ],
-        "adobeRecommended": true,
-        "keywords": [
-            "ecosystem:aio-app-builder-templates"
-        ],
-        "links": {
-            "npm": "https://www.npmjs.com/package/@adobe/commerce-events-ext-tpl",
-            "github": "https://github.com/adobe/commerce-events-ext-tpl"
-        },
-        "status": "Approved",
-        "apis": [
-            {
-                "code": "AdobeIOManagementAPISDK"
-            }
-        ],
-        "runtime": true
-    },
-    {
         "id": "fdcefc4b-d859-4265-80bf-5a562df73a80",
         "author": "Adobe Inc.",
         "name": "@adobe/aem-cf-editor-ui-ext-tpl",
