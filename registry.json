@@ -466,5 +466,31 @@
                 "extensionPointId": "aem/assets/details/1"
             }
         ]
+    },
+    {
+        "id": "c9e45ff4-d373-49b2-b76c-ff737fa943e4",
+        "author": "Adobe Inc.",
+        "name": "@adobe/universal-editor-ui-ext-tpl",
+        "description": "Extensibility Template for Universal Editor",
+        "latestVersion": "1.0.0-beta.1",
+        "publishDate": "2024-12-17T22:11:52.221Z",
+        "categories": [
+            "action",
+            "ui"
+        ],
+        "adobeRecommended": true,
+        "keywords": [
+            "ecosystem:aio-app-builder-templates"
+        ],
+        "links": {
+            "npm": "https://www.npmjs.com/package/@adobe/universal-editor-ui-ext-tpl",
+            "github": "https://github.com/adobe/universal-editor-ui-ext-tpl"
+        },
+        "status": "Approved",
+        "extensions": [
+            {
+                "extensionPointId": "universal-editor/ui/1"
+            }
+        ]
     }
 ]
