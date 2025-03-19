@@ -446,7 +446,7 @@
         "author": "Adobe Inc.",
         "name": "@adobe/aem-assets-details-ext-tpl",
         "description": "Asset Details extension template for the AEM Assets View",
-        "latestVersion": "0.0.4",
+        "latestVersion": "0.0.7",
         "publishDate": "2024-10-29T15:36:52.362Z",
         "categories": [
             "action",
