@@ -138,7 +138,7 @@
         "author": "Adobe Inc.",
         "name": "@adobe/generator-add-web-assets-exc-react",
         "description": "Extensibility template for generating Experience Cloud Shell web assets (React)",
-        "latestVersion": "1.1.0",
+        "latestVersion": "1.1.1",
         "publishDate": "2022-09-21T11:44:44.250Z",
         "categories": [
             "ui",
