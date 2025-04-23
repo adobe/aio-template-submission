@@ -63,7 +63,7 @@
         "author": "Adobe Inc.",
         "name": "@adobe/generator-app-excshell",
         "description": "Extensibility template for generator-aio-app",
-        "latestVersion": "1.0.1",
+        "latestVersion": "2.0.0",
         "publishDate": "2022-08-25T15:00:24.763Z",
         "categories": [
             "action",
