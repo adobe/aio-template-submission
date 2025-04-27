@@ -218,7 +218,7 @@
         "author": "Adobe Inc.",
         "name": "@adobe/generator-add-action-target",
         "description": "Extensibility template for generating an Adobe Target App Builder action",
-        "latestVersion": "1.0.1",
+        "latestVersion": "2.0.0",
         "publishDate": "2022-10-20T04:38:17.237Z",
         "categories": [
             "helper-template",
