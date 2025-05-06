@@ -159,7 +159,7 @@
         "author": "Adobe Inc.",
         "name": "@adobe/generator-add-action-asset-compute",
         "description": "Extensibility template for generating an Adobe Asset Compute action",
-        "latestVersion": "2.0.1",
+        "latestVersion": "3.0.0",
         "publishDate": "2022-10-03T09:57:04.934Z",
         "categories": [
             "action",
