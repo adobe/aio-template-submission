@@ -492,5 +492,31 @@
                 "extensionPointId": "universal-editor/ui/1"
             }
         ]
+    },
+    {
+        "id": "1e2c4a9f-09c0-4bc5-b355-03be41c52b56",
+        "author": "Adobe Inc.",
+        "name": "@adobe/aem-assets-browse-ext-tpl",
+        "description": "Asset Browse extension template for the AEM Assets View",
+        "latestVersion": "0.0.2",
+        "publishDate": "2025-06-03T11:38:21.956Z",
+        "categories": [
+            "action",
+            "ui"
+        ],
+        "adobeRecommended": true,
+        "keywords": [
+            "ecosystem:aio-app-builder-templates"
+        ],
+        "links": {
+            "npm": "https://www.npmjs.com/package/@adobe/aem-assets-browse-ext-tpl",
+            "github": "https://github.com/adobe/aem-assets-browse-ext-tpl"
+        },
+        "status": "Approved",
+        "extensions": [
+            {
+                "extensionPointId": "aem/assets/browse/1"
+            }
+        ]
     }
 ]
