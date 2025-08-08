@@ -59,33 +59,6 @@
         ]
     },
     {
-        "id": "7f9c3718-4773-4418-ba8e-b568aca97be8",
-        "author": "Adobe Inc.",
-        "name": "@adobe/generator-app-excshell",
-        "description": "Extensibility template for generator-aio-app",
-        "latestVersion": "2.0.0",
-        "publishDate": "2022-08-25T15:00:24.763Z",
-        "categories": [
-            "action",
-            "ui"
-        ],
-        "adobeRecommended": true,
-        "keywords": [
-            "ecosystem:aio-app-builder-template"
-        ],
-        "status": "Approved",
-        "links": {
-            "npm": "https://www.npmjs.com/package/@adobe/generator-app-excshell",
-            "github": "https://github.com/adobe/generator-app-excshell"
-        },
-        "extensions": [
-            {
-                "extensionPointId": "dx/excshell/1"
-            }
-        ],
-        "runtime": true
-    },
-    {
         "id": "85bb93d2-6f6b-46b7-a0ce-de5fb519dab7",
         "author": "Adobe Inc.",
         "name": "@adobe/generator-app-api-mesh",
