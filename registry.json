@@ -518,5 +518,14 @@
                 "extensionPointId": "aem/assets/browse/1"
             }
         ]
+    },
+    {
+        "id": "709d3469-8c71-4b31-889c-fed0e718010e",
+        "name": "@none/app-builder-template",
+        "status": "InVerification",
+        "links": {
+            "npm": "https://www.npmjs.com/package/@none/app-builder-template",
+            "github": "https://github.com/none/app-builder-template"
+        }
     }
 ]
