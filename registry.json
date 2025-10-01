@@ -518,5 +518,29 @@
                 "extensionPointId": "aem/assets/browse/1"
             }
         ]
+    },
+    {
+        "id": "6179a1f0-ad9a-4655-aabe-7207c3a712f4",
+        "name": "@adobe/aem-experience-hub-ext-tpl",
+        "description": "Extension template for AEM Experience Hub",
+        "latestVersion": "0.0.8",
+        "publishDate": "2025-10-01T13:15:20.102Z",
+        "categories": [
+            "helper-template"
+        ],
+        "adobeRecommended": true,
+        "keywords": [
+            "ecosystem:aio-app-builder-templates"
+        ],
+        "links": {
+            "npm": "https://www.npmjs.com/package/@adobe/aem-experience-hub-ext-tpl",
+            "github": "https://github.com/adobe/aem-experience-hub-ext-tpl"
+        },
+        "status": "Approved",
+        "extensions": [
+            {
+                "extensionPointId": "aem/launchpad/1"
+            }
+        ]
     }
 ]
