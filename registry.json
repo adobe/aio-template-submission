@@ -498,7 +498,7 @@
         "author": "Adobe Inc.",
         "name": "@adobe/aem-assets-browse-ext-tpl",
         "description": "Asset Browse extension template for the AEM Assets View",
-        "latestVersion": "0.0.2",
+        "latestVersion": "0.0.3",
         "publishDate": "2025-06-03T11:38:21.956Z",
         "categories": [
             "action",
