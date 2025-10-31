@@ -543,5 +543,33 @@
                 "extensionPointId": "aem/launchpad/1"
             }
         ]
+    },
+    {
+        "id": "8aaf388f-b61c-4d89-90b1-db6693479322",
+        "author": "Adobe Inc.",
+        "name": "@adobe/generator-app-remote-mcp-server-generic",
+        "description": "Adobe I/O Appbuilder template for MCP server implementation with Appbuilder actions.",
+        "latestVersion": "0.1.5",
+        "publishDate": "2025-10-31T06:55:21.503Z",
+        "categories": [
+            "action",
+            "helper-template"
+        ],
+        "adobeRecommended": true,
+        "keywords": [
+            "ecosystem:aio-app-builder-templates",
+            "aio-app-builder-template",
+            "mcp",
+            "model-context-protocol",
+            "adobe-io",
+            "runtime",
+            "yeoman-generator"
+        ],
+        "links": {
+            "npm": "https://www.npmjs.com/package/@adobe/generator-app-remote-mcp-server-generic",
+            "github": "https://github.com/adobe/generator-app-remote-mcp-server-generic"
+        },
+        "status": "Approved",
+        "runtime": true
     }
 ]
