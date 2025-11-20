@@ -523,7 +523,7 @@
         "id": "6179a1f0-ad9a-4655-aabe-7207c3a712f4",
         "name": "@adobe/aem-experience-hub-ext-tpl",
         "description": "Extension template for AEM Experience Hub",
-        "latestVersion": "0.0.15",
+        "latestVersion": "0.0.16",
         "publishDate": "2025-10-01T13:15:20.102Z",
         "categories": [
             "action",
