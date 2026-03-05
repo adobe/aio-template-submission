@@ -39,6 +39,8 @@ jobs:
   check-github-link:
     name: Check GitHub link
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     continue-on-error: true
     outputs:
       error: ${{ steps.check-github-link.outputs.ERROR }}
@@ -48,6 +50,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: false
       - name: Use node 20
         uses: actions/setup-node@v4
         with:
@@ -68,6 +71,8 @@ jobs:
   check-npm-package-name:
     name: Check NPM package name
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     outputs:
       error: ${{ steps.check-npm-package-name.outputs.ERROR }}
       status: ${{ steps.check-npm-package-name.outputs.STATUS }}
@@ -84,6 +89,8 @@ jobs:
   check-npm-package-metadata:
     name: Check NPM package metadata
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     needs: [check-npm-package-name]
     outputs:
       error: ${{ steps.check-npm-package-metadata.outputs.ERROR }}
@@ -93,6 +100,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: false
       - name: Use node 20
         uses: actions/setup-node@v4
         with:
@@ -110,6 +118,8 @@ jobs:
   check-npm-package-step-requirements:
     name: Check if we can move to the "check-npm-package" step
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     needs: [check-github-link, check-npm-package-metadata]
     steps:
       - name: Check statuses of previous steps
@@ -119,6 +129,8 @@ jobs:
   check-npm-package:
     name: Validate template
     runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
     needs: [check-npm-package-step-requirements]
     strategy:
       fail-fast: false
@@ -135,6 +147,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: false
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
