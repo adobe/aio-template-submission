@@ -2,9 +2,6 @@ name: Reusable Workflow For Checking Permissions
 
 on:
   workflow_call:
-    secrets:
-      ALLOWLIST_ADMINS:
-        required: true
     inputs:
       user-login:
         required: true
@@ -51,6 +48,6 @@ jobs:
         id: is-admin
         env:
           USER_LOGIN: ${{ inputs.user-login }}
-          ALLOWLIST_ADMINS: ${{ secrets.ALLOWLIST_ADMINS }}
+          ALLOWLIST_ADMINS: ${{ vars.ALLOWLIST_ADMINS }}
         run: |
           node src/is-admin.js "$USER_LOGIN"
