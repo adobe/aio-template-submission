@@ -155,6 +155,8 @@ jobs:
 
             ${{ needs.parse-issue-form-body.outputs.error }}
             ${{ needs.check-permissions.outputs.is-admin-error }}
+            ${{ needs.validate-template.outputs.check-github-link-error }}
+            ${{ needs.validate-template.outputs.npm-metadata-error }}
             ${{ needs.update-template.outputs.error }}
 
             If you are the template maintainer and need to update your template, an admin will review your request shortly.
