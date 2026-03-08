@@ -18,13 +18,13 @@ body:
         Please provide proof that you maintain this package:
         - Your NPM username
         - Link to NPM package page
-        - Output of: `npm owner ls <package-name>`
+        - Redacted output of: `npm owner ls <package-name>` (remove or obscure email addresses), or another form of proof that does not expose email addresses
 
         This helps admins verify your request quickly.
       placeholder: |
         NPM username: my-npm-username
         Package link: https://www.npmjs.com/package/@example/my-template
-        Maintainers: (output of npm owner ls command)
+        Maintainers: (redacted `npm owner ls` output or other proof without email addresses)
         Reason for removal: No longer maintaining this package
     validations:
       required: true
