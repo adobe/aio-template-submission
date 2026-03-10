@@ -50,4 +50,11 @@ jobs:
           USER_LOGIN: ${{ inputs.user-login }}
           ALLOWLIST_ADMINS: ${{ vars.ALLOWLIST_ADMINS }}
         run: |
+          if [ -z "${ALLOWLIST_ADMINS:-}" ]; then
+            echo "ALLOWLIST_ADMINS repository variable is not configured." >&2
+            if [ -n "${GITHUB_OUTPUT:-}" ]; then
+              echo "error=ALLOWLIST_ADMINS variable is not configured" >> "$GITHUB_OUTPUT"
+            fi
+            exit 1
+          fi
           node src/is-admin.js "$USER_LOGIN"
