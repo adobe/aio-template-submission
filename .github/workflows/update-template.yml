@@ -65,9 +65,6 @@ jobs:
     uses: ./.github/workflows/check-permissions-workflow.yml
     with:
       user-login: ${{ needs.set-owner-repo-user.outputs.user-login }}
-      npm-package: ${{ needs.parse-issue-form-body.outputs.npm-package }}
-      github-repo-owner: ${{ needs.set-owner-repo-user.outputs.github-repo-owner }}
-      github-repo: ${{ needs.set-owner-repo-user.outputs.github-repo }}
   validate-template:
     needs: [parse-issue-form-body, check-permissions]
     if: ${{ always() && needs.parse-issue-form-body.result == 'success' && needs.check-permissions.outputs.is-admin == 'true' && github.event_name == 'issue_comment' && github.event.comment.body == '/update' }}

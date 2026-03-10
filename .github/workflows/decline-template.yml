@@ -68,9 +68,6 @@ jobs:
     uses: ./.github/workflows/check-permissions-workflow.yml
     with:
       user-login: ${{ github.event.comment.user.login }}
-      npm-package: ${{ needs.parse-issue-form-body.outputs.npm-package }}
-      github-repo-owner: ${{ needs.set-owner-repo.outputs.github-repo-owner }}
-      github-repo: ${{ needs.set-owner-repo.outputs.github-repo }}
   update-request-rejected:
     name: Update template status to rejected if approval declined on update request
     runs-on: ubuntu-latest
