@@ -70,7 +70,7 @@ jobs:
       github-repo: ${{ needs.set-owner-repo-user.outputs.github-repo }}
   validate-template:
     needs: [parse-issue-form-body, check-permissions]
-    if: ${{ always() && needs.parse-issue-form-body.result == 'success' && needs.check-permissions.outputs.is-admin == 'true' }}
+    if: ${{ always() && needs.parse-issue-form-body.result == 'success' && needs.check-permissions.outputs.is-admin == 'true' && github.event_name == 'issue_comment' && github.event.comment.body == '/update' }}
     uses: ./.github/workflows/validate-template-workflow.yml
     with:
       github-link: ${{ needs.parse-issue-form-body.outputs.github-link }}
