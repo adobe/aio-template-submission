@@ -61,9 +61,11 @@ Example:
 ```
 NPM username: my-npm-username
 Package link: https://www.npmjs.com/package/@example/my-template
-Maintainers list: npm owner ls @example/my-template
+Maintainers (usernames only, no emails): user1, user2, user3
 Reason: Package deprecated / no longer maintained / security update needed
 ```
+
+> **Note:** If using `npm owner ls <package-name>` to list maintainers, **redact or remove all email addresses** from the output before submitting. Only include NPM usernames.
 
 ### For Admins
 
