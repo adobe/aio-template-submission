@@ -6,15 +6,6 @@ on:
       user-login:
         required: true
         type: string
-      npm-package:
-        required: true
-        type: string
-      github-repo-owner:
-        required: true
-        type: string
-      github-repo:
-        required: true
-        type: string
     outputs:
       is-admin-error:
         value: ${{ jobs.is-admin.outputs.error }}

@@ -64,9 +64,6 @@ jobs:
     uses: ./.github/workflows/check-permissions-workflow.yml
     with:
       user-login: ${{ needs.set-owner-repo-user.outputs.user-login }}
-      npm-package: ${{ needs.parse-issue-form-body.outputs.npm-package }}
-      github-repo-owner: ${{ needs.set-owner-repo-user.outputs.github-repo-owner }}
-      github-repo: ${{ needs.set-owner-repo-user.outputs.github-repo }}
   remove-from-registry:
     name: Remove template from registry
     runs-on: ubuntu-latest
