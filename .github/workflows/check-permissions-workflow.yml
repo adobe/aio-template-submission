@@ -2,20 +2,8 @@ name: Reusable Workflow For Checking Permissions
 
 on:
   workflow_call:
-    secrets:
-      ALLOWLIST_ADMINS:
-        required: true
     inputs:
       user-login:
-        required: true
-        type: string
-      npm-package:
-        required: true
-        type: string
-      github-repo-owner:
-        required: true
-        type: string
-      github-repo:
         required: true
         type: string
     outputs:
@@ -23,10 +11,6 @@ on:
         value: ${{ jobs.is-admin.outputs.error }}
       is-admin:
         value: ${{ jobs.is-admin.outputs.is-admin }}
-      is-owner-error:
-        value: ${{ jobs.is-owner.outputs.error }}
-      is-owner:
-        value: ${{ jobs.is-owner.outputs.is-owner }}
 
 defaults:
   run:
@@ -55,36 +39,13 @@ jobs:
         id: is-admin
         env:
           USER_LOGIN: ${{ inputs.user-login }}
-          ALLOWLIST_ADMINS: ${{ secrets.ALLOWLIST_ADMINS }}
+          ALLOWLIST_ADMINS: ${{ vars.ALLOWLIST_ADMINS }}
         run: |
+          if [ -z "${ALLOWLIST_ADMINS:-}" ]; then
+            echo "ALLOWLIST_ADMINS repository variable is not configured." >&2
+            if [ -n "${GITHUB_OUTPUT:-}" ]; then
+              echo "error=ALLOWLIST_ADMINS variable is not configured" >> "$GITHUB_OUTPUT"
+            fi
+            exit 1
+          fi
           node src/is-admin.js "$USER_LOGIN"
-  is-owner:
-    name: Validate matching add-template issue
-    runs-on: ubuntu-latest
-    outputs:
-      error: ${{ steps.is-owner.outputs.error }}
-      is-owner: ${{ steps.is-owner.outputs.is-owner }}
-    needs: [is-admin]
-    if: ${{ always() && needs.is-admin.outputs.is-admin != 'true' }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-      - name: Use node 20
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - name: Install dependencies
-        run: npm install
-      - name: Validate creator of request
-        env:
-          USER_LOGIN: ${{ inputs.user-login }}
-          NPM_PACKAGE: ${{ inputs.npm-package }}
-          GITHUB_REPO_OWNER: ${{ inputs.github-repo-owner }}
-          GITHUB_REPO: ${{ inputs.github-repo }}
-          ALLOWLIST_ADMINS: ${{ secrets.ALLOWLIST_ADMINS }}
-        id: is-owner
-        run: |
-          node src/validate-request-author.js "$USER_LOGIN" "$NPM_PACKAGE" "$GITHUB_REPO_OWNER" "$GITHUB_REPO"

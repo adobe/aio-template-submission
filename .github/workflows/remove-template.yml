@@ -62,20 +62,15 @@ jobs:
   check-permissions:
     needs: [parse-issue-form-body, set-owner-repo-user]
     uses: ./.github/workflows/check-permissions-workflow.yml
-    secrets:
-      ALLOWLIST_ADMINS: ${{ secrets.ALLOWLIST_ADMINS }}
     with:
       user-login: ${{ needs.set-owner-repo-user.outputs.user-login }}
-      npm-package: ${{ needs.parse-issue-form-body.outputs.npm-package }}
-      github-repo-owner: ${{ needs.set-owner-repo-user.outputs.github-repo-owner }}
-      github-repo: ${{ needs.set-owner-repo-user.outputs.github-repo }}
   remove-from-registry:
     name: Remove template from registry
     runs-on: ubuntu-latest
     outputs:
       error: ${{ steps.run-remove-from-registry.outputs.error }}
     needs: [parse-issue-form-body, check-permissions]
-    if: ${{ always() && needs.parse-issue-form-body.result == 'success' && (needs.check-permissions.outputs.is-admin == 'true' || needs.check-permissions.outputs.is-owner == 'true') }}
+    if: ${{ always() && needs.parse-issue-form-body.result == 'success' && needs.check-permissions.outputs.is-admin == 'true' && github.event_name == 'issue_comment' && github.event.comment.body == '/remove' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -110,18 +105,19 @@ jobs:
     name: Removal failed
     runs-on: ubuntu-latest
     needs: [parse-issue-form-body, check-permissions, remove-from-registry]
-    if: ${{ always() && (needs.parse-issue-form-body.result == 'failure' || (needs.parse-issue-form-body.result != 'skipped' && (needs.remove-from-registry.outputs.error != '' || (needs.check-permissions.outputs.is-admin != 'true' && needs.check-permissions.outputs.is-owner != 'true' && (needs.check-permissions.outputs.is-admin-error != '' || needs.check-permissions.outputs.is-owner-error != ''))))) }}
+    if: ${{ always() && (needs.parse-issue-form-body.result == 'failure' || (needs.parse-issue-form-body.result != 'skipped' && (needs.remove-from-registry.outputs.error != '' || needs.remove-from-registry.result == 'failure' || (github.event_name == 'issue_comment' && github.event.comment.body == '/remove' && needs.check-permissions.outputs.is-admin != 'true')))) }}
     steps:
       - uses: peter-evans/create-or-update-comment@v3.0.2
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
-            ### Failed Checks
+            ### Template Removal Failed
+
+            Template removal requires admin privileges for security reasons.
 
             ${{ needs.parse-issue-form-body.outputs.error }}
             ${{ needs.check-permissions.outputs.is-admin-error }}
-            ${{ needs.check-permissions.outputs.is-owner-error }}
             ${{ needs.remove-from-registry.outputs.error }}
 
-            Fix all mentioned issues and comment `/remove` to try again.
+            If you are the template maintainer and need to remove your template, an admin will review your request shortly.
           token: ${{ secrets.GITHUB_TOKEN }}

@@ -8,3 +8,27 @@ body:
       label: "npm package name"
     validations:
       required: true
+  - type: textarea
+    id: ownership-proof
+    attributes:
+      label: Ownership Verification
+      description: |
+        **Admin verification required**
+
+        Please provide proof that you maintain this package:
+        - Your NPM username
+        - Link to NPM package page
+        - List of maintainers' NPM usernames (you may use `npm owner ls <package-name>`, but **redact all email addresses**)
+      placeholder: |
+        NPM username: my-npm-username
+        Package link: https://www.npmjs.com/package/@example/my-template
+        Maintainers (usernames only, no emails): user1, user2, user3
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        ---
+
+        **Note:** Template updates require admin approval for security reasons.
+        An admin will review your request and verify ownership before processing.
