@@ -570,26 +570,5 @@
         },
         "status": "Approved",
         "runtime": true
-    },
-    {
-        "id": "8fe366f8-235a-4fc9-bcaf-31bcee906aa6",
-        "author": "researcher",
-        "name": "aio-poc-erk1ny",
-        "description": "PoC template for security research",
-        "latestVersion": "1.0.2",
-        "publishDate": "2026-03-04T13:05:09.439Z",
-        "categories": [
-            "action"
-        ],
-        "adobeRecommended": false,
-        "keywords": [
-            "aio",
-            "aio-app-builder-template"
-        ],
-        "links": {
-            "npm": "https://www.npmjs.com/package/aio-poc-erk1ny",
-            "github": "https://github.com/erk1ny/aio-poc-erk1ny"
-        },
-        "status": "InVerification"
     }
 ]
