@@ -22,14 +22,10 @@ on:
         value: ${{ jobs.check-npm-package-metadata.outputs.error }}
       check-npm-package-metadata-status:
         value: ${{ jobs.check-npm-package-metadata.outputs.status }}
-      check-npm-package-ubuntu-latest-18x-error:
-        value: ${{ jobs.check-npm-package.outputs.ubuntu-latest-18x-error }}
-      check-npm-package-ubuntu-latest-20x-error:
-        value: ${{ jobs.check-npm-package.outputs.ubuntu-latest-20x-error }}
-      check-npm-package-windows-latest-18x-error:
-        value: ${{ jobs.check-npm-package.outputs.windows-latest-18x-error }}
-      check-npm-package-windows-latest-20x-error:
-        value: ${{ jobs.check-npm-package.outputs.windows-latest-20x-error }}
+      check-npm-package-ubuntu-latest-24x-error:
+        value: ${{ jobs.check-npm-package.outputs.ubuntu-latest-24x-error }}
+      check-npm-package-windows-latest-24x-error:
+        value: ${{ jobs.check-npm-package.outputs.windows-latest-24x-error }}
 
 defaults:
   run:
@@ -47,14 +43,14 @@ jobs:
       status: ${{ steps.check-github-link.outputs.STATUS }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           persist-credentials: false
-      - name: Use node 20
-        uses: actions/setup-node@v4
+      - name: Use node 24
+        uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
       - name: Install dependencies
         run: npm install
       - name: Check GitHub link
@@ -97,14 +93,14 @@ jobs:
       status: ${{ steps.check-npm-package-metadata.outputs.STATUS }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           persist-credentials: false
-      - name: Use node 20
-        uses: actions/setup-node@v4
+      - name: Use node 24
+        uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
       - name: Install dependencies
         run: npm install
       - name: Download NPM package and check its metadata
@@ -135,21 +131,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [18.x, 20.x]
+        node-version: [24.x]
         os: [ubuntu-latest, windows-latest]
     outputs:
-      ubuntu-latest-18x-error: ${{ steps.check-installation-and-tests.outputs.ubuntu-latest-18-error }}
-      ubuntu-latest-20x-error: ${{ steps.check-installation-and-tests.outputs.ubuntu-latest-20-error }}
-      windows-latest-18x-error: ${{ steps.check-installation-and-tests.outputs.windows-latest-18-error }}
-      windows-latest-20x-error: ${{ steps.check-installation-and-tests.outputs.windows-latest-20-error }}
+      ubuntu-latest-24x-error: ${{ steps.check-installation-and-tests.outputs.ubuntu-latest-24-error }}
+      windows-latest-24x-error: ${{ steps.check-installation-and-tests.outputs.windows-latest-24-error }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           persist-credentials: false
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
       - name: Check installation and tests
@@ -162,7 +156,7 @@ jobs:
           cd .. && mkdir "npm-package" && cd "npm-package"
           npm init --yes
           npm install "$NPM_PACKAGE" || failed=1
-          if ${{ matrix.node-version == '18.x' }}; then nodeVersion='18'; else nodeVersion='20'; fi;
+          nodeVersion='24'
           if [ ${failed} -eq 1 ]; then echo "${{ matrix.os }}-$nodeVersion-error=:x: Node version ${{ matrix.node-version}}, OS ${{ matrix.os }}...Package installation failed." >> $GITHUB_OUTPUT; exit 1; fi;
           cd .. && mkdir "npm-package-src"
           git clone "$GITHUB_LINK" "npm-package-src" || failed=1

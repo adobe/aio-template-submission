@@ -25,14 +25,14 @@ jobs:
       error: ${{ steps.more-verification-script.outputs.error }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           persist-credentials: false
-      - name: Use node 20
-        uses: actions/setup-node@v4
+      - name: Use node 24
+        uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
       - name: Install dependencies
         run: npm install
       - name: Run script
