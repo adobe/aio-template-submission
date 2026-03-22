@@ -15,14 +15,14 @@ jest.mock('@actions/core');
 
 beforeEach(() => {
     jest.clearAllMocks();
+    process.env.ALLOWLIST_ADMINS = 'github-user-1,github-user-2';
 });
 
-process.env.ALLOWLIST_ADMINS = 'github-user-1,github-user-2';
+const script = '../src/is-admin.js';
 
 describe('Verify invoking is-admin.js', () => {
     test('A user is an admin', () => {
         const userLogin = 'github-user-1';
-        const script = '../src/is-admin.js';
         process.argv = ['node', script, userLogin];
         jest.isolateModules(() => {
             require(script);
@@ -32,11 +32,40 @@ describe('Verify invoking is-admin.js', () => {
 
     test('A user is not an admin', () => {
         const userLogin = 'non-admin-github-user';
-        const script = '../src/is-admin.js';
         process.argv = ['node', script, userLogin];
         jest.isolateModules(() => {
             require(script);
         });
         expect(core.setOutput).toHaveBeenCalledWith('error', ':x: Submitter is not an admin. Admins can remove and update any templates.');
+    });
+
+    test('Handles whitespace in ALLOWLIST_ADMINS', () => {
+        process.env.ALLOWLIST_ADMINS = 'github-user-1, github-user-2 , github-user-3';
+        const userLogin = 'github-user-2';
+        process.argv = ['node', script, userLogin];
+        jest.isolateModules(() => {
+            require(script);
+        });
+        expect(core.setOutput).toHaveBeenCalledWith('is-admin', 'true');
+    });
+
+    test('Handles undefined ALLOWLIST_ADMINS', () => {
+        delete process.env.ALLOWLIST_ADMINS;
+        const userLogin = 'github-user-1';
+        process.argv = ['node', script, userLogin];
+        jest.isolateModules(() => {
+            require(script);
+        });
+        expect(core.setOutput).toHaveBeenCalledWith('error', ':x: ALLOWLIST_ADMINS is not configured. No users are authorized to perform this action.');
+    });
+
+    test('Handles empty ALLOWLIST_ADMINS', () => {
+        process.env.ALLOWLIST_ADMINS = '';
+        const userLogin = 'github-user-1';
+        process.argv = ['node', script, userLogin];
+        jest.isolateModules(() => {
+            require(script);
+        });
+        expect(core.setOutput).toHaveBeenCalledWith('error', ':x: ALLOWLIST_ADMINS is not configured. No users are authorized to perform this action.');
     });
 });

@@ -71,7 +71,6 @@ Reason: Package deprecated / no longer maintained / security update needed
 
 Admins are defined in the `ALLOWLIST_ADMINS` repository variable (comma-separated list of GitHub usernames, with no spaces).
 
-Note: whitespace is significant. For example, `user1,user2` works, but `user1, user2` will only match `user1` because of the space before `user2`.
 **Configuration**: See [GitHub documentation on repository variables](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables) for setup instructions.
 
 #### Admin Procedure: Template Removal
