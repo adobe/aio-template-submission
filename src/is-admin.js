@@ -11,11 +11,13 @@ governing permissions and limitations under the License.
 
 const core = require('@actions/core');
 
-const admins = process.env.ALLOWLIST_ADMINS.split(',');
+const allowlistAdmins = process.env.ALLOWLIST_ADMINS;
 const myArgs = process.argv.slice(2);
 const userLogin = myArgs[0];
 
-if (admins.includes(userLogin)) {
+if (!allowlistAdmins) {
+  core.setOutput('error', ':x: ALLOWLIST_ADMINS is not configured. No users are authorized to perform this action.');
+} else if (allowlistAdmins.split(',').map(s => s.trim()).filter(Boolean).includes(userLogin)) {
   core.setOutput('is-admin', 'true');
 } else {
   core.setOutput('error', ':x: Submitter is not an admin. Admins can remove and update any templates.');
