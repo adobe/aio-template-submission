@@ -61,13 +61,15 @@ Example:
 ```
 NPM username: my-npm-username
 Package link: https://www.npmjs.com/package/@example/my-template
-Maintainers list: npm owner ls @example/my-template
+Maintainers (usernames only, no emails): user1, user2, user3
 Reason: Package deprecated / no longer maintained / security update needed
 ```
 
+> **Note:** If using `npm owner ls <package-name>` to list maintainers, **redact or remove all email addresses** from the output before submitting. Only include NPM usernames.
+
 ### For Admins
 
-Admins are defined in the `ALLOWLIST_ADMINS` repository variable (comma-separated list of GitHub usernames).
+Admins are defined in the `ALLOWLIST_ADMINS` repository variable (comma-separated list of GitHub usernames, with no spaces).
 
 **Configuration**: See [GitHub documentation on repository variables](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables) for setup instructions.
 

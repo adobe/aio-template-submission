@@ -18,11 +18,11 @@ body:
         Please provide proof that you maintain this package:
         - Your NPM username
         - Link to NPM package page
-        - Output of: `npm owner ls <package-name>`
+        - List of maintainers' NPM usernames (you may use `npm owner ls <package-name>`, but **redact all email addresses**)
       placeholder: |
         NPM username: my-npm-username
         Package link: https://www.npmjs.com/package/@example/my-template
-        Maintainers: (output of npm owner ls command)
+        Maintainers (usernames only, no emails): user1, user2, user3
     validations:
       required: true
   - type: markdown

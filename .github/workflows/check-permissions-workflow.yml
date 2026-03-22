@@ -6,15 +6,6 @@ on:
       user-login:
         required: true
         type: string
-      npm-package:
-        required: true
-        type: string
-      github-repo-owner:
-        required: true
-        type: string
-      github-repo:
-        required: true
-        type: string
     outputs:
       is-admin-error:
         value: ${{ jobs.is-admin.outputs.error }}
@@ -50,4 +41,11 @@ jobs:
           USER_LOGIN: ${{ inputs.user-login }}
           ALLOWLIST_ADMINS: ${{ vars.ALLOWLIST_ADMINS }}
         run: |
+          if [ -z "${ALLOWLIST_ADMINS:-}" ]; then
+            echo "ALLOWLIST_ADMINS repository variable is not configured." >&2
+            if [ -n "${GITHUB_OUTPUT:-}" ]; then
+              echo "error=ALLOWLIST_ADMINS variable is not configured" >> "$GITHUB_OUTPUT"
+            fi
+            exit 1
+          fi
           node src/is-admin.js "$USER_LOGIN"
