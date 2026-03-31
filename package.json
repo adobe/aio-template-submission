@@ -20,7 +20,6 @@
     "@adobe/aio-lib-template-validation": "^5.0.0",
     "ajv": "^8.11.0",
     "ajv-formats": "^2.1.1",
-    "axios": "^0.26.1",
     "fs": "0.0.1-security",
     "uuid": "^8.3.2",
     "validate-npm-package-name": "^4.0.0",
