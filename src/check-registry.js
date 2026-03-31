@@ -10,7 +10,7 @@ governing permissions and limitations under the License.
 */
 
 const core = require('@actions/core');
-const axios = require('axios').default;
+
 const exec = require('@actions/exec');
 const { getRegistry, TEMPLATE_STATUS_IN_VERIFICATION } = require('./registry');
 const github = require('./github');
@@ -53,10 +53,7 @@ async function checkUrlAvailability(url) {
         available: false,
         error: ''
     }
-    await axios({
-        'method': 'get',
-        'url': url
-    })
+    await fetch(url)
         .then(response => {
             if (response.status === 200) {
                 result.available = true;
