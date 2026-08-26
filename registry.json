@@ -570,5 +570,31 @@
         },
         "status": "Approved",
         "runtime": true
+    },
+    {
+        "id": "e29b83f3-2687-49c7-a070-a6ed1fcba9e1",
+        "author": "Adobe Inc.",
+        "name": "@adobe/aem-assets-assetsview-ext-tpl",
+        "description": "Combined Asset Details + Asset Browse extension template for the AEM Assets View",
+        "latestVersion": "0.1.0",
+        "publishDate": "2026-08-26T13:50:16.778Z",
+        "categories": [
+            "action",
+            "ui"
+        ],
+        "adobeRecommended": true,
+        "keywords": [
+            "ecosystem:aio-app-builder-templates"
+        ],
+        "links": {
+            "npm": "https://www.npmjs.com/package/@adobe/aem-assets-assetsview-ext-tpl",
+            "github": "https://github.com/adobe/aem-assets-assetsview-ext-tpl"
+        },
+        "status": "Approved",
+        "extensions": [
+            {
+                "extensionPointId": "aem/assets/assetsview/1"
+            }
+        ]
     }
 ]
