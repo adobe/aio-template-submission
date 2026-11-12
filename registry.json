@@ -602,7 +602,7 @@
         "author": "Adobe Inc.",
         "name": "@adobe/generator-app-commerce-merchandising-mcp-custom-tools",
         "description": "Adobe App Builder template for an IMS-authenticated commerce merchandising MCP server with custom tools.",
-        "latestVersion": "1.0.1",
+        "latestVersion": "1.0.4",
         "publishDate": "2026-11-03T14:29:18.880Z",
         "categories": [
             "action"
