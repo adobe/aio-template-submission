@@ -14,6 +14,7 @@ const core = require('@actions/core');
 const exec = require('@actions/exec');
 const { getRegistry, TEMPLATE_STATUS_IN_VERIFICATION } = require('./registry');
 const github = require('./github');
+const { checkUrlAvailability } = require('./check-url-availability');
 
 /**
  * Get the latest template version
@@ -40,31 +41,6 @@ async function getLatestVersion(templateName) {
         throw new Error(errorMsg);
     }
     return JSON.parse(output);
-}
-
-/**
- * Check Url availability
- *
- * @param {string} url Url link
- * @returns {Promise<{available: boolean, error: string}>}
- */
-async function checkUrlAvailability(url) {
-    let result = {
-        available: false,
-        error: ''
-    }
-    await fetch(url)
-        .then(response => {
-            if (response.status === 200) {
-                result.available = true;
-            } else {
-                result.error = `Error fetching "${url}". Response code is ${response.status}`;
-            }
-        })
-        .catch(e => {
-            result.error = `Error occurred during fetching "${url}". ${e.message}`;
-        });
-    return result;
 }
 
 (async () => {
